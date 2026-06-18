@@ -666,9 +666,31 @@ const RES_META = {
 // ══════════════════════════════════════════
 //  STORAGE
 // ══════════════════════════════════════════
-function loadLib(){try{return JSON.parse(localStorage.getItem('manabiLib3')||'null');}catch{return null;}}
-function saveLib(){try{localStorage.setItem('manabiLib3',JSON.stringify(LIB));}catch{}}
-function initLib(){return{shards:0,totalPlays:0,level:1,unlockedEndings:[],upgradedCards:[],unlockedSkills:[],wins:0,losses:0,totalCards:0,totalUpgrades:0,hardWins:0,maxResources:{question:0,hypothesis:0,experiment:0,discovery:0,resonance:0}};}
+function loadLib(){
+  try{
+    const data = localStorage.getItem('manabiLib3');
+    return data ? JSON.parse(data) : null;
+  } catch(e) {
+    console.warn('loadLib error:', e);
+    return null;
+  }
+}
+function saveLib(){
+  try{
+    localStorage.setItem('manabiLib3', JSON.stringify(LIB));
+  } catch(e) {
+    console.warn('saveLib error:', e);
+  }
+}
+function initLib(){
+  return {
+    shards:0, totalPlays:0, level:1,
+    unlockedEndings:[], upgradedCards:[], unlockedSkills:[],
+    wins:0, losses:0, totalCards:0, totalUpgrades:0, hardWins:0,
+    achievements:[],
+    maxResources:{question:0,hypothesis:0,experiment:0,discovery:0,resonance:0}
+  };
+}
 
 const NODE_ICONS={normal:'⬜',event:'⚠️',rest:'🏕️',trial:'⚔️',discover:'🔍',goal:'🏛️'};
 const NODE_LABELS={normal:'',event:'イベント',rest:'休憩',trial:'試練',discover:'発見',goal:'GOAL'};
@@ -1131,27 +1153,30 @@ function checkSkillUnlock(endingId){
   saveLib();return newSkills;
 }
 
+// ── FIX 1 & 2: isNewEnding フラグを先に取得し、_renderEnding に渡す ──
 function showEnding(won){
   const ending=won
     ?ENDINGS.find(e=>e.id!=='unfinished'&&e.cond(G))||ENDINGS.find(e=>e.id==='unfinished')
     :ENDINGS.find(e=>e.id==='unfinished');
-  const isNew=!LIB.unlockedEndings.includes(ending.id);
-  if(isNew)LIB.unlockedEndings.push(ending.id);
-  const newSkills=won&&isNew?checkSkillUnlock(ending.id):[];
+
+  const isNewEnding=!LIB.unlockedEndings.includes(ending.id); // 先に判定
+  if(isNewEnding)LIB.unlockedEndings.push(ending.id);
+  const newSkills=won&&isNewEnding?checkSkillUnlock(ending.id):[];
   saveLib();
 
   // Show shard burst before screen transition
   showShardBurst(G.shardsEarned, ending.label, ()=>{
-    _renderEnding(ending, won, newSkills);
+    _renderEnding(ending, won, newSkills, isNewEnding); // フラグを渡す
     show('screen-ending');
     if(ending.id==='giant') setTimeout(startGiantEffect, 600);
     else startStarfall();
   });
 }
 
-function _renderEnding(ending, won, newSkills){
+// ── FIX 3: 引数に isNewEnding を追加、isNew() 関数呼び出しを削除 ──
+function _renderEnding(ending, won, newSkills, isNewEnding){
   document.getElementById('end-emblem').textContent=ending.emblem;
-  document.getElementById('end-type').textContent=ending.label+(isNew(ending.id)?' ✦ 初クリア！':'');
+  document.getElementById('end-type').textContent=ending.label+(isNewEnding?' ✦ 初クリア！':''); // FIX
   document.getElementById('end-title').textContent=ending.title;
   document.getElementById('end-shard-gain').textContent=`+${G.shardsEarned}`;
 
@@ -1189,8 +1214,6 @@ function _renderEnding(ending, won, newSkills){
 
   document.getElementById('end-log-wrap').innerHTML=`<h3>📖 旅の記録</h3><ul>${G.log.map(l=>`<li>${l}</li>`).join('')}</ul>`;
 }
-
-function isNew(endingId){return LIB.unlockedEndings.filter(id=>id===endingId).length===1;}
 
 // ══════════════════════════════════════════
 //  LIBRARY
@@ -1252,12 +1275,16 @@ function renderLibrary(){
       return`<div class="ach-item ${unlocked?'unlocked':'locked'}"><div class="ai-icon">${a.icon}</div><div><div class="ai-name">${a.name}</div><div class="ai-cond">${a.desc}</div></div></div>`;
     }).join('');
   }
+
+  // ── FIX 4: list 変数を定義してから appendChild ──
   const items=[
     {icon:'📚',name:'基本カード 8種',desc:'学びの旅の基礎',always:true},
     ...(LIB.upgradedCards.length>0?[{icon:'✨',name:`強化カード ${LIB.upgradedCards.length}種`,desc:LIB.upgradedCards.map(id=>{const c=[...BASE_CARDS,...UNLOCK_CARDS].find(x=>x.id===id);return c?.name||id;}).join('、'),always:false}]:[]),
     ...LIB.unlockedEndings.map(id=>{const e=ENDINGS.find(x=>x.id===id);return{icon:e.emblem,name:`エンディング：${e.label}`,desc:e.title,always:false};}),
     ...LIB.unlockedSkills.map(id=>{const s=SKILLS.find(x=>x.id===id);return{icon:s.icon,name:`スキル：${s.name}`,desc:s.desc,always:false};}),
   ];
+  const list=document.getElementById('unlocked-list'); // FIX: 変数を定義
+  list.innerHTML=''; // FIX: 重複防止のためリセット
   items.forEach(item=>{
     const el=document.createElement('div');el.className='unlocked-item';
     el.innerHTML=`<span class="ui-icon">${item.icon}</span><div><div class="ui-name">${item.name}</div><div class="ui-desc">${item.desc}</div></div>${!item.always?'<span class="ui-new">✓</span>':''}`;
@@ -1480,9 +1507,7 @@ function showPhaseBanner(name){const b=document.getElementById('phase-banner');b
 // ══════════════════════════════════════════
 //  INIT
 // ══════════════════════════════════════════
-G={};
 renderTitle();
-show('screen-title');
 </script>
 </body>
 </html>
