@@ -6,18 +6,15 @@
 <title>学びを、かたちにする旅</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap');
-
-:root {
-  --bg:#0e1420; --bg-mid:#151e30; --bg-panel:#1a2438; --border:rgba(140,180,255,0.15);
-  --parch:#f5eedc; --parch-mid:#e8ddc0; --parch-drk:#d4c498; --ink:#2a1e0e; --ink-soft:#5a4830;
-  --c-question:#a78bfa; --c-hypothesis:#60a5fa; --c-experiment:#f97316; --c-discovery:#facc15; --c-resonance:#34d399;
-  --gold:#d4a017; --gold-lt:#f5c842; --glow-gold:rgba(212,160,23,0.35);
-  --lib:#1e3a5f; --lib-lt:#2a5080;
-  --radius:14px; --radius-sm:9px; --shadow:0 4px 24px rgba(0,0,0,0.45);
+:root{
+  --bg:#0e1420;--bg-mid:#151e30;--bg-panel:#1a2438;--border:rgba(140,180,255,0.15);
+  --parch:#f5eedc;--parch-mid:#e8ddc0;--ink:#2a1e0e;--ink-soft:#5a4830;
+  --c-q:#a78bfa;--c-h:#60a5fa;--c-e:#f97316;--c-d:#facc15;--c-r:#34d399;
+  --gold:#d4a017;--gold-lt:#f5c842;--glow:rgba(212,160,23,.35);
+  --radius:14px;--radius-sm:9px;--shadow:0 4px 24px rgba(0,0,0,.45);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);font-family:'Noto Sans JP',sans-serif;color:var(--parch);min-height:100vh;overflow-x:hidden;}
-
 #stars{position:fixed;inset:0;z-index:0;pointer-events:none;background:
   radial-gradient(ellipse at 30% 20%,#1e2f55 0%,#0e1420 60%),
   radial-gradient(1.5px 1.5px at 15% 25%,rgba(200,220,255,.8) 0%,transparent 100%),
@@ -30,44 +27,62 @@ body{background:var(--bg);font-family:'Noto Sans JP',sans-serif;color:var(--parc
   radial-gradient(1px 1px at 25% 55%,rgba(200,220,255,.5) 0%,transparent 100%),
   radial-gradient(1.5px 1.5px at 70% 18%,rgba(200,220,255,.7) 0%,transparent 100%),
   radial-gradient(1px 1px at 38% 12%,rgba(200,220,255,.6) 0%,transparent 100%);}
-
 .screen{position:fixed;inset:0;z-index:10;overflow-y:auto;}
 .screen.hidden{display:none!important;}
 
 /* ── TITLE ── */
-#screen-title{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;background:radial-gradient(ellipse at 50% 35%,#1e2f55 0%,#0e1420 100%);transition:opacity .8s ease;}
+#screen-title{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px 60px;text-align:center;background:radial-gradient(ellipse at 50% 35%,#1e2f55 0%,#0e1420 100%);transition:opacity .8s ease;}
 #screen-title.fade{opacity:0;pointer-events:none;}
 .title-glyph{font-size:48px;margin-bottom:16px;animation:float 4s ease-in-out infinite alternate;}
 @keyframes float{from{transform:translateY(0) rotate(-4deg);}to{transform:translateY(-12px) rotate(4deg);}}
-.title-main{font-family:'Noto Serif JP',serif;font-size:clamp(24px,5.5vw,44px);font-weight:900;color:var(--gold-lt);text-shadow:0 2px 28px var(--glow-gold);letter-spacing:.06em;line-height:1.45;margin-bottom:8px;animation:glow 3s ease-in-out infinite alternate;}
+.title-main{font-family:'Noto Serif JP',serif;font-size:clamp(24px,5.5vw,44px);font-weight:900;color:var(--gold-lt);text-shadow:0 2px 28px var(--glow);letter-spacing:.06em;line-height:1.45;margin-bottom:8px;animation:glow 3s ease-in-out infinite alternate;}
 @keyframes glow{from{text-shadow:0 2px 20px rgba(212,160,23,.5);}to{text-shadow:0 2px 36px rgba(212,160,23,1),0 0 80px rgba(212,160,23,.35);}}
 .title-sub{font-family:'Noto Serif JP',serif;font-size:13px;color:rgba(245,238,220,.55);letter-spacing:.18em;margin-bottom:10px;}
-.title-phase-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.14em;background:rgba(100,140,255,.15);border:1px solid rgba(100,140,255,.35);border-radius:20px;padding:4px 14px;color:#93c5fd;margin-bottom:28px;}
-.title-tagline{font-size:13px;color:rgba(245,238,220,.5);max-width:300px;line-height:1.9;margin-bottom:32px;}
-.library-preview{background:rgba(30,58,95,.6);border:1px solid rgba(100,150,255,.25);border-radius:var(--radius);padding:16px 20px;margin-bottom:24px;max-width:360px;width:100%;text-align:left;backdrop-filter:blur(8px);}
+.title-phase-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.14em;background:rgba(100,140,255,.15);border:1px solid rgba(100,140,255,.35);border-radius:20px;padding:4px 14px;color:#93c5fd;margin-bottom:24px;}
+.title-tagline{font-size:13px;color:rgba(245,238,220,.5);max-width:300px;line-height:1.9;margin-bottom:24px;}
+
+/* Library preview */
+.library-preview{background:rgba(30,58,95,.6);border:1px solid rgba(100,150,255,.25);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;max-width:380px;width:100%;text-align:left;backdrop-filter:blur(8px);}
 .lib-preview-title{font-family:'Noto Serif JP',serif;font-size:13px;color:#93c5fd;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
 .lib-level-bar{background:rgba(255,255,255,.08);border-radius:8px;height:8px;overflow:hidden;margin-bottom:8px;}
 .lib-level-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,#3b82f6,#93c5fd);transition:width .8s cubic-bezier(.4,0,.2,1);box-shadow:0 0 8px rgba(147,197,253,.5);}
-.lib-stats{display:flex;gap:16px;font-size:12px;color:rgba(245,238,220,.6);}
+.lib-stats{display:flex;gap:14px;font-size:12px;color:rgba(245,238,220,.6);flex-wrap:wrap;}
 .lib-stat-val{font-weight:700;color:var(--gold-lt);}
+
+/* Skill badges on title */
+.active-skills{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.skill-chip{font-size:10px;font-weight:700;background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.35);border-radius:999px;padding:3px 10px;color:#34d399;}
+
+/* Difficulty selector */
+.diff-selector{display:flex;gap:8px;margin-bottom:20px;max-width:380px;width:100%;}
+.diff-btn{flex:1;background:rgba(245,238,220,.06);border:1.5px solid rgba(245,238,220,.18);border-radius:var(--radius-sm);padding:10px 8px;cursor:pointer;text-align:center;transition:all .2s ease;font-size:11px;color:rgba(245,238,220,.7);}
+.diff-btn .db-icon{font-size:20px;display:block;margin-bottom:4px;}
+.diff-btn .db-name{font-weight:700;font-size:12px;display:block;margin-bottom:2px;}
+.diff-btn .db-hint{font-size:10px;opacity:.6;}
+.diff-btn:hover{background:rgba(245,238,220,.12);border-color:rgba(245,238,220,.4);}
+.diff-btn.active{background:rgba(212,160,23,.18);border-color:var(--gold-lt);color:var(--gold-lt);}
+.diff-btn.locked{opacity:.35;cursor:not-allowed;pointer-events:none;}
+
 .project-select-label{font-family:'Noto Serif JP',serif;font-size:14px;color:var(--gold-lt);margin-bottom:12px;letter-spacing:.06em;}
-.project-choices{display:flex;flex-direction:column;gap:9px;width:100%;max-width:380px;margin-bottom:24px;}
+.project-choices{display:flex;flex-direction:column;gap:9px;width:100%;max-width:380px;margin-bottom:20px;}
 .project-choice{background:rgba(245,238,220,.05);border:1.5px solid rgba(212,160,23,.28);border-radius:var(--radius-sm);padding:12px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s ease;text-align:left;}
 .project-choice:hover{background:rgba(212,160,23,.12);border-color:rgba(245,200,66,.6);transform:translateX(4px);}
 .project-choice.selected{background:rgba(212,160,23,.18);border-color:var(--gold-lt);box-shadow:0 0 0 2px rgba(245,200,66,.2);transform:translateX(4px);}
+.project-choice.locked{opacity:.38;cursor:not-allowed;pointer-events:none;}
 .pc-icon{font-size:24px;flex-shrink:0;}.pc-name{font-family:'Noto Serif JP',serif;font-size:13px;font-weight:700;color:var(--parch);}
 .pc-desc{font-size:11px;color:rgba(245,238,220,.5);margin-top:2px;line-height:1.5;}.pc-diff{font-size:10px;margin-top:3px;color:var(--gold-lt);}
+.pc-lock{font-size:10px;color:rgba(245,238,220,.38);margin-top:3px;}
 
 /* ── BUTTONS ── */
 .btn{font-family:'Noto Serif JP',serif;font-weight:700;font-size:14px;padding:12px 28px;border-radius:999px;border:none;cursor:pointer;transition:all .22s ease;letter-spacing:.06em;position:relative;overflow:hidden;}
 .btn::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,0);transition:.2s;}
 .btn:hover::after{background:rgba(255,255,255,.1);}
-.btn-gold{background:linear-gradient(135deg,#c8900e 0%,var(--gold-lt) 100%);color:#1a1000;box-shadow:0 4px 18px var(--glow-gold),0 1px 0 rgba(255,255,255,.3) inset;}
-.btn-gold:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 24px var(--glow-gold);}
+.btn-gold{background:linear-gradient(135deg,#c8900e 0%,var(--gold-lt) 100%);color:#1a1000;box-shadow:0 4px 18px var(--glow),0 1px 0 rgba(255,255,255,.3) inset;}
+.btn-gold:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 24px var(--glow);}
 .btn-ghost{background:rgba(245,238,220,.08);border:1.5px solid rgba(245,238,220,.3)!important;color:rgba(245,238,220,.8);}
 .btn-ghost:hover{background:rgba(245,238,220,.14);}
-.btn-green{background:linear-gradient(135deg,#166534,#22c55e);color:#fff;box-shadow:0 4px 18px rgba(34,197,94,.3);}
-.btn-green:hover:not(:disabled){transform:translateY(-2px);}
+.btn-lib{background:linear-gradient(135deg,#1e3a5f,#2a5080);color:#93c5fd;border:1px solid rgba(147,197,253,.3);}
+.btn-lib:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(30,58,95,.6);}
 .btn:disabled{opacity:.35;cursor:not-allowed;transform:none!important;}
 
 /* ── GAME SCREEN ── */
@@ -76,61 +91,66 @@ body{background:var(--bg);font-family:'Noto Sans JP',sans-serif;color:var(--parc
 #turn-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
 .phase-pill{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(120deg,#1e3a5f,#2a5080);border:1px solid rgba(100,160,255,.3);border-radius:999px;padding:5px 14px;font-size:11px;font-weight:700;color:#93c5fd;letter-spacing:.05em;}
 .turn-counter{font-family:'Noto Serif JP',serif;font-size:13px;color:rgba(245,238,220,.7);}
+.diff-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:999px;}
+.diff-badge.easy{background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.3);color:#34d399;}
+.diff-badge.normal{background:rgba(212,160,23,.15);border:1px solid rgba(212,160,23,.3);color:var(--gold-lt);}
+.diff-badge.hard{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#f87171;}
 .status-hint{font-size:11px;color:rgba(245,238,220,.45);font-style:italic;}
+
+/* Active skill indicator */
+#skill-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.skill-indicator{font-size:10px;font-weight:700;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.28);border-radius:999px;padding:3px 10px;color:#34d399;}
+
 #narrator{background:rgba(14,20,32,.82);border:1px solid rgba(140,180,255,.18);border-radius:var(--radius);padding:12px 16px;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start;backdrop-filter:blur(6px);}
 #narrator .n-icon{font-size:20px;flex-shrink:0;margin-top:1px;}
 #narrator .n-text{font-family:'Noto Serif JP',serif;font-size:13px;color:rgba(245,238,220,.85);line-height:1.85;font-style:italic;}
 
-/* ── MAP (Phase 2: node types) ── */
+/* MAP */
 #map-wrap{background:linear-gradient(155deg,#1a3a20 0%,#102810 25%,#102040 55%,#080e28 80%,#1a1200 100%);border-radius:var(--radius);padding:16px 14px 54px;margin-bottom:14px;box-shadow:inset 0 2px 10px rgba(0,0,0,.5),var(--shadow);position:relative;}
 .map-zone-labels{display:flex;justify-content:space-between;margin-bottom:10px;}
 .mzl{font-family:'Noto Serif JP',serif;font-size:9px;color:rgba(245,238,220,.7);text-align:center;width:22%;text-shadow:0 1px 4px rgba(0,0,0,.9);}
 .mzl span{display:block;font-size:16px;margin-bottom:2px;}
 #path{display:flex;align-items:center;position:relative;}
-.step{width:36px;height:36px;border-radius:50%;flex-shrink:0;border:2px solid rgba(212,160,23,.4);background:rgba(212,160,23,.08);display:flex;align-items:center;justify-content:center;font-size:16px;color:rgba(245,200,66,.6);font-weight:700;transition:all .4s ease;position:relative;cursor:default;}
+.step{width:36px;height:36px;border-radius:50%;flex-shrink:0;border:2px solid rgba(212,160,23,.4);background:rgba(212,160,23,.08);display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .4s ease;position:relative;cursor:default;}
 .step.done{background:rgba(212,160,23,.35);border-color:var(--gold-lt);box-shadow:0 0 8px rgba(212,160,23,.4);}
 .step.here{background:rgba(212,160,23,.6);border-color:#fff;box-shadow:0 0 20px rgba(255,230,80,.8);}
-/* Node type styles */
-.step.type-normal{}
 .step.type-event{border-color:rgba(249,115,22,.7);background:rgba(249,115,22,.15);}
 .step.type-rest{border-color:rgba(52,211,153,.7);background:rgba(52,211,153,.15);}
 .step.type-trial{border-color:rgba(239,68,68,.7);background:rgba(239,68,68,.15);}
 .step.type-discover{border-color:rgba(250,204,21,.7);background:rgba(250,204,21,.15);}
 .step.type-goal{border-color:var(--gold-lt);background:rgba(212,160,23,.3);}
-.step-tooltip{position:absolute;bottom:-28px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:9px;color:rgba(245,238,220,.7);background:rgba(14,20,32,.9);padding:2px 6px;border-radius:6px;pointer-events:none;z-index:20;}
+.step-tooltip{position:absolute;bottom:-26px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:9px;color:rgba(245,238,220,.7);background:rgba(14,20,32,.9);padding:2px 6px;border-radius:6px;pointer-events:none;z-index:20;}
 .connector{flex:1;height:2px;background:rgba(212,160,23,.2);min-width:3px;border-radius:2px;}
 .connector.done{background:linear-gradient(90deg,var(--gold),rgba(212,160,23,.4));}
 #pawn{position:absolute;font-size:24px;bottom:14px;transition:left .75s cubic-bezier(.34,1.56,.64,1);filter:drop-shadow(0 2px 8px rgba(0,0,0,.6));pointer-events:none;z-index:5;}
-
-/* Map legend */
 .map-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;padding:0 2px;}
 .ml-item{display:flex;align-items:center;gap:4px;font-size:10px;color:rgba(245,238,220,.55);}
 .ml-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 
-/* ── RESOURCES ── */
-#res-bar{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap;}
+/* RESOURCES */
+#res-bar{display:flex;gap:7px;margin-bottom:10px;flex-wrap:wrap;}
 .res-chip{background:rgba(14,20,32,.7);border:1.5px solid rgba(255,255,255,.1);border-radius:999px;padding:6px 12px 6px 9px;display:flex;align-items:center;gap:5px;backdrop-filter:blur(4px);transition:all .3s ease;box-shadow:0 2px 8px rgba(0,0,0,.3);}
 .res-chip .rc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
 .res-chip .rc-name{font-size:11px;color:rgba(245,238,220,.6);}
 .res-chip .rc-val{font-family:'Noto Serif JP',serif;font-size:17px;font-weight:900;min-width:18px;text-align:right;}
 .res-chip.pulse{animation:chip-pulse .45s ease;}
 @keyframes chip-pulse{0%{transform:scale(1);}45%{transform:scale(1.22);box-shadow:0 0 20px rgba(255,255,255,.3);}100%{transform:scale(1);}}
-.rc-question{border-color:rgba(167,139,250,.4);}.rc-question .rc-dot{background:var(--c-question);box-shadow:0 0 6px var(--c-question);}.rc-question .rc-val{color:var(--c-question);}
-.rc-hypothesis{border-color:rgba(96,165,250,.4);}.rc-hypothesis .rc-dot{background:var(--c-hypothesis);box-shadow:0 0 6px var(--c-hypothesis);}.rc-hypothesis .rc-val{color:var(--c-hypothesis);}
-.rc-experiment{border-color:rgba(249,115,22,.4);}.rc-experiment .rc-dot{background:var(--c-experiment);box-shadow:0 0 6px var(--c-experiment);}.rc-experiment .rc-val{color:var(--c-experiment);}
-.rc-discovery{border-color:rgba(250,204,21,.4);}.rc-discovery .rc-dot{background:var(--c-discovery);box-shadow:0 0 6px var(--c-discovery);}.rc-discovery .rc-val{color:var(--c-discovery);}
-.rc-resonance{border-color:rgba(52,211,153,.4);}.rc-resonance .rc-dot{background:var(--c-resonance);box-shadow:0 0 6px var(--c-resonance);}.rc-resonance .rc-val{color:var(--c-resonance);}
+.rc-question{border-color:rgba(167,139,250,.4);}.rc-question .rc-dot{background:var(--c-q);box-shadow:0 0 6px var(--c-q);}.rc-question .rc-val{color:var(--c-q);}
+.rc-hypothesis{border-color:rgba(96,165,250,.4);}.rc-hypothesis .rc-dot{background:var(--c-h);box-shadow:0 0 6px var(--c-h);}.rc-hypothesis .rc-val{color:var(--c-h);}
+.rc-experiment{border-color:rgba(249,115,22,.4);}.rc-experiment .rc-dot{background:var(--c-e);box-shadow:0 0 6px var(--c-e);}.rc-experiment .rc-val{color:var(--c-e);}
+.rc-discovery{border-color:rgba(250,204,21,.4);}.rc-discovery .rc-dot{background:var(--c-d);box-shadow:0 0 6px var(--c-d);}.rc-discovery .rc-val{color:var(--c-d);}
+.rc-resonance{border-color:rgba(52,211,153,.4);}.rc-resonance .rc-dot{background:var(--c-r);box-shadow:0 0 6px var(--c-r);}.rc-resonance .rc-val{color:var(--c-r);}
 
-/* ── CARDS ── */
+/* CARDS */
 .section-label{font-family:'Noto Serif JP',serif;font-size:12px;font-weight:700;color:rgba(245,238,220,.5);letter-spacing:.1em;margin-bottom:9px;display:flex;align-items:center;gap:6px;}
 .section-label::after{content:'';flex:1;height:1px;background:rgba(245,238,220,.1);}
-.cards-row{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:16px;}
+.cards-row{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px;}
 .card{border-radius:var(--radius);padding:14px 12px 12px;width:calc(33.3% - 7px);min-width:100px;cursor:pointer;position:relative;overflow:hidden;transition:transform .22s cubic-bezier(.34,1.3,.64,1),box-shadow .22s ease;border:1.5px solid transparent;}
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:var(--radius) var(--radius) 0 0;}
 .card:hover:not(.disabled){transform:translateY(-7px) rotate(-.7deg);}
 .card.disabled{opacity:.32;cursor:not-allowed;filter:grayscale(30%);}
-/* Upgrade indicator */
 .card .upgrade-badge{position:absolute;top:6px;right:6px;font-size:9px;font-weight:700;padding:2px 5px;border-radius:6px;background:rgba(52,211,153,.25);color:#34d399;border:1px solid rgba(52,211,153,.4);}
+.card .legend-badge{position:absolute;top:6px;right:6px;font-size:9px;font-weight:700;padding:2px 5px;border-radius:6px;background:rgba(212,160,23,.3);color:var(--gold-lt);border:1px solid rgba(212,160,23,.5);}
 .card-badge{font-size:9px;font-weight:700;letter-spacing:.12em;margin-bottom:6px;text-transform:uppercase;}
 .card-icon-big{font-size:28px;display:block;margin-bottom:7px;line-height:1;}
 .card-name{font-family:'Noto Serif JP',serif;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:4px;line-height:1.35;}
@@ -143,33 +163,27 @@ body{background:var(--bg);font-family:'Noto Sans JP',sans-serif;color:var(--parc
 .card-learn::before{background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);}
 .card-learn .card-badge{color:#8b6010;}
 .card-action{background:linear-gradient(150deg,#edf8f0 0%,#cde8d4 100%);border-color:rgba(52,160,80,.4);box-shadow:0 3px 12px rgba(0,0,0,.25),0 1px 0 rgba(255,255,255,.6) inset;}
-.card-action::before{background:linear-gradient(90deg,transparent,rgba(100,220,140,.4),transparent);}
 .card-action .card-badge{color:#1a6b30;}
 .card-event{background:linear-gradient(150deg,#fff3e0 0%,#fde5b8 100%);border-color:rgba(220,130,30,.4);box-shadow:0 3px 12px rgba(0,0,0,.25),0 1px 0 rgba(255,255,255,.6) inset;}
-.card-event::before{background:linear-gradient(90deg,transparent,rgba(240,160,60,.4),transparent);}
 .card-event .card-badge{color:#8b4010;}
-/* Rare card glow */
 .card.rare{border-color:rgba(147,197,253,.6);box-shadow:0 3px 16px rgba(147,197,253,.2),0 1px 0 rgba(255,255,255,.6) inset;}
-.card.rare::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(147,197,253,.05),transparent);pointer-events:none;}
+.card.legend{border-color:rgba(212,160,23,.8);box-shadow:0 0 24px rgba(212,160,23,.35),0 1px 0 rgba(255,255,255,.6) inset;animation:legend-glow 2s ease-in-out infinite alternate;}
+@keyframes legend-glow{from{box-shadow:0 0 14px rgba(212,160,23,.3);}to{box-shadow:0 0 28px rgba(212,160,23,.6);}}
 
-/* ── REST PANEL ── */
+/* SPECIAL NODE PANELS */
 #rest-panel{background:rgba(14,20,32,.85);border:1.5px solid rgba(52,211,153,.35);border-radius:var(--radius);padding:16px;margin-bottom:14px;backdrop-filter:blur(6px);}
-#rest-panel .rest-title{font-family:'Noto Serif JP',serif;font-size:15px;font-weight:700;color:#34d399;margin-bottom:4px;}
-#rest-panel .rest-desc{font-size:12px;color:rgba(245,238,220,.55);margin-bottom:14px;line-height:1.6;}
+.rest-title{font-family:'Noto Serif JP',serif;font-size:15px;font-weight:700;color:#34d399;margin-bottom:4px;}
+.rest-desc{font-size:12px;color:rgba(245,238,220,.55);margin-bottom:14px;line-height:1.6;}
 .rest-options{display:flex;flex-direction:column;gap:8px;}
 .rest-option{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);border-radius:var(--radius-sm);padding:10px 14px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .2s ease;}
 .rest-option:hover{background:rgba(52,211,153,.18);border-color:rgba(52,211,153,.5);transform:translateX(4px);}
 .rest-option .ro-icon{font-size:22px;flex-shrink:0;}
 .rest-option .ro-title{font-family:'Noto Serif JP',serif;font-size:13px;font-weight:700;color:var(--parch);}
 .rest-option .ro-desc{font-size:11px;color:rgba(245,238,220,.5);margin-top:2px;}
-
-/* ── UPGRADE PANEL ── */
 #upgrade-panel{background:rgba(14,20,32,.85);border:1.5px solid rgba(250,204,21,.35);border-radius:var(--radius);padding:16px;margin-bottom:14px;backdrop-filter:blur(6px);}
 .upgrade-title{font-family:'Noto Serif JP',serif;font-size:15px;font-weight:700;color:var(--gold-lt);margin-bottom:4px;}
 .upgrade-desc{font-size:12px;color:rgba(245,238,220,.55);margin-bottom:14px;}
 .upgrade-cards{display:flex;gap:9px;flex-wrap:wrap;}
-
-/* ── TRIAL PANEL ── */
 #trial-panel{background:rgba(14,20,32,.85);border:1.5px solid rgba(239,68,68,.35);border-radius:var(--radius);padding:16px;margin-bottom:14px;backdrop-filter:blur(6px);}
 .trial-title{font-family:'Noto Serif JP',serif;font-size:15px;font-weight:700;color:#f87171;margin-bottom:4px;}
 .trial-desc{font-size:12px;color:rgba(245,238,220,.55);margin-bottom:14px;line-height:1.6;}
@@ -180,7 +194,7 @@ body{background:var(--bg);font-family:'Noto Sans JP',sans-serif;color:var(--parc
 .trial-choice .tc-name{font-family:'Noto Serif JP',serif;font-size:12px;font-weight:700;color:var(--parch);margin-bottom:4px;}
 .trial-choice .tc-desc{font-size:10px;color:rgba(245,238,220,.5);}
 
-/* ── PROJECT ── */
+/* PROJECT */
 #project-panel{background:rgba(14,20,32,.7);border:1.5px solid rgba(212,160,23,.25);border-radius:var(--radius);padding:16px;margin-bottom:14px;backdrop-filter:blur(4px);}
 .proj-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
 .proj-icon{font-size:28px;}.proj-title{font-family:'Noto Serif JP',serif;font-size:14px;font-weight:700;color:var(--parch);}
@@ -192,33 +206,56 @@ body{background:var(--bg);font-family:'Noto Sans JP',sans-serif;color:var(--parc
 .prog-bg{background:rgba(255,255,255,.07);border-radius:6px;height:7px;overflow:hidden;}
 .prog-fill{height:100%;border-radius:6px;transition:width .55s cubic-bezier(.4,0,.2,1);}
 
-/* ── LOG ── */
+/* LOG */
 #log-wrap{background:rgba(14,20,32,.6);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:14px;}
 .log-header{padding:8px 14px;border-bottom:1px solid var(--border);font-size:11px;color:rgba(245,238,220,.4);letter-spacing:.1em;}
 #log-list{padding:8px 14px;max-height:100px;overflow-y:auto;}
-.log-row{font-size:11px;color:rgba(245,238,220,.65);padding:3px 0;border-bottom:1px dashed rgba(255,255,255,.06);display:flex;gap:6px;align-items:flex-start;animation:fadein .35s ease;}
+.log-row{font-size:11px;color:rgba(245,238,220,.65);padding:3px 0;border-bottom:1px dashed rgba(255,255,255,.06);display:flex;gap:6px;animation:fadein .35s ease;}
 @keyframes fadein{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:none;}}
 .log-row:last-child{border-bottom:none;}
 .action-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;}
 
 /* ── LIBRARY SCREEN ── */
 #screen-library{background:radial-gradient(ellipse at 40% 30%,#1e3050 0%,#0a1020 100%);display:flex;flex-direction:column;align-items:center;padding:40px 20px 60px;}
-.lib-inner{max-width:520px;width:100%;}
+.lib-inner{max-width:540px;width:100%;}
 .lib-title{font-family:'Noto Serif JP',serif;font-size:26px;font-weight:900;color:#93c5fd;text-align:center;margin-bottom:6px;text-shadow:0 2px 20px rgba(100,150,255,.5);}
-.lib-sub{text-align:center;font-size:13px;color:rgba(245,238,220,.45);margin-bottom:28px;letter-spacing:.06em;}
-.lib-shard-box{background:rgba(30,58,95,.6);border:1px solid rgba(100,150,255,.25);border-radius:var(--radius);padding:18px 20px;margin-bottom:20px;display:flex;align-items:center;gap:16px;}
+.lib-sub{text-align:center;font-size:13px;color:rgba(245,238,220,.45);margin-bottom:24px;letter-spacing:.06em;}
+.lib-shard-box{background:rgba(30,58,95,.6);border:1px solid rgba(100,150,255,.25);border-radius:var(--radius);padding:18px 20px;margin-bottom:18px;display:flex;align-items:center;gap:16px;}
 .shard-icon{font-size:40px;animation:float 3s ease-in-out infinite alternate;}
 .shard-info .shard-label{font-size:11px;color:rgba(245,238,220,.45);margin-bottom:4px;}
 .shard-info .shard-val{font-family:'Noto Serif JP',serif;font-size:32px;font-weight:900;color:#93c5fd;line-height:1;}
 .shard-info .shard-sub{font-size:11px;color:rgba(245,238,220,.4);margin-top:3px;}
-.lib-level-section{background:rgba(14,20,32,.6);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:20px;}
+.lib-level-section{background:rgba(14,20,32,.6);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:18px;}
 .lib-lv-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
 .lib-lv-name{font-family:'Noto Serif JP',serif;font-size:15px;font-weight:700;color:#93c5fd;}
 .lib-lv-num{font-size:12px;color:rgba(245,238,220,.4);}
 .lib-lv-bar{background:rgba(255,255,255,.07);border-radius:8px;height:10px;overflow:hidden;margin-bottom:8px;}
 .lib-lv-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,#2563eb,#93c5fd);transition:width .8s ease;box-shadow:0 0 10px rgba(147,197,253,.5);}
 .lib-lv-hint{font-size:11px;color:rgba(245,238,220,.4);}
-.lib-unlocked{margin-bottom:20px;}
+
+/* Skills section in library */
+.lib-skills{background:rgba(14,20,32,.6);border:1px solid rgba(52,211,153,.2);border-radius:var(--radius);padding:14px 16px;margin-bottom:18px;}
+.lib-skills-title{font-family:'Noto Serif JP',serif;font-size:13px;color:#34d399;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.skill-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px dashed rgba(52,211,153,.15);}
+.skill-item:last-child{border-bottom:none;}
+.skill-item .si-icon{font-size:20px;flex-shrink:0;}
+.skill-item .si-name{font-family:'Noto Serif JP',serif;font-size:13px;font-weight:700;color:var(--parch);}
+.skill-item .si-desc{font-size:11px;color:rgba(245,238,220,.45);margin-top:2px;}
+.skill-item .si-active{font-size:9px;font-weight:700;color:#34d399;background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.3);border-radius:6px;padding:2px 7px;margin-left:auto;flex-shrink:0;}
+.skill-item .si-locked{font-size:9px;color:rgba(245,238,220,.3);margin-left:auto;flex-shrink:0;}
+
+/* Unlock roadmap */
+.lib-roadmap{background:rgba(14,20,32,.6);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:18px;}
+.lib-roadmap-title{font-family:'Noto Serif JP',serif;font-size:13px;color:var(--gold-lt);margin-bottom:12px;}
+.roadmap-row{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px dashed rgba(255,255,255,.06);}
+.roadmap-row:last-child{border-bottom:none;}
+.roadmap-lv{font-size:10px;font-weight:700;color:#93c5fd;flex-shrink:0;min-width:32px;}
+.roadmap-content .rc-name{font-size:12px;font-weight:700;color:var(--parch);}
+.roadmap-content .rc-items{font-size:11px;color:rgba(245,238,220,.5);margin-top:2px;line-height:1.6;}
+.roadmap-row.achieved .roadmap-lv{color:#34d399;}
+.roadmap-row.achieved .rc-name{color:#34d399;}
+
+.lib-unlocked{margin-bottom:18px;}
 .lib-unlocked-title{font-size:12px;color:rgba(245,238,220,.4);letter-spacing:.1em;margin-bottom:10px;}
 .unlocked-list{display:flex;flex-direction:column;gap:7px;}
 .unlocked-item{background:rgba(30,58,95,.4);border:1px solid rgba(100,150,255,.2);border-radius:var(--radius-sm);padding:10px 14px;display:flex;align-items:center;gap:10px;}
@@ -234,15 +271,24 @@ body{background:var(--bg);font-family:'Noto Sans JP',sans-serif;color:var(--parc
 .end-emblem{font-size:72px;margin-bottom:16px;animation:float 3.5s ease-in-out infinite alternate;filter:drop-shadow(0 4px 16px rgba(212,160,23,.4));}
 .end-type{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.22em;color:var(--gold-lt);border:1px solid rgba(212,160,23,.4);border-radius:999px;padding:5px 18px;margin-bottom:14px;background:rgba(212,160,23,.1);}
 .end-title{font-family:'Noto Serif JP',serif;font-size:clamp(20px,5vw,30px);font-weight:900;color:var(--gold-lt);text-shadow:0 2px 24px rgba(212,160,23,.6);margin-bottom:20px;line-height:1.5;}
-.end-shard-gain{background:rgba(30,58,95,.5);border:1px solid rgba(147,197,253,.3);border-radius:var(--radius);padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px;text-align:left;}
+
+/* New skill unlock notification */
+.skill-unlock-box{background:rgba(52,211,153,.1);border:1.5px solid rgba(52,211,153,.4);border-radius:var(--radius);padding:14px 18px;margin-bottom:18px;text-align:left;}
+.sub-title{font-family:'Noto Serif JP',serif;font-size:13px;color:#34d399;margin-bottom:8px;font-weight:700;}
+.skill-unlock-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--parch);}
+.skill-unlock-item .sui-icon{font-size:24px;}
+.skill-unlock-item .sui-name{font-family:'Noto Serif JP',serif;font-weight:700;}
+.skill-unlock-item .sui-desc{font-size:11px;color:rgba(245,238,220,.55);margin-top:2px;}
+
+.end-shard-gain{background:rgba(30,58,95,.5);border:1px solid rgba(147,197,253,.3);border-radius:var(--radius);padding:14px 18px;margin-bottom:18px;display:flex;align-items:center;gap:12px;text-align:left;}
 .esg-icon{font-size:32px;flex-shrink:0;}.esg-label{font-size:11px;color:rgba(245,238,220,.45);margin-bottom:3px;}.esg-val{font-family:'Noto Serif JP',serif;font-size:22px;font-weight:900;color:#93c5fd;}
-.end-proj-badge{background:rgba(212,160,23,.1);border:1.5px solid rgba(212,160,23,.35);border-radius:var(--radius);padding:14px 16px;margin-bottom:20px;display:flex;align-items:center;gap:12px;text-align:left;}
+.end-proj-badge{background:rgba(212,160,23,.1);border:1.5px solid rgba(212,160,23,.35);border-radius:var(--radius);padding:14px 16px;margin-bottom:18px;display:flex;align-items:center;gap:12px;text-align:left;}
 .epb-icon{font-size:30px;flex-shrink:0;}.epb-label{font-size:10px;color:rgba(245,238,220,.4);margin-bottom:3px;}.epb-name{font-family:'Noto Serif JP',serif;font-size:14px;font-weight:700;color:var(--gold-lt);}
-.end-story{background:rgba(14,20,32,.6);border:1px solid rgba(212,160,23,.2);border-radius:var(--radius);padding:22px 20px;margin-bottom:20px;text-align:left;}
+.end-story{background:rgba(14,20,32,.6);border:1px solid rgba(212,160,23,.2);border-radius:var(--radius);padding:22px 20px;margin-bottom:18px;text-align:left;}
 .end-story p{font-family:'Noto Serif JP',serif;font-size:14px;color:rgba(245,238,220,.88);line-height:2.05;margin-bottom:10px;}
 .end-story p:last-child{margin-bottom:0;}
 .end-coda{display:block;font-size:14px;font-weight:700;color:var(--gold-lt);margin-top:12px;font-style:italic;padding-top:12px;border-top:1px dashed rgba(212,160,23,.25);}
-.end-stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:20px;text-align:left;}
+.end-stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:18px;text-align:left;}
 .end-stat{background:rgba(14,20,32,.6);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-sm);padding:12px 14px;}
 .end-stat .es-icon{font-size:16px;margin-bottom:4px;}.end-stat .es-val{font-family:'Noto Serif JP',serif;font-size:22px;font-weight:900;}.end-stat .es-name{font-size:11px;color:rgba(245,238,220,.5);margin-top:2px;}
 .end-log{background:rgba(14,20,32,.6);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:14px 16px;margin-bottom:24px;text-align:left;}
@@ -250,11 +296,59 @@ body{background:var(--bg);font-family:'Noto Sans JP',sans-serif;color:var(--parc
 .end-log ul{list-style:none;}.end-log li{font-size:11px;color:rgba(245,238,220,.65);padding:4px 0;border-bottom:1px dashed rgba(255,255,255,.06);line-height:1.55;}.end-log li:last-child{border-bottom:none;}
 .end-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
 
-/* ── PHASE BANNER ── */
 #phase-banner{position:fixed;top:50%;left:50%;z-index:100;transform:translate(-50%,-50%) scale(0);background:linear-gradient(140deg,#0e1420,#1a2438);border:2px solid rgba(147,197,253,.5);border-radius:18px;padding:22px 44px;font-family:'Noto Serif JP',serif;font-size:18px;font-weight:900;color:#93c5fd;text-align:center;box-shadow:0 12px 50px rgba(0,0,0,.8),0 0 0 6px rgba(147,197,253,.08);pointer-events:none;transition:transform .38s cubic-bezier(.34,1.56,.64,1);}
 #phase-banner.show{transform:translate(-50%,-50%) scale(1);}
+
+/* ── PARTICLE CANVAS ── */
+#particle-canvas{position:fixed;inset:0;pointer-events:none;z-index:200;}
+
+/* ── FLOATING NUMBER ── */
+.float-num{position:fixed;pointer-events:none;z-index:300;font-family:'Noto Serif JP',serif;font-size:20px;font-weight:900;animation:float-up .9s ease forwards;}
+@keyframes float-up{0%{opacity:1;transform:translateY(0) scale(1);}100%{opacity:0;transform:translateY(-60px) scale(1.3);}}
+
+/* ── SHARD BURST ── */
+#shard-burst{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:400;pointer-events:none;display:none;text-align:center;}
+#shard-burst .sb-inner{background:linear-gradient(135deg,#0e1420,#1e3050);border:2px solid rgba(147,197,253,.6);border-radius:20px;padding:28px 44px;box-shadow:0 0 60px rgba(147,197,253,.3);}
+#shard-burst .sb-emoji{font-size:56px;display:block;margin-bottom:8px;animation:sb-bounce .5s cubic-bezier(.34,1.56,.64,1);}
+@keyframes sb-bounce{from{transform:scale(0);}to{transform:scale(1);}}
+#shard-burst .sb-label{font-family:'Noto Serif JP',serif;font-size:13px;color:rgba(245,238,220,.55);margin-bottom:4px;}
+#shard-burst .sb-val{font-family:'Noto Serif JP',serif;font-size:38px;font-weight:900;color:#93c5fd;text-shadow:0 0 20px rgba(147,197,253,.7);}
+#shard-burst .sb-sub{font-size:12px;color:rgba(245,238,220,.45);margin-top:6px;}
+
+/* ── SPECIAL ENDING: GIANT ── */
+#giant-canvas{position:fixed;inset:0;z-index:250;pointer-events:none;display:none;}
+
+/* ── ACHIEVEMENTS ── */
+.achievements-section{background:rgba(14,20,32,.6);border:1px solid rgba(212,160,23,.2);border-radius:var(--radius);padding:14px 16px;margin-bottom:18px;text-align:left;}
+.achievements-title{font-family:'Noto Serif JP',serif;font-size:13px;color:var(--gold-lt);margin-bottom:10px;}
+.ach-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.ach-item{background:rgba(212,160,23,.06);border:1px solid rgba(212,160,23,.18);border-radius:var(--radius-sm);padding:10px 12px;display:flex;align-items:center;gap:8px;}
+.ach-item.unlocked{background:rgba(212,160,23,.14);border-color:rgba(212,160,23,.45);}
+.ach-item .ai-icon{font-size:22px;flex-shrink:0;}
+.ach-item .ai-name{font-family:'Noto Serif JP',serif;font-size:11px;font-weight:700;color:var(--parch);line-height:1.35;}
+.ach-item .ai-cond{font-size:10px;color:rgba(245,238,220,.4);margin-top:2px;}
+.ach-item.locked{opacity:.4;}
+
+/* ── STATS TABLE ── */
+.stats-section{background:rgba(14,20,32,.6);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:18px;text-align:left;}
+.stats-title{font-family:'Noto Serif JP',serif;font-size:13px;color:#93c5fd;margin-bottom:10px;}
+.stats-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px dashed rgba(255,255,255,.06);font-size:12px;color:rgba(245,238,220,.65);}
+.stats-row:last-child{border-bottom:none;}
+.stats-row .sv{font-weight:700;color:var(--gold-lt);}
+
+/* ── PROJ EPILOGUE ── */
+.end-epilogue{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.2);border-radius:var(--radius);padding:16px 18px;margin-bottom:18px;text-align:left;}
+.end-epilogue p{font-family:'Noto Serif JP',serif;font-size:13px;color:rgba(245,238,220,.85);line-height:1.9;font-style:italic;}
+
+/* ── TYPEWRITER ── */
+.typewriter{overflow:hidden;white-space:pre-wrap;}
+
+/* ── CARD PLAY FLASH ── */
+@keyframes card-flash{0%{box-shadow:0 0 0 0 rgba(245,200,66,.8);}100%{box-shadow:0 0 0 24px rgba(245,200,66,0);}}
+.card-played{animation:card-flash .5s ease;}
+
 ::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:4px;}
-@media(max-width:560px){.card{width:calc(50% - 5px);}.step{width:30px;height:30px;font-size:12px;}.end-stats{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.card{width:calc(50% - 5px);}.step{width:30px;height:30px;font-size:12px;}.end-stats{grid-template-columns:1fr 1fr;}.diff-selector{flex-wrap:wrap;}.ach-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -265,8 +359,8 @@ body{background:var(--bg);font-family:'Noto Sans JP',sans-serif;color:var(--parc
   <div class="title-glyph">📚</div>
   <h1 class="title-main">学びを、<br>かたちにする旅</h1>
   <div class="title-sub">〜 知ることは、旅することだ 〜</div>
-  <div class="title-phase-badge">✦ Phase 2 — ランダムマップ & カード強化 ✦</div>
-  <div class="title-tagline">仮説を立て、実験し、失敗し、<br>それでも前に進む探求者の物語。<br>旅は、図書館に積み重なっていく。</div>
+  <div class="title-phase-badge">✦ Phase 4 — 完全版 ✦</div>
+  <div class="title-tagline">失敗するたびに、図書館は豊かになる。<br>旅を重ねるほど、探求者は深くなる。</div>
   <div class="library-preview">
     <div class="lib-preview-title">🏛️ 知の図書館</div>
     <div class="lib-level-bar"><div class="lib-level-fill" id="title-lib-fill" style="width:0%"></div></div>
@@ -275,10 +369,18 @@ body{background:var(--bg);font-family:'Noto Sans JP',sans-serif;color:var(--parc
       <span>欠片 <span class="lib-stat-val" id="title-shard-count">0</span></span>
       <span>旅 <span class="lib-stat-val" id="title-play-count">0</span> 回</span>
     </div>
+    <div class="active-skills" id="title-active-skills"></div>
   </div>
+
+  <div style="font-family:'Noto Serif JP',serif;font-size:13px;color:var(--gold-lt);margin-bottom:10px;letter-spacing:.06em;">⚔️ 難易度を選ぼう</div>
+  <div class="diff-selector" id="diff-selector"></div>
+
   <div class="project-select-label">✦ プロジェクトを選ぼう ✦</div>
   <div class="project-choices" id="proj-choices"></div>
   <button class="btn btn-gold" id="btn-start" onclick="startGame()" disabled>旅を始める</button>
+  <div style="margin-top:12px;">
+    <button class="btn btn-lib" onclick="goToLibrary()">🏛️ 図書館を見る</button>
+  </div>
 </div>
 
 <!-- GAME -->
@@ -287,8 +389,10 @@ body{background:var(--bg);font-family:'Noto Sans JP',sans-serif;color:var(--parc
     <div id="turn-bar">
       <div class="phase-pill"><span id="phase-icon">🌾</span><span id="phase-name">疑問の野原</span></div>
       <div class="turn-counter">ターン <span id="turn-now">1</span> / <span id="turn-max">12</span></div>
+      <span class="diff-badge" id="diff-badge-game">標準</span>
       <div class="status-hint" id="status-hint">← カードを引こう</div>
     </div>
+    <div id="skill-bar"></div>
     <div id="narrator"><span class="n-icon" id="n-icon">📖</span><span class="n-text" id="n-text">旅が始まった。</span></div>
     <div id="map-wrap">
       <div class="map-zone-labels">
@@ -308,11 +412,9 @@ body{background:var(--bg);font-family:'Noto Sans JP',sans-serif;color:var(--parc
       </div>
     </div>
     <div id="res-bar"></div>
-
-    <!-- Special node panels -->
     <div id="rest-panel" style="display:none">
       <div class="rest-title">🏕️ 休憩マス</div>
-      <div class="rest-desc">ここで少し立ち止まろう。体力を回復するか、カードを強化するか選べる。</div>
+      <div class="rest-desc">立ち止まって、自分を整えよう。</div>
       <div class="rest-options" id="rest-options"></div>
     </div>
     <div id="upgrade-panel" style="display:none">
@@ -325,21 +427,16 @@ body{background:var(--bg);font-family:'Noto Sans JP',sans-serif;color:var(--parc
       <div class="trial-desc" id="trial-desc">覚悟を決めろ。どちらの道を選ぶ？</div>
       <div class="trial-choices" id="trial-choices"></div>
     </div>
-
-    <!-- Hand -->
     <div class="section-label">✦ 手札（1枚選んで使おう）</div>
     <div class="cards-row" id="hand-area">
       <div style="font-size:12px;color:rgba(245,238,220,.35);font-style:italic;padding:8px 4px;">カードを引いてください</div>
     </div>
     <div class="action-row" id="action-row">
-      <button class="btn btn-gold" id="btn-draw" onclick="drawCards()">カードを引く（2枚）</button>
+      <button class="btn btn-gold" id="btn-draw" onclick="drawCards()">カードを引く（<span id="draw-count">2</span>枚）</button>
     </div>
-
-    <!-- Deck info -->
     <div style="text-align:center;font-size:11px;color:rgba(245,238,220,.3);margin-bottom:14px;">
       デッキ: <span id="deck-size">8</span>枚　強化済: <span id="upgraded-count">0</span>枚
     </div>
-
     <div id="project-panel">
       <div class="proj-header">
         <div class="proj-icon" id="proj-icon">📚</div>
@@ -361,10 +458,13 @@ body{background:var(--bg);font-family:'Noto Sans JP',sans-serif;color:var(--parc
     <div class="end-emblem" id="end-emblem">🌟</div>
     <div class="end-type" id="end-type">エンディング</div>
     <div class="end-title" id="end-title"></div>
+    <div id="skill-unlock-area"></div>
     <div class="end-shard-gain"><div class="esg-icon">💎</div><div><div class="esg-label">この旅で得た 知識の欠片</div><div class="esg-val" id="end-shard-gain">+0</div></div></div>
     <div class="end-proj-badge" id="end-proj-badge"></div>
+    <div class="end-epilogue" id="end-epilogue" style="display:none"><p id="end-epilogue-text"></p></div>
     <div class="end-story" id="end-story"></div>
     <div class="end-stats" id="end-stats"></div>
+    <div class="achievements-section" id="end-achievements"></div>
     <div class="end-log" id="end-log-wrap"></div>
     <div class="end-buttons">
       <button class="btn btn-gold" onclick="goToLibrary()">図書館を確認する</button>
@@ -384,76 +484,133 @@ body{background:var(--bg);font-family:'Noto Sans JP',sans-serif;color:var(--parc
       <div class="lib-lv-bar"><div class="lib-lv-fill" id="lib-lv-fill" style="width:0%"></div></div>
       <div class="lib-lv-hint" id="lib-lv-hint">Lv2まで 欠片3個が必要</div>
     </div>
+    <!-- Skills section -->
+    <div class="lib-skills">
+      <div class="lib-skills-title">💪 永続スキル</div>
+      <div id="lib-skills-list"></div>
+    </div>
+    <!-- Unlock roadmap -->
+    <div class="lib-roadmap">
+      <div class="lib-roadmap-title">🗺️ 解放ロードマップ</div>
+      <div id="lib-roadmap-list"></div>
+    </div>
     <div class="lib-unlocked"><div class="lib-unlocked-title">✦ 解放済みのコンテンツ</div><div class="unlocked-list" id="unlocked-list"></div></div>
-    <div class="lib-buttons"><button class="btn btn-gold" onclick="goToTitle()">旅の選択に戻る</button></div>
+    <!-- Stats -->
+    <div class="stats-section">
+      <div class="stats-title">📊 プレイ統計</div>
+      <div id="lib-stats-rows"></div>
+    </div>
+    <!-- Achievements -->
+    <div class="achievements-section">
+      <div class="achievements-title">🏆 実績</div>
+      <div class="ach-grid" id="lib-ach-grid"></div>
+    </div>
+    <div class="lib-buttons">
+      <button class="btn btn-gold" onclick="goToTitle()">旅の選択に戻る</button>
+      <button class="btn btn-ghost" onclick="resetLib()">データをリセット</button>
+    </div>
   </div>
 </div>
 
 <div id="phase-banner"></div>
+<canvas id="particle-canvas"></canvas>
+<canvas id="giant-canvas"></canvas>
+<div id="shard-burst"><div class="sb-inner"><span class="sb-emoji">💎</span><div class="sb-label">知識の欠片を獲得！</div><div class="sb-val" id="sb-val">+0</div><div class="sb-sub" id="sb-sub"></div></div></div>
 
 <script>
-// ═══════ DATA ═══════
+// ══════════════════════════════════════════
+//  DATA
+// ══════════════════════════════════════════
 
+// ── DIFFICULTY ──
+const DIFFICULTIES = [
+  { id:'easy',   icon:'🌱', name:'入門',   hint:'+2ターン / 初期+1',      turnsBonus:2, resBonus:1, eventChance:.15, badge:'easy'   },
+  { id:'normal', icon:'📚', name:'標準',   hint:'基本設定',                 turnsBonus:0, resBonus:0, eventChance:.22, badge:'normal' },
+  { id:'hard',   icon:'🔥', name:'熟練',   hint:'-2ターン / イベント増',   turnsBonus:-2,resBonus:0, eventChance:.32, badge:'hard',  needPlays:3 },
+];
+
+// ── PROJECTS ──
 const PROJECTS = [
-  { id:'P1', icon:'📚', name:'学びの場をつくる', desc:'知識が育つ空間を社会に生み出す', cost:{question:3,hypothesis:3,discovery:2,resonance:1}, diff:'★☆☆' },
-  { id:'P2', icon:'❓', name:'問いを届ける', desc:'「なぜ？」という問いを、誰かの日常に届ける', cost:{question:4,hypothesis:2,resonance:3}, diff:'★☆☆' },
-  { id:'P3', icon:'💔', name:'失敗を讃える文化をつくる', desc:'失敗した人が称えられる社会を作る', cost:{experiment:4,discovery:3,resonance:2}, diff:'★★☆' },
+  { id:'P1', icon:'📚', name:'学びの場をつくる',       desc:'知識が育つ空間を社会に生み出す',          cost:{question:3,hypothesis:3,discovery:2,resonance:1}, diff:'★☆☆' },
+  { id:'P2', icon:'❓', name:'問いを届ける',             desc:'「なぜ？」という問いを誰かの日常に届ける', cost:{question:4,hypothesis:2,resonance:3},             diff:'★☆☆' },
+  { id:'P3', icon:'💔', name:'失敗を讃える文化をつくる',desc:'失敗した人が称えられる社会を作る',         cost:{experiment:4,discovery:3,resonance:2},             diff:'★★☆', needLv:2 },
+  { id:'P4', icon:'🗺️', name:'知の地図を描く',          desc:'あらゆる知識をつなぐ地図を描き出す',       cost:{question:2,hypothesis:3,experiment:2,discovery:3,resonance:2}, diff:'★★☆', needLv:3 },
+  { id:'P5', icon:'🌱', name:'次世代の探求者を育てる',   desc:'次の世代に問いを受け継がせる',             cost:{hypothesis:2,discovery:3,resonance:5},             diff:'★★★', needLv:4 },
+  { id:'P6', icon:'🌐', name:'学びの連鎖を起こす',       desc:'全リソースを極めた先にある、知の爆発',     cost:{question:4,hypothesis:4,experiment:4,discovery:4,resonance:4}, diff:'★★★', needLv:6 },
 ];
 
-// Base card pool (16 cards for Phase 2)
+// ── CARDS (16 base + 8 unlockable) ──
 const BASE_CARDS = [
-  { id:'L1', icon:'❓', name:'素朴な疑問', desc:'「なぜ？」が旅の第一歩', gain:{question:2}, cost:{} },
-  { id:'L2', icon:'💭', name:'小さな仮説', desc:'疑うことは、考えることだ', gain:{hypothesis:2}, cost:{question:1} },
-  { id:'L3', icon:'📝', name:'走り書きのメモ', desc:'思いついたらすぐ書く', gain:{question:1,hypothesis:1}, cost:{} },
-  { id:'L4', icon:'🧪', name:'小さな実験', desc:'失敗しても、それが答えだ', gain:{experiment:1,discovery:1}, cost:{hypothesis:1} },
-  { id:'L5', icon:'🪞', name:'振り返り', desc:'歩いた道を振り返ると、見えなかったものが見える', gain:{question:1,discovery:1}, cost:{} },
-  { id:'L6', icon:'💬', name:'対話', desc:'人と話すと、考えが整理される', gain:{hypothesis:1,resonance:1}, cost:{question:1} },
-  { id:'L7', icon:'📖', name:'記録する', desc:'記録しないと、発見は消える', gain:{discovery:2}, cost:{experiment:1} },
-  { id:'L8', icon:'📢', name:'伝える', desc:'知識は、伝わった時に価値になる', gain:{resonance:2}, cost:{discovery:1} },
-  // Phase 2 new cards
-  { id:'L9',  icon:'🌙', name:'深夜の研究', desc:'誰も邪魔しない時間に、思考が深まる', gain:{hypothesis:3}, cost:{question:1}, rare:true },
-  { id:'L10', icon:'🔎', name:'反証を探す', desc:'正しいかどうかより、なぜ間違いか', gain:{discovery:3}, cost:{hypothesis:2}, rare:true },
-  { id:'L11', icon:'🌈', name:'セレンディピティ', desc:'探していないものが最も重要だった', gain:{question:2,discovery:1,resonance:1}, cost:{}, rare:true },
-  { id:'L12', icon:'💡', name:'ひらめき', desc:'何かがつながった瞬間', gain:{question:1,hypothesis:1,experiment:1}, cost:{} },
-  { id:'L13', icon:'🔬', name:'精密な観察', desc:'細部に神が宿る', gain:{experiment:2,discovery:1}, cost:{hypothesis:1} },
-  { id:'L14', icon:'🤝', name:'共同研究', desc:'一人では見えなかった景色が、二人では見える', gain:{resonance:3}, cost:{question:1,discovery:1}, rare:true },
-  { id:'L15', icon:'📊', name:'データを整理する', desc:'散らばった点が、線になる', gain:{hypothesis:1,discovery:2}, cost:{experiment:1} },
-  { id:'L16', icon:'🌱', name:'種を蒔く', desc:'今日の問いが、明日の発見になる', gain:{question:2,resonance:1}, cost:{} },
+  {id:'L1', icon:'❓', name:'素朴な疑問',     desc:'「なぜ？」が旅の第一歩',                     gain:{question:2},             cost:{}},
+  {id:'L2', icon:'💭', name:'小さな仮説',     desc:'疑うことは、考えることだ',                   gain:{hypothesis:2},           cost:{question:1}},
+  {id:'L3', icon:'📝', name:'走り書きのメモ', desc:'思いついたらすぐ書く',                       gain:{question:1,hypothesis:1},cost:{}},
+  {id:'L4', icon:'🧪', name:'小さな実験',     desc:'失敗しても、それが答えだ',                   gain:{experiment:1,discovery:1},cost:{hypothesis:1}},
+  {id:'L5', icon:'🪞', name:'振り返り',       desc:'歩いた道を振り返ると、見えなかったものが見える',gain:{question:1,discovery:1}, cost:{}},
+  {id:'L6', icon:'💬', name:'対話',           desc:'人と話すと、考えが整理される',               gain:{hypothesis:1,resonance:1},cost:{question:1}},
+  {id:'L7', icon:'📖', name:'記録する',       desc:'記録しないと、発見は消える',                 gain:{discovery:2},             cost:{experiment:1}},
+  {id:'L8', icon:'📢', name:'伝える',         desc:'知識は、伝わった時に価値になる',             gain:{resonance:2},             cost:{discovery:1}},
+  {id:'L9', icon:'🌙', name:'深夜の研究',     desc:'誰も邪魔しない時間に、思考が深まる',         gain:{hypothesis:3},            cost:{question:1},  rare:true},
+  {id:'L10',icon:'🔎', name:'反証を探す',     desc:'正しいかどうかより、なぜ間違いか',           gain:{discovery:3},             cost:{hypothesis:2},rare:true},
+  {id:'L11',icon:'🌈', name:'セレンディピティ',desc:'探していないものが最も重要だった',           gain:{question:2,discovery:1,resonance:1},cost:{},rare:true},
+  {id:'L12',icon:'💡', name:'ひらめき',       desc:'何かがつながった瞬間',                       gain:{question:1,hypothesis:1,experiment:1},cost:{}},
+  {id:'L13',icon:'🔬', name:'精密な観察',     desc:'細部に神が宿る',                             gain:{experiment:2,discovery:1},cost:{hypothesis:1}},
+  {id:'L14',icon:'🤝', name:'共同研究',       desc:'一人では見えなかった景色が、二人では見える', gain:{resonance:3},             cost:{question:1,discovery:1},rare:true},
+  {id:'L15',icon:'📊', name:'データを整理する',desc:'散らばった点が、線になる',                  gain:{hypothesis:1,discovery:2},cost:{experiment:1}},
+  {id:'L16',icon:'🌱', name:'種を蒔く',       desc:'今日の問いが、明日の発見になる',             gain:{question:2,resonance:1},  cost:{}},
 ];
 
-// Card upgrade definitions
+// Unlock cards (Phase 3 — require lib level)
+const UNLOCK_CARDS = [
+  {id:'U1', icon:'📄', name:'論文を書く',       desc:'発見と共鳴を凝縮した、知の結晶',  gain:{resonance:4},             cost:{discovery:2,resonance:1},rare:true, needLv:2},
+  {id:'U2', icon:'🧑‍🏫',name:'メンターとの出会い',desc:'全てを底上げしてくれる師',        gain:{question:1,hypothesis:1,experiment:1,discovery:1,resonance:1},cost:{resonance:1},rare:true,needLv:2},
+  {id:'U3', icon:'📓', name:'失敗ノート',        desc:'失敗した分だけ、発見が増える',    gain:{discovery:2},             cost:{},                       needLv:3, failBonus:true},
+  {id:'U4', icon:'⚡', name:'ブレイクスルー',    desc:'思考が爆発する瞬間',              gain:{discovery:4,resonance:2}, cost:{question:2,hypothesis:2},rare:true,needLv:5},
+  {id:'U5', icon:'🌐', name:'知の連鎖',         desc:'全てのリソースが共鳴する',        gain:{question:2,hypothesis:2,experiment:2,discovery:2,resonance:2},cost:{discovery:2,resonance:2},legend:true,needLv:6},
+];
+
+// Card upgrades
 const UPGRADES = {
-  L1: { name:'深い疑問', gain:{question:3}, desc:'より本質的な問いへ' },
-  L2: { name:'鋭い仮説', gain:{hypothesis:3}, desc:'精度が上がった' },
-  L3: { name:'詳細なメモ', gain:{question:2,hypothesis:1}, desc:'記録の質が向上' },
-  L4: { name:'慣れた実験', gain:{experiment:2,discovery:1}, desc:'失敗から学んだ' },
-  L5: { name:'深い振り返り', gain:{question:2,discovery:1}, desc:'より深く内省する' },
-  L6: { name:'豊かな対話', gain:{hypothesis:2,resonance:1}, desc:'聞き方が変わった' },
-  L7: { name:'体系的な記録', gain:{discovery:3}, desc:'整理の力が増した' },
-  L8: { name:'響く言葉', gain:{resonance:3}, desc:'伝え方が洗練された' },
-  L9: { name:'徹夜の研究', gain:{hypothesis:4}, desc:'限界を超えた' },
-  L10:{ name:'徹底的な反証', gain:{discovery:4}, desc:'疑いが深まった' },
-  L12:{ name:'大ひらめき', gain:{question:2,hypothesis:2,experiment:1}, desc:'思考が加速する' },
-  L13:{ name:'超精密観察', gain:{experiment:3,discovery:1}, desc:'ミクロの世界が見える' },
-  L15:{ name:'完璧な整理', gain:{hypothesis:2,discovery:2}, desc:'全てが見えた' },
-  L16:{ name:'豊かな種蒔き', gain:{question:3,resonance:1}, desc:'未来への投資' },
+  L1:{name:'深い疑問',        gain:{question:3},             desc:'より本質的な問いへ'},
+  L2:{name:'鋭い仮説',        gain:{hypothesis:3},           desc:'精度が上がった'},
+  L3:{name:'詳細なメモ',      gain:{question:2,hypothesis:1},desc:'記録の質が向上'},
+  L4:{name:'慣れた実験',      gain:{experiment:2,discovery:1},desc:'失敗から学んだ'},
+  L5:{name:'深い振り返り',    gain:{question:2,discovery:1}, desc:'より深く内省する'},
+  L6:{name:'豊かな対話',      gain:{hypothesis:2,resonance:1},desc:'聞き方が変わった'},
+  L7:{name:'体系的な記録',    gain:{discovery:3},            desc:'整理の力が増した'},
+  L8:{name:'響く言葉',        gain:{resonance:3},            desc:'伝え方が洗練された'},
+  L9:{name:'徹夜の研究',      gain:{hypothesis:4},           desc:'限界を超えた'},
+  L10:{name:'徹底的な反証',   gain:{discovery:4},            desc:'疑いが深まった'},
+  L12:{name:'大ひらめき',     gain:{question:2,hypothesis:2,experiment:1},desc:'思考が加速する'},
+  L13:{name:'超精密観察',     gain:{experiment:3,discovery:1},desc:'ミクロの世界が見える'},
+  L15:{name:'完璧な整理',     gain:{hypothesis:2,discovery:2},desc:'全てが見えた'},
+  L16:{name:'豊かな種蒔き',   gain:{question:3,resonance:1}, desc:'未来への投資'},
 };
 
+// ── PERMANENT SKILLS ──
+const SKILLS = [
+  { id:'SK1', icon:'❓', name:'問いの才能',       desc:'疑問の初期値 +1',                  endingId:'researcher',  effect:{initBonus:{question:1}} },
+  { id:'SK2', icon:'📚', name:'賢者の変換',       desc:'発見→共鳴の変換効率 +1',           endingId:'awakened',    effect:{conversionBonus:true} },
+  { id:'SK3', icon:'📢', name:'伝道者の声',       desc:'共鳴の上限 +2',                    endingId:'transmitter', effect:{resonanceCap:2} },
+  { id:'SK4', icon:'💔', name:'失敗の達人',       desc:'試練マス失敗時も発見 +1',           endingId:'experimenter',effect:{failDiscovery:1} },
+  { id:'SK5', icon:'🌟', name:'三枚引き',         desc:'毎ターン3枚引けるようになる',       endingId:'awakened',    effect:{drawCount:3}, special:true },
+];
+
+// ── EVENTS ──
 const EVENTS = [
-  { id:'E1', icon:'📗', name:'名著との邂逅', desc:'一冊の本が、視界を開いた。', effect:{hypothesis:2,discovery:1}, bad:false },
-  { id:'E2', icon:'🧑‍🏫', name:'良き師との出会い', desc:'教えてくれる人がいることの幸運。', effect:{question:1,hypothesis:1,experiment:1,discovery:1,resonance:1}, bad:false },
-  { id:'E3', icon:'🌀', name:'行き詰まり', desc:'考えれば考えるほど、わからなくなる。', effect:{question:-1,hypothesis:-1}, bad:true },
-  { id:'E4', icon:'💥', name:'実験の失敗', desc:'失敗した。でも、なぜ失敗したかはわかった。', effect:{experiment:-2,discovery:1}, bad:true },
-  { id:'E5', icon:'🌈', name:'突破口の閃き', desc:'あの瞬間、すべてがつながった。', effect:{question:2,discovery:1}, bad:false },
-  { id:'E6', icon:'💔', name:'批判を受ける', desc:'否定された。でも、全部間違っていたわけじゃない。', effect:{resonance:-1,hypothesis:1}, bad:true },
-  { id:'E7', icon:'🏆', name:'小さな成功', desc:'ちゃんと進んでいた。その実感が次を生む。', effect:{experiment:2,resonance:1}, bad:false },
-  { id:'E8', icon:'🌧️', name:'突然の嵐', desc:'予期せぬ困難が訪れた。', effect:{question:-1,experiment:-1}, bad:true },
+  {id:'E1',icon:'📗',name:'名著との邂逅',      desc:'一冊の本が、視界を開いた。',            effect:{hypothesis:2,discovery:1},bad:false},
+  {id:'E2',icon:'🧑‍🏫',name:'良き師との出会い', desc:'教えてくれる人がいることの幸運。',        effect:{question:1,hypothesis:1,experiment:1,discovery:1,resonance:1},bad:false},
+  {id:'E3',icon:'🌀',name:'行き詰まり',        desc:'考えれば考えるほど、わからなくなる。',    effect:{question:-1,hypothesis:-1},bad:true},
+  {id:'E4',icon:'💥',name:'実験の失敗',        desc:'失敗した。でも、なぜ失敗したかはわかった。',effect:{experiment:-2,discovery:1},bad:true},
+  {id:'E5',icon:'🌈',name:'突破口の閃き',      desc:'あの瞬間、すべてがつながった。',          effect:{question:2,discovery:1},bad:false},
+  {id:'E6',icon:'💔',name:'批判を受ける',      desc:'否定された。でも全部間違っていたわけじゃない。',effect:{resonance:-1,hypothesis:1},bad:true},
+  {id:'E7',icon:'🏆',name:'小さな成功',        desc:'ちゃんと進んでいた。その実感が次を生む。',effect:{experiment:2,resonance:1},bad:false},
+  {id:'E8',icon:'🌧️',name:'突然の嵐',          desc:'予期せぬ困難が訪れた。',                  effect:{question:-1,experiment:-1},bad:true},
 ];
 
 const TRIALS = [
-  { desc:'深い問いか、早い答えか。', a:{name:'深く掘る', icon:'⛏️', desc:'時間をかけて本質を探る', cost:{question:2}, gain:{hypothesis:3,discovery:2}}, b:{name:'先に進む', icon:'🏃', desc:'スピードを優先する', cost:{}, gain:{experiment:2}} },
-  { desc:'失敗を公表するか、黙って学ぶか。', a:{name:'公表する', icon:'📢', desc:'信頼を失うかもしれないが、誰かの役に立つ', cost:{resonance:1}, gain:{discovery:3,resonance:2}}, b:{name:'黙っておく', icon:'🤫', desc:'傷つかずに、ひっそり学ぶ', cost:{}, gain:{discovery:2}} },
-  { desc:'未検証の仮説を提出するか、もっと調べるか。', a:{name:'提出する', icon:'📄', desc:'不完全でも世に出す勇気', cost:{hypothesis:2}, gain:{resonance:3,experiment:1}}, b:{name:'調べ続ける', icon:'🔬', desc:'完璧を求めて深める', cost:{experiment:1}, gain:{discovery:3}} },
+  {desc:'深い問いか、早い答えか。',a:{name:'深く掘る',icon:'⛏️',desc:'本質を探る',cost:{question:2},gain:{hypothesis:3,discovery:2}},b:{name:'先に進む',icon:'🏃',desc:'スピード優先',cost:{},gain:{experiment:2}}},
+  {desc:'失敗を公表するか、黙って学ぶか。',a:{name:'公表する',icon:'📢',desc:'誰かの役に立つかも',cost:{resonance:1},gain:{discovery:3,resonance:2}},b:{name:'黙っておく',icon:'🤫',desc:'ひっそり学ぶ',cost:{},gain:{discovery:2}}},
+  {desc:'未検証の仮説を提出するか、調べ続けるか。',a:{name:'提出する',icon:'📄',desc:'不完全でも世に出す',cost:{hypothesis:2},gain:{resonance:3,experiment:1}},b:{name:'調べ続ける',icon:'🔬',desc:'完璧を求める',cost:{experiment:1},gain:{discovery:3}}},
 ];
 
 const NARRATIONS = [
@@ -472,100 +629,142 @@ const NARRATIONS = [
 ];
 
 const ENDINGS = [
-  { id:'awakened', emblem:'🌟', label:'探求者の覚醒', title:'全てが実を結んだ、探求者の覚醒', cond:s=>{const v=Object.values(s.resources);return Math.min(...v)>=2&&Math.max(...v)-Math.min(...v)<=4;}, story:['すべての要素が、美しく調和した。','疑問、仮説、実験、発見、共鳴——どれ一つ欠けることなく育てたあなたは、真の探求者だ。','この旅で得たものは、知識だけではない。学ぶことの喜び、それ自体を手に入れた。'], coda:'学びとは、終わりのない旅だ。そして、それは美しい。' },
-  { id:'researcher', emblem:'🔭', label:'孤独な研究者', title:'静寂の中で輝く、孤独な研究者', cond:s=>s.resources.question+s.resources.hypothesis>=10&&s.resources.resonance<=1, story:['あなたは誰よりも深く、問い続けた。','その仮説は精緻で、誰も辿り着けなかった場所まで届いた。','問いの価値は、答えを得た瞬間だけにあるのではない。'], coda:'孤独な問いが、次の時代の礎になる。' },
-  { id:'transmitter', emblem:'📢', label:'伝道者', title:'知を届け続けた、伝道者', cond:s=>s.resources.resonance>=6, story:['あなたはいつも、誰かに伝えることを選んだ。','知識は、伝わった瞬間に倍になる。','あなたが届けた問いが、今頃誰かの心の中で芽吹いている。'], coda:'伝えることは、種を蒔くことだ。' },
-  { id:'experimenter', emblem:'⚡', label:'実験家', title:'失敗を愛した、実験家', cond:s=>s.resources.experiment+s.resources.discovery>=8, story:['あなたは恐れずに、何度も試みた。','失敗するたびに、少し賢くなった。','そのサイクルこそが、あなたの学びの形だ。'], coda:'失敗とは、正解への最短経路だ。' },
-  { id:'unfinished', emblem:'🌙', label:'未完の研究', title:'未完という名の可能性', cond:()=>true, story:['プロジェクトは完成しなかった。','でも、旅の中で手に入れたものは確かにある。','この問いは、次の旅へと続いていく。'], coda:'終わらない旅に、本当の敗北はない。' },
+  {id:'awakened',   emblem:'🌟', label:'探求者の覚醒',  title:'全てが実を結んだ、探求者の覚醒',    cond:s=>{const v=Object.values(s.resources);return Math.min(...v)>=2&&Math.max(...v)-Math.min(...v)<=4;}, story:['すべての要素が、美しく調和した。','疑問、仮説、実験、発見、共鳴——どれ一つ欠けることなく育てたあなたは、真の探求者だ。','この旅で得たものは、知識だけではない。学ぶことの喜び、それ自体を手に入れた。'],coda:'学びとは、終わりのない旅だ。そして、それは美しい。'},
+  {id:'researcher', emblem:'🔭', label:'孤独な研究者',  title:'静寂の中で輝く、孤独な研究者',      cond:s=>s.resources.question+s.resources.hypothesis>=10&&s.resources.resonance<=1, story:['あなたは誰よりも深く、問い続けた。','その仮説は精緻で、誰も辿り着けなかった場所まで届いた。','問いの価値は、答えを得た瞬間だけにあるのではない。'],coda:'孤独な問いが、次の時代の礎になる。'},
+  {id:'transmitter',emblem:'📢', label:'伝道者',        title:'知を届け続けた、伝道者',            cond:s=>s.resources.resonance>=6, story:['あなたはいつも、誰かに伝えることを選んだ。','知識は、伝わった瞬間に倍になる。','あなたが届けた問いが、今頃誰かの心の中で芽吹いている。'],coda:'伝えることは、種を蒔くことだ。'},
+  {id:'experimenter',emblem:'⚡',label:'実験家',        title:'失敗を愛した、実験家',              cond:s=>s.resources.experiment+s.resources.discovery>=8, story:['あなたは恐れずに、何度も試みた。','失敗するたびに、少し賢くなった。','そのサイクルこそが、あなたの学びの形だ。'],coda:'失敗とは、正解への最短経路だ。'},
+  {id:'giant',      emblem:'🏔️', label:'知の巨人',      title:'山を超えた、知の巨人',              cond:s=>Object.values(s.resources).every(v=>v>=6), story:['あなたは全てを手に入れた。','疑問の深さ、仮説の鋭さ、実験の勇気、発見の喜び、共鳴の広がり。','これほどの探求者が、かつてここにいたか。'],coda:'知の頂は、新たな谷の始まりだ。'},
+  {id:'unfinished', emblem:'🌙', label:'未完の研究',     title:'未完という名の可能性',              cond:()=>true, story:['プロジェクトは完成しなかった。','でも、旅の中で手に入れたものは確かにある。','この問いは、次の旅へと続いていく。'],coda:'終わらない旅に、本当の敗北はない。'},
 ];
 
 const LIB_LEVELS = [
-  {lv:1,name:'夜明けの書架',need:0,next:3},
-  {lv:2,name:'探求者の回廊',need:3,next:8},
-  {lv:3,name:'仮説の書庫',need:8,next:15},
-  {lv:4,name:'実験の記録室',need:15,next:25},
-  {lv:5,name:'発見の神殿',need:25,next:40},
-  {lv:6,name:'知の大図書館',need:40,next:999},
+  {lv:1,name:'夜明けの書架',  need:0,  next:3},
+  {lv:2,name:'探求者の回廊',  need:3,  next:8},
+  {lv:3,name:'仮説の書庫',    need:8,  next:15},
+  {lv:4,name:'実験の記録室',  need:15, next:25},
+  {lv:5,name:'発見の神殿',    need:25, next:40},
+  {lv:6,name:'知の大図書館',  need:40, next:999},
 ];
 
-const RES_META = {
-  question:  {name:'疑問',icon:'❓',color:'var(--c-question)',  cls:'rc-question'},
-  hypothesis:{name:'仮説',icon:'💭',color:'var(--c-hypothesis)',cls:'rc-hypothesis'},
-  experiment:{name:'実験',icon:'🧪',color:'var(--c-experiment)',cls:'rc-experiment'},
-  discovery: {name:'発見',icon:'✨',color:'var(--c-discovery)', cls:'rc-discovery'},
-  resonance: {name:'共鳴',icon:'🌐',color:'var(--c-resonance)', cls:'rc-resonance'},
+const LIB_UNLOCK_MAP = {
+  1: {cards:[], projects:['P1','P2'],  skills:[]},
+  2: {cards:['L9','L10','U1','U2'],    projects:['P3'],       skills:[]},
+  3: {cards:['L11','L14','U3'],        projects:['P4'],       skills:[]},
+  4: {cards:['L12','L13','L15','L16'], projects:['P5'],       skills:[]},
+  5: {cards:['U4'],                    projects:[],           skills:[]},
+  6: {cards:['U5'],                    projects:['P6'],       skills:[]},
 };
 
-// ═══════ MAP GENERATION (Phase 2) ═══════
-const NODE_TYPES = ['normal','normal','normal','event','event','rest','trial','discover'];
+const RES_META = {
+  question:  {name:'疑問',icon:'❓',color:'var(--c-q)',  cls:'rc-question'},
+  hypothesis:{name:'仮説',icon:'💭',color:'var(--c-h)',  cls:'rc-hypothesis'},
+  experiment:{name:'実験',icon:'🧪',color:'var(--c-e)',  cls:'rc-experiment'},
+  discovery: {name:'発見',icon:'✨',color:'var(--c-d)',  cls:'rc-discovery'},
+  resonance: {name:'共鳴',icon:'🌐',color:'var(--c-r)',  cls:'rc-resonance'},
+};
 
-function generateMap(length) {
-  const nodes = [];
-  nodes.push({type:'normal', idx:0});
-  for (let i = 1; i < length - 1; i++) {
-    // Zone-weighted type selection
-    const zone = Math.floor(i / (length/4));
+// ══════════════════════════════════════════
+//  STORAGE
+// ══════════════════════════════════════════
+function loadLib(){try{return JSON.parse(localStorage.getItem('manabiLib3')||'null');}catch{return null;}}
+function saveLib(){try{localStorage.setItem('manabiLib3',JSON.stringify(LIB));}catch{}}
+function initLib(){return{shards:0,totalPlays:0,level:1,unlockedEndings:[],upgradedCards:[],unlockedSkills:[],wins:0,losses:0,totalCards:0,totalUpgrades:0,hardWins:0,maxResources:{question:0,hypothesis:0,experiment:0,discovery:0,resonance:0}};}
+
+const NODE_ICONS={normal:'⬜',event:'⚠️',rest:'🏕️',trial:'⚔️',discover:'🔍',goal:'🏛️'};
+const NODE_LABELS={normal:'',event:'イベント',rest:'休憩',trial:'試練',discover:'発見',goal:'GOAL'};
+
+function generateMap(length){
+  const nodes=[{type:'normal',idx:0}];
+  for(let i=1;i<length-1;i++){
+    const zone=Math.floor(i/(length/4));
     let pool;
-    if (zone === 0) pool = ['normal','normal','normal','event'];
-    else if (zone === 1) pool = ['normal','normal','event','rest'];
-    else if (zone === 2) pool = ['normal','event','trial','discover'];
-    else pool = ['normal','trial','discover','event'];
-    const t = pool[Math.floor(Math.random()*pool.length)];
-    nodes.push({type:t, idx:i});
+    if(zone===0)pool=['normal','normal','normal','event'];
+    else if(zone===1)pool=['normal','normal','event','rest'];
+    else if(zone===2)pool=['normal','event','trial','discover'];
+    else pool=['normal','trial','discover','event'];
+    nodes.push({type:pool[Math.floor(Math.random()*pool.length)],idx:i});
   }
-  nodes.push({type:'goal', idx:length-1});
+  nodes.push({type:'goal',idx:length-1});
   return nodes;
 }
 
-const NODE_ICONS = {normal:'⬜',event:'⚠️',rest:'🏕️',trial:'⚔️',discover:'🔍',goal:'🏛️'};
-const NODE_LABELS = {normal:'',event:'イベント',rest:'休憩',trial:'試練',discover:'発見',goal:'GOAL'};
-
-// ═══════ STORAGE ═══════
-function loadLib(){try{return JSON.parse(localStorage.getItem('manabiLib2')||'null');}catch{return null;}}
-function saveLib(lib){try{localStorage.setItem('manabiLib2',JSON.stringify(lib));}catch{}}
-function initLib(){return{shards:0,totalPlays:0,level:1,unlockedEndings:[],upgradedCards:[]};}
-
-// ═══════ STATE ═══════
+// ══════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════
 let G={};
 let LIB=loadLib()||initLib();
+let _diff=DIFFICULTIES[1]; // default normal
 
-function initGame(project) {
-  const mapLen = 12;
-  const map = generateMap(mapLen);
-  // Build deck: basic 8 cards, + 2-4 rare based on lib level
-  const deck = BASE_CARDS.slice(0,8).map(c=>({...c, upgraded:false}));
-  if (LIB.level >= 2) deck.push({...BASE_CARDS[8], upgraded:false}); // L9
-  if (LIB.level >= 3) deck.push({...BASE_CARDS[9], upgraded:false}); // L10
-  // Apply previously upgraded cards from library
-  LIB.upgradedCards.forEach(uid => {
-    const i = deck.findIndex(c=>c.id===uid);
-    if (i>=0 && UPGRADES[uid]) {
-      deck[i] = {...deck[i], ...UPGRADES[uid], upgraded:true, id:uid};
-    }
+function getActiveSkills(){
+  return SKILLS.filter(s=>LIB.unlockedSkills.includes(s.id));
+}
+
+function getDrawCount(){
+  const sk=getActiveSkills().find(s=>s.effect.drawCount);
+  return sk?sk.effect.drawCount:2;
+}
+
+function getInitBonus(){
+  const bonus={question:0,hypothesis:0,experiment:0,discovery:0,resonance:0};
+  getActiveSkills().forEach(s=>{
+    if(s.effect.initBonus) Object.entries(s.effect.initBonus).forEach(([k,v])=>bonus[k]+=v);
+  });
+  return bonus;
+}
+
+function getAvailableCards(){
+  const all=[...BASE_CARDS,...UNLOCK_CARDS];
+  return all.filter(c=>{
+    if(!c.needLv)return true;
+    return LIB.level>=c.needLv;
+  });
+}
+
+function initGame(project,diff){
+  const mapLen=12+diff.turnsBonus;
+  const map=generateMap(mapLen);
+  const initBonus=getInitBonus();
+  const baseRes={question:3,hypothesis:1,experiment:1,discovery:0,resonance:0};
+  const resources={};
+  Object.keys(baseRes).forEach(k=>{resources[k]=baseRes[k]+diff.resBonus+(initBonus[k]||0);});
+
+  // Build deck based on lib level
+  const available=getAvailableCards();
+  const deck=available.slice(0,8).map(c=>({...c,upgraded:false}));
+  // Add unlock cards available by level
+  available.filter(c=>c.needLv).forEach(c=>{
+    if(LIB.level>=c.needLv&&!deck.find(d=>d.id===c.id)) deck.push({...c,upgraded:false});
+  });
+  // Apply upgrades
+  LIB.upgradedCards.forEach(uid=>{
+    const i=deck.findIndex(c=>c.id===uid);
+    if(i>=0&&UPGRADES[uid]) deck[i]={...deck[i],...UPGRADES[uid],upgraded:true,id:uid};
   });
 
-  G = {
-    project, map, mapLen,
-    turn:1, maxTurns:mapLen,
-    position:0,
-    resources:{question:3,hypothesis:1,experiment:1,discovery:0,resonance:0},
+  G={
+    project,map,mapLen,diff,
+    turn:1,maxTurns:mapLen,
+    position:0,resources,
     progress:Object.fromEntries(Object.entries(project.cost).map(([k])=>[k,0])),
-    deck,
-    hand:[],
-    drawnThisTurn:false, playedThisTurn:false,
-    gameOver:false, projectComplete:false,
-    log:[], eventPending:false, pendingEvent:null,
-    shardsEarned:0,
-    nodeHandled:false,
-    upgradedThisRun:[],
+    deck,hand:[],
+    drawnThisTurn:false,playedThisTurn:false,
+    gameOver:false,projectComplete:false,
+    log:[],eventPending:false,pendingEvent:null,
+    shardsEarned:0,nodeHandled:false,
+    upgradedThisRun:[],failCount:0,
   };
 }
 
-// ═══════ SCREEN ═══════
+// ══════════════════════════════════════════
+//  SCREEN
+// ══════════════════════════════════════════
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');}
 
-// ═══════ TITLE ═══════
+// ══════════════════════════════════════════
+//  TITLE
+// ══════════════════════════════════════════
 function renderTitle(){
+  // Lib preview
   const lvInfo=LIB_LEVELS.find(l=>l.lv===LIB.level)||LIB_LEVELS[0];
   const nextInfo=LIB_LEVELS.find(l=>l.lv===LIB.level+1);
   const pct=nextInfo?Math.min(100,((LIB.shards-lvInfo.need)/(nextInfo.need-lvInfo.need))*100):100;
@@ -573,14 +772,33 @@ function renderTitle(){
   document.getElementById('title-lib-lv').textContent=LIB.level;
   document.getElementById('title-shard-count').textContent=LIB.shards;
   document.getElementById('title-play-count').textContent=LIB.totalPlays;
+  // Active skills preview
+  const skillArea=document.getElementById('title-active-skills');
+  skillArea.innerHTML='';
+  getActiveSkills().forEach(s=>{
+    const chip=document.createElement('div');chip.className='skill-chip';chip.textContent=`${s.icon} ${s.name}`;skillArea.appendChild(chip);
+  });
 
-  const c=document.getElementById('proj-choices');
-  c.innerHTML='';
+  // Difficulty
+  const diffSel=document.getElementById('diff-selector');
+  diffSel.innerHTML='';
+  DIFFICULTIES.forEach(d=>{
+    const locked=d.needPlays&&LIB.totalPlays<d.needPlays;
+    const btn=document.createElement('div');
+    btn.className='diff-btn'+(d.id===_diff.id?' active':'')+(locked?' locked':'');
+    btn.innerHTML=`<span class="db-icon">${d.icon}</span><span class="db-name">${d.name}</span><span class="db-hint">${locked?`${d.needPlays}回プレイで解放`:d.hint}</span>`;
+    btn.onclick=()=>{if(locked)return;_diff=d;renderTitle();};
+    diffSel.appendChild(btn);
+  });
+
+  // Projects
+  const c=document.getElementById('proj-choices');c.innerHTML='';
   PROJECTS.forEach((p,i)=>{
+    const locked=p.needLv&&LIB.level<p.needLv;
     const el=document.createElement('div');
-    el.className='project-choice';
-    el.innerHTML=`<div class="pc-icon">${p.icon}</div><div><div class="pc-name">${p.name}</div><div class="pc-desc">${p.desc}</div><div class="pc-diff">${p.diff}</div></div>`;
-    el.onclick=()=>{document.querySelectorAll('.project-choice').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');G._selectedProj=i;document.getElementById('btn-start').disabled=false;};
+    el.className='project-choice'+(locked?' locked':'');
+    el.innerHTML=`<div class="pc-icon">${p.icon}</div><div><div class="pc-name">${p.name}</div><div class="pc-desc">${p.desc}</div><div class="pc-diff">${p.diff}</div>${locked?`<div class="pc-lock">🔒 図書館Lv${p.needLv}で解放</div>`:''}</div>`;
+    if(!locked) el.onclick=()=>{document.querySelectorAll('.project-choice').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');G._selectedProj=i;document.getElementById('btn-start').disabled=false;};
     c.appendChild(el);
   });
   document.getElementById('btn-start').disabled=true;
@@ -589,15 +807,24 @@ function renderTitle(){
 
 function startGame(){
   const proj=PROJECTS[G._selectedProj??0];
-  initGame(proj);
-  LIB.totalPlays++;saveLib(LIB);
+  initGame(proj,_diff);
+  LIB.totalPlays++;saveLib();
   hideAllPanels();
   show('screen-game');
   renderGame();
 }
 
-// ═══════ GAME RENDER ═══════
-function renderGame(){renderMap();renderResources();renderHand();renderProject();renderTurnBar();renderNarrator();renderDeckInfo();}
+// ══════════════════════════════════════════
+//  GAME RENDER
+// ══════════════════════════════════════════
+function renderGame(){renderMap();renderResources();renderHand();renderProject();renderTurnBar();renderNarrator();renderDeckInfo();renderSkillBar();}
+
+function renderSkillBar(){
+  const bar=document.getElementById('skill-bar');bar.innerHTML='';
+  getActiveSkills().forEach(s=>{
+    const el=document.createElement('div');el.className='skill-indicator';el.textContent=`${s.icon} ${s.name}`;bar.appendChild(el);
+  });
+}
 
 function renderTurnBar(){
   const phase=getPhase(G.position);
@@ -605,12 +832,14 @@ function renderTurnBar(){
   document.getElementById('phase-name').textContent=phase.name;
   document.getElementById('turn-now').textContent=G.turn;
   document.getElementById('turn-max').textContent=G.maxTurns;
+  const badge=document.getElementById('diff-badge-game');
+  badge.className=`diff-badge ${G.diff.badge}`;badge.textContent=G.diff.name;
   const node=G.map[G.position];
-  const nodeStr=node&&node.type!=='normal'&&node.type!=='goal'?` [${NODE_LABELS[node.type]}]`:'';
+  const ns=node&&node.type!=='normal'&&node.type!=='goal'?` [${NODE_LABELS[node.type]}]`:'';
   const hint=!G.drawnThisTurn?(G.nodeHandled||!['rest','trial','discover'].includes(node?.type)?'← カードを引こう':'← マスのアクションを先に'):G.playedThisTurn?'✓ ターン完了':'← カードを選ぼう';
-  document.getElementById('status-hint').textContent=hint+nodeStr;
-  const drawBtn=document.getElementById('btn-draw');
-  if(drawBtn) drawBtn.disabled=G.drawnThisTurn||G.gameOver;
+  document.getElementById('status-hint').textContent=hint+ns;
+  const btn=document.getElementById('btn-draw');if(btn)btn.disabled=G.drawnThisTurn||G.gameOver;
+  const dc=document.getElementById('draw-count');if(dc)dc.textContent=getDrawCount();
 }
 
 function getPhase(pos){
@@ -627,77 +856,53 @@ function renderNarrator(){
 }
 
 function renderMap(){
-  const track=document.getElementById('path');
-  track.innerHTML='';
+  const track=document.getElementById('path');track.innerHTML='';
   G.map.forEach((node,i)=>{
     const s=document.createElement('div');
-    const typeClass=`type-${node.type}`;
-    s.className='step '+typeClass+(i<G.position?' done':'')+(i===G.position?' here':'');
+    s.className='step type-'+node.type+(i<G.position?' done':'')+(i===G.position?' here':'');
     s.textContent=NODE_ICONS[node.type]||'⬜';
-    if(node.type!=='normal'&&node.type!=='goal'){
-      const tip=document.createElement('div');
-      tip.className='step-tooltip';
-      tip.textContent=NODE_LABELS[node.type];
-      s.appendChild(tip);
-    }
+    if(node.type!=='normal'&&node.type!=='goal'){const tip=document.createElement('div');tip.className='step-tooltip';tip.textContent=NODE_LABELS[node.type];s.appendChild(tip);}
     track.appendChild(s);
-    if(i<G.map.length-1){
-      const conn=document.createElement('div');
-      conn.className='connector'+(i<G.position?' done':'');
-      track.appendChild(conn);
-    }
+    if(i<G.map.length-1){const conn=document.createElement('div');conn.className='connector'+(i<G.position?' done':'');track.appendChild(conn);}
   });
   const pawn=document.getElementById('pawn');
   const steps=track.querySelectorAll('.step');
-  if(steps[G.position]){
-    const wr=document.getElementById('map-wrap').getBoundingClientRect();
-    const sr=steps[G.position].getBoundingClientRect();
-    pawn.style.left=(sr.left-wr.left+sr.width/2-12)+'px';
-  }
+  if(steps[G.position]){const wr=document.getElementById('map-wrap').getBoundingClientRect();const sr=steps[G.position].getBoundingClientRect();pawn.style.left=(sr.left-wr.left+sr.width/2-12)+'px';}
 }
 
 function renderResources(){
   const bar=document.getElementById('res-bar');bar.innerHTML='';
+  const capBonus=getActiveSkills().find(s=>s.effect.resonanceCap)?getActiveSkills().find(s=>s.effect.resonanceCap).effect.resonanceCap:0;
   Object.entries(G.resources).forEach(([k,v])=>{
-    const m=RES_META[k];
-    const div=document.createElement('div');
-    div.className=`res-chip ${m.cls}`;div.id=`chip-${k}`;
-    div.innerHTML=`<div class="rc-dot"></div><div class="rc-name">${m.name}</div><div class="rc-val">${Math.max(0,v)}</div>`;
+    const m=RES_META[k];const cap=8+(k==='resonance'?capBonus:0);
+    const div=document.createElement('div');div.className=`res-chip ${m.cls}`;div.id=`chip-${k}`;
+    div.innerHTML=`<div class="rc-dot"></div><div class="rc-name">${m.name}</div><div class="rc-val">${Math.max(0,Math.min(v,cap))}</div>`;
     bar.appendChild(div);
   });
 }
 
 function renderHand(){
-  const area=document.getElementById('hand-area');
-  area.innerHTML='';
-  if(!G.drawnThisTurn){
-    area.innerHTML='<div style="font-size:12px;color:rgba(245,238,220,.35);font-style:italic;padding:8px 4px;">カードを引いてください</div>';
-    return;
-  }
-  if(G.hand.length===0){
-    area.innerHTML='<div style="font-size:12px;color:rgba(245,238,220,.35);font-style:italic;padding:8px 4px;">手札なし</div>';
-    return;
-  }
+  const area=document.getElementById('hand-area');area.innerHTML='';
+  if(!G.drawnThisTurn){area.innerHTML='<div style="font-size:12px;color:rgba(245,238,220,.35);font-style:italic;padding:8px 4px;">カードを引いてください</div>';return;}
+  if(!G.hand.length){area.innerHTML='<div style="font-size:12px;color:rgba(245,238,220,.35);font-style:italic;padding:8px 4px;">手札なし</div>';return;}
   G.hand.forEach((card,idx)=>{
     const el=buildCard(card,'learn');
     const canPlay=!G.playedThisTurn&&!G.gameOver&&canAfford(card.cost);
-    if(!canPlay)el.classList.add('disabled');
-    else el.onclick=()=>playCard(idx);
+    if(!canPlay)el.classList.add('disabled');else el.onclick=()=>playCard(idx);
     area.appendChild(el);
   });
 }
 
 function renderDeckInfo(){
-  const ds=document.getElementById('deck-size');
-  const uc=document.getElementById('upgraded-count');
-  if(ds)ds.textContent=G.deck.length;
-  if(uc)uc.textContent=G.deck.filter(c=>c.upgraded).length;
+  const ds=document.getElementById('deck-size');const uc=document.getElementById('upgraded-count');
+  if(ds)ds.textContent=G.deck.length;if(uc)uc.textContent=G.deck.filter(c=>c.upgraded).length;
 }
 
 function buildCard(card,type){
   const el=document.createElement('div');
-  el.className=`card card-${type}`+(card.rare?' rare':'');
-  if(card.upgraded)el.innerHTML+='<div class="upgrade-badge">強化済</div>';
+  el.className=`card card-${type}`+(card.rare?' rare':'')+(card.legend?' legend':'');
+  if(card.upgraded)el.innerHTML='<div class="upgrade-badge">強化済</div>';
+  if(card.legend)el.innerHTML='<div class="legend-badge">✦ 伝説</div>';
   const typeLabel=type==='learn'?'📘 学びカード':type==='action'?'⚡ アクション':'⚠️ イベント';
   const gainHtml=card.gain?Object.entries(card.gain).map(([k,v])=>{const m=RES_META[k];return`<span class="eff-tag" style="color:${m.color}">${m.icon}+${v}</span>`;}).join(''):'';
   const costHtml=card.cost&&Object.keys(card.cost).length?Object.entries(card.cost).map(([k,v])=>{const m=RES_META[k];return`<span class="cost-pip" style="color:${m.color}">${m.icon}${v}</span>`;}).join(''):'';
@@ -719,18 +924,18 @@ function renderProject(){
   });
 }
 
-// ═══════ NODE HANDLERS ═══════
+// ══════════════════════════════════════════
+//  NODE HANDLERS
+// ══════════════════════════════════════════
+function hideAllPanels(){['rest-panel','upgrade-panel','trial-panel'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});}
+
 function handleNodeEntry(){
   const node=G.map[G.position];
   if(G.nodeHandled||!node)return;
-  if(node.type==='rest') showRestPanel();
-  else if(node.type==='trial') showTrialPanel();
-  else if(node.type==='discover') showDiscoverPanel();
-  else if(node.type==='event') triggerEvent(true);
-}
-
-function hideAllPanels(){
-  ['rest-panel','upgrade-panel','trial-panel'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
+  if(node.type==='rest')showRestPanel();
+  else if(node.type==='trial')showTrialPanel();
+  else if(node.type==='discover')showDiscoverPanel();
+  else if(node.type==='event')triggerEvent(true);
 }
 
 function showRestPanel(){
@@ -745,201 +950,253 @@ function showRestPanel(){
 
 function restRecover(){
   Object.keys(G.resources).forEach(k=>{G.resources[k]=(G.resources[k]||0)+1;pulseChip(k);if(G.project.cost[k])G.progress[k]=Math.min(G.project.cost[k],(G.progress[k]||0)+1);});
-  addLog('🏕️','休憩：全リソース +1 を回復した');
-  document.getElementById('rest-panel').style.display='none';
-  renderGame();
+  addLog('🏕️','休憩：全リソース +1');
+  document.getElementById('rest-panel').style.display='none';renderGame();
 }
 
 function restUpgrade(){
   document.getElementById('rest-panel').style.display='none';
-  showUpgradePanel('rest');
+  showUpgradePanel();
 }
 
-function showUpgradePanel(from){
-  const panel=document.getElementById('upgrade-panel');
-  panel.style.display='block';
+function showUpgradePanel(){
+  document.getElementById('upgrade-panel').style.display='block';
   document.getElementById('upgrade-desc').textContent='強化したいカードを選ぼう（強化できないカードはグレー表示）';
-  const area=document.getElementById('upgrade-cards');
-  area.innerHTML='';
+  const area=document.getElementById('upgrade-cards');area.innerHTML='';
   G.deck.forEach((card,idx)=>{
     const canUp=!!UPGRADES[card.id]&&!card.upgraded;
     const el=buildCard(card,'learn');
-    el.style.opacity=canUp?'1':'0.4';
-    el.style.cursor=canUp?'pointer':'not-allowed';
-    if(canUp) el.onclick=()=>upgradeCard(idx,from);
+    el.style.opacity=canUp?'1':'0.4';el.style.cursor=canUp?'pointer':'not-allowed';
+    if(canUp)el.onclick=()=>upgradeCard(idx);
     area.appendChild(el);
   });
 }
 
-function upgradeCard(idx, from){
-  const card=G.deck[idx];
-  const up=UPGRADES[card.id];
+function upgradeCard(idx){
+  const card=G.deck[idx];const up=UPGRADES[card.id];
   if(!up||card.upgraded)return;
   G.deck[idx]={...card,...up,upgraded:true,id:card.id};
   G.upgradedThisRun.push(card.id);
-  // Persist to library
-  if(!LIB.upgradedCards.includes(card.id)){LIB.upgradedCards.push(card.id);saveLib(LIB);}
-  addLog('✨',`「${card.name}」→「${up.name}」に強化した！`);
-  document.getElementById('upgrade-panel').style.display='none';
-  renderGame();
+  if(!LIB.upgradedCards.includes(card.id)){LIB.upgradedCards.push(card.id);saveLib();}
+  addLog('✨',`「${card.name}」→「${up.name}」に強化！`);
+  document.getElementById('upgrade-panel').style.display='none';renderGame();
 }
 
 function showTrialPanel(){
   document.getElementById('trial-panel').style.display='block';
   const trial=TRIALS[Math.floor(Math.random()*TRIALS.length)];
-  G._currentTrial=trial;
   document.getElementById('trial-desc').textContent=trial.desc;
-  const choices=document.getElementById('trial-choices');
-  choices.innerHTML='';
-  [trial.a,trial.b].forEach((opt,i)=>{
-    const el=document.createElement('div');
-    el.className='trial-choice';
+  const choices=document.getElementById('trial-choices');choices.innerHTML='';
+  [trial.a,trial.b].forEach(opt=>{
+    const el=document.createElement('div');el.className='trial-choice';
     const gainStr=Object.entries(opt.gain).map(([k,v])=>`${RES_META[k].icon}+${v}`).join(' ');
     const costStr=opt.cost&&Object.keys(opt.cost).length?'コスト: '+Object.entries(opt.cost).map(([k,v])=>`${RES_META[k].icon}${v}`).join(' '):'コストなし';
     el.innerHTML=`<span class="tc-icon">${opt.icon}</span><div class="tc-name">${opt.name}</div><div class="tc-desc">${opt.desc}<br><small style="color:var(--gold-lt)">${gainStr}</small><br><small style="opacity:.6">${costStr}</small></div>`;
-    el.onclick=()=>resolveTrial(i===0?trial.a:trial.b);
+    el.onclick=()=>resolveTrial(opt);
     choices.appendChild(el);
   });
   G.nodeHandled=true;renderTurnBar();
 }
 
 function resolveTrial(opt){
-  if(opt.cost) Object.entries(opt.cost).forEach(([k,v])=>{G.resources[k]=Math.max(0,G.resources[k]-v);});
+  if(opt.cost)Object.entries(opt.cost).forEach(([k,v])=>{G.resources[k]=Math.max(0,G.resources[k]-v);});
   Object.entries(opt.gain).forEach(([k,v])=>{G.resources[k]=(G.resources[k]||0)+v;pulseChip(k);if(G.project.cost[k])G.progress[k]=Math.min(G.project.cost[k],(G.progress[k]||0)+v);});
   addLog('⚔️',`試練「${opt.name}」を選んだ`);
-  document.getElementById('trial-panel').style.display='none';
-  renderGame();
+  document.getElementById('trial-panel').style.display='none';renderGame();
 }
 
 function showDiscoverPanel(){
-  // Add a rare card to deck
-  const rare=BASE_CARDS.filter(c=>c.rare&&!G.deck.find(d=>d.id===c.id));
-  if(rare.length>0){
-    const pick=rare[Math.floor(Math.random()*rare.length)];
+  const available=[...BASE_CARDS,...UNLOCK_CARDS].filter(c=>c.rare&&LIB.level>=(c.needLv||1)&&!G.deck.find(d=>d.id===c.id));
+  if(available.length>0){
+    const pick=available[Math.floor(Math.random()*available.length)];
     G.deck.push({...pick,upgraded:false});
-    addLog('🔍',`レアカード「${pick.name}」をデッキに加えた！`);
+    addLog('🔍',`レアカード「${pick.name}」をデッキに追加！`);
     showPhaseBanner(`✨ レアカード発見！\n「${pick.name}」`);
   } else {
-    // All rares already obtained — give resources instead
-    G.resources.discovery=(G.resources.discovery||0)+2;
-    pulseChip('discovery');
-    addLog('🔍','発見マス：全レアカード取得済み。発見 +2 を得た');
+    G.resources.discovery=(G.resources.discovery||0)+2;pulseChip('discovery');
+    addLog('🔍','発見マス：発見 +2');
   }
-  G.nodeHandled=true;
-  renderGame();renderTurnBar();
+  G.nodeHandled=true;renderGame();renderTurnBar();
 }
 
-// ═══════ DRAW & PLAY ═══════
+// ══════════════════════════════════════════
+//  DRAW & PLAY
+// ══════════════════════════════════════════
 function drawCards(){
   if(G.drawnThisTurn||G.gameOver)return;
   const node=G.map[G.position];
-  // Handle node entry first if not yet handled
-  if(!G.nodeHandled&&['rest','trial','discover'].includes(node?.type)){
-    handleNodeEntry();return;
-  }
-  // Event node: forced event
-  if(!G.nodeHandled&&node?.type==='event'){handleNodeEntry();return;}
-
-  // Random event chance on normal nodes (after turn 3)
-  if(G.turn>3&&Math.random()<0.2&&node?.type==='normal'){
-    triggerEvent(false);return;
-  }
-
+  if(!G.nodeHandled&&['rest','trial','discover','event'].includes(node?.type)){handleNodeEntry();return;}
+  if(G.turn>3&&Math.random()<G.diff.eventChance&&node?.type==='normal'){triggerEvent(false);return;}
   pickCards();
 }
 
 function pickCards(){
-  const pool=[...G.deck];
-  const picks=[];
-  while(picks.length<2&&pool.length){
-    const i=Math.floor(Math.random()*pool.length);
-    picks.push(pool.splice(i,1)[0]);
-  }
-  G.hand=picks;
-  G.drawnThisTurn=true;
-  addLog('🃏','2枚のカードを引いた');
-  renderGame();
+  const n=getDrawCount();
+  const pool=[...G.deck];const picks=[];
+  while(picks.length<n&&pool.length){const i=Math.floor(Math.random()*pool.length);picks.push(pool.splice(i,1)[0]);}
+  G.hand=picks;G.drawnThisTurn=true;
+  addLog('🃏',`${n}枚のカードを引いた`);renderGame();
 }
 
 function triggerEvent(forced){
   const ev=EVENTS[Math.floor(Math.random()*EVENTS.length)];
   G.eventPending=true;G.pendingEvent=ev;
-  const area=document.getElementById('hand-area');
-  area.innerHTML='';
-  const el=buildCard(ev,'event');
-  el.style.width='100%';area.appendChild(el);
-  const ar=document.getElementById('action-row');
-  ar.innerHTML='<button class="btn btn-gold" onclick="resolveEvent()">受け入れて進む</button>';
-  if(forced)G.nodeHandled=true;
-  G.drawnThisTurn=true;
-  addLog('⚠️',`イベント：「${ev.name}」`);
-  renderTurnBar();
+  const area=document.getElementById('hand-area');area.innerHTML='';
+  const el=buildCard(ev,'event');el.style.width='100%';area.appendChild(el);
+  document.getElementById('action-row').innerHTML='<button class="btn btn-gold" onclick="resolveEvent()">受け入れて進む</button>';
+  if(forced)G.nodeHandled=true;G.drawnThisTurn=true;
+  addLog('⚠️',`イベント：「${ev.name}」`);renderTurnBar();
 }
 
 function resolveEvent(){
   const ev=G.pendingEvent;
-  if(ev?.effect) Object.entries(ev.effect).forEach(([k,v])=>{G.resources[k]=Math.max(0,(G.resources[k]||0)+v);pulseChip(k);if(v>0&&G.project.cost[k])G.progress[k]=Math.min(G.project.cost[k],(G.progress[k]||0)+v);});
+  if(ev?.effect) Object.entries(ev.effect).forEach(([k,v])=>{
+    G.resources[k]=Math.max(0,(G.resources[k]||0)+v);pulseChip(k);
+    if(v>0&&G.project.cost[k])G.progress[k]=Math.min(G.project.cost[k],(G.progress[k]||0)+v);
+    if(v<0)G.failCount++;
+    // Skill: failDiscovery
+    if(v<0&&getActiveSkills().find(s=>s.effect.failDiscovery)){G.resources.discovery=(G.resources.discovery||0)+1;pulseChip('discovery');}
+  });
   G.eventPending=false;G.pendingEvent=null;
   addLog('📝',`「${ev.name}」の影響を受けた`);
-  document.getElementById('action-row').innerHTML='<button class="btn btn-gold" id="btn-draw" onclick="drawCards()">カードを引く（2枚）</button>';
+  document.getElementById('action-row').innerHTML=`<button class="btn btn-gold" id="btn-draw" onclick="drawCards()">カードを引く（<span id="draw-count">${getDrawCount()}</span>枚）</button>`;
   pickCards();
 }
 
 function playCard(idx){
   if(G.playedThisTurn||G.gameOver)return;
-  const card=G.hand[idx];
-  if(!canAfford(card.cost))return;
-  if(card.cost) Object.entries(card.cost).forEach(([k,v])=>{G.resources[k]=Math.max(0,G.resources[k]-v);});
-  if(card.gain) Object.entries(card.gain).forEach(([k,v])=>{G.resources[k]=(G.resources[k]||0)+v;pulseChip(k);if(G.project.cost[k])G.progress[k]=Math.min(G.project.cost[k],(G.progress[k]||0)+v);});
-  addLog('📘',`「${card.name}」を使った${card.upgraded?' ✨':''}`);
+  const card=G.hand[idx];if(!canAfford(card.cost))return;
+  if(card.cost)Object.entries(card.cost).forEach(([k,v])=>{G.resources[k]=Math.max(0,G.resources[k]-v);});
+  if(card.gain){
+    // Skill: conversionBonus (発見→共鳴 +1)
+    const convBonus=getActiveSkills().find(s=>s.effect.conversionBonus);
+    Object.entries(card.gain).forEach(([k,v])=>{
+      let val=v;
+      if(k==='resonance'&&convBonus)val+=1;
+      G.resources[k]=(G.resources[k]||0)+val;pulseChip(k);
+      if(G.project.cost[k])G.progress[k]=Math.min(G.project.cost[k],(G.progress[k]||0)+val);
+    });
+  }
+  // failBonus card (失敗ノート)
+  if(card.failBonus&&G.failCount>0){
+    const bonus=G.failCount;G.resources.discovery=(G.resources.discovery||0)+bonus;pulseChip('discovery');
+    if(G.project.cost.discovery)G.progress.discovery=Math.min(G.project.cost.discovery,(G.progress.discovery||0)+bonus);
+    addLog('📓',`失敗ノート：失敗${G.failCount}回 → 発見 +${bonus}！`);
+  }
+  addLog('📘',`「${card.name}」を使った${card.upgraded?' ✨':card.legend?' ✦':''}`);
+  spawnCardParticles(card);
   G.playedThisTurn=true;
-  endTurn();
-  renderGame();
+  endTurn();renderGame();
 }
 
 function endTurn(){
-  G.position=Math.min(G.maxTurns-1,G.position+1);
-  G.nodeHandled=false;
+  G.position=Math.min(G.maxTurns-1,G.position+1);G.nodeHandled=false;
   if(isComplete()){G.projectComplete=true;G.gameOver=true;calcShards(true);setTimeout(()=>showEnding(true),900);return;}
   if(G.turn>=G.maxTurns){G.gameOver=true;calcShards(false);setTimeout(()=>showEnding(false),900);return;}
   const prev=getPhase(G.position-1).name,cur=getPhase(G.position).name;
   if(prev!==cur)showPhaseBanner(cur);
   G.turn++;G.drawnThisTurn=false;G.playedThisTurn=false;G.hand=[];
   hideAllPanels();
-  // Auto-trigger node on arrival
   const node=G.map[G.position];
-  if(node&&['event'].includes(node.type)){
-    setTimeout(()=>{handleNodeEntry();renderGame();},400);
-  }
-  document.getElementById('action-row').innerHTML='<button class="btn btn-gold" id="btn-draw" onclick="drawCards()">カードを引く（2枚）</button>';
+  if(node&&node.type==='event')setTimeout(()=>{handleNodeEntry();renderGame();},400);
+  document.getElementById('action-row').innerHTML=`<button class="btn btn-gold" id="btn-draw" onclick="drawCards()">カードを引く（<span id="draw-count">${getDrawCount()}</span>枚）</button>`;
 }
 
 function calcShards(won){
-  let s=1;if(won)s+=2;
-  if(G.upgradedThisRun.length>0)s+=1;
+  let s=1;if(won)s+=2;if(G.upgradedThisRun.length>0)s+=1;
+  if(G.diff.id==='hard')s+=1;
+  if(won&&G.diff.id==='hard')s+=1;
   G.shardsEarned=s;LIB.shards+=s;
+  // Stats
+  if(won)LIB.wins=(LIB.wins||0)+1;else LIB.losses=(LIB.losses||0)+1;
+  LIB.totalCards=(LIB.totalCards||0)+G.log.filter(l=>l.includes('📘')).length;
+  LIB.totalUpgrades=(LIB.totalUpgrades||0)+G.upgradedThisRun.length;
+  if(won&&G.diff.id==='hard')LIB.hardWins=(LIB.hardWins||0)+1;
+  if(!LIB.maxResources)LIB.maxResources={question:0,hypothesis:0,experiment:0,discovery:0,resonance:0};
+  Object.keys(G.resources).forEach(k=>{if((G.resources[k]||0)>(LIB.maxResources[k]||0))LIB.maxResources[k]=G.resources[k];});
   for(let i=LIB_LEVELS.length-1;i>=0;i--){if(LIB.shards>=LIB_LEVELS[i].need){LIB.level=LIB_LEVELS[i].lv;break;}}
-  saveLib(LIB);
+  saveLib();
 }
 
-// ═══════ ENDING ═══════
+// ══════════════════════════════════════════
+//  ENDING + SKILL UNLOCK
+// ══════════════════════════════════════════
+function checkSkillUnlock(endingId){
+  const newSkills=[];
+  SKILLS.forEach(sk=>{
+    if(sk.endingId===endingId&&!LIB.unlockedSkills.includes(sk.id)){
+      LIB.unlockedSkills.push(sk.id);newSkills.push(sk);
+    }
+  });
+  saveLib();return newSkills;
+}
+
 function showEnding(won){
-  const ending=won?ENDINGS.find(e=>e.id!=='unfinished'&&e.cond(G))||ENDINGS.find(e=>e.id==='unfinished'):ENDINGS.find(e=>e.id==='unfinished');
-  if(!LIB.unlockedEndings.includes(ending.id)){LIB.unlockedEndings.push(ending.id);saveLib(LIB);}
+  const ending=won
+    ?ENDINGS.find(e=>e.id!=='unfinished'&&e.cond(G))||ENDINGS.find(e=>e.id==='unfinished')
+    :ENDINGS.find(e=>e.id==='unfinished');
+  const isNew=!LIB.unlockedEndings.includes(ending.id);
+  if(isNew)LIB.unlockedEndings.push(ending.id);
+  const newSkills=won&&isNew?checkSkillUnlock(ending.id):[];
+  saveLib();
+
+  // Show shard burst before screen transition
+  showShardBurst(G.shardsEarned, ending.label, ()=>{
+    _renderEnding(ending, won, newSkills);
+    show('screen-ending');
+    if(ending.id==='giant') setTimeout(startGiantEffect, 600);
+    else startStarfall();
+  });
+}
+
+function _renderEnding(ending, won, newSkills){
   document.getElementById('end-emblem').textContent=ending.emblem;
-  document.getElementById('end-type').textContent=ending.label;
+  document.getElementById('end-type').textContent=ending.label+(isNew(ending.id)?' ✦ 初クリア！':'');
   document.getElementById('end-title').textContent=ending.title;
   document.getElementById('end-shard-gain').textContent=`+${G.shardsEarned}`;
+
+  // Skill unlock notification
+  const skillArea=document.getElementById('skill-unlock-area');skillArea.innerHTML='';
+  if(newSkills.length>0){
+    const box=document.createElement('div');box.className='skill-unlock-box';
+    box.innerHTML=`<div class="sub-title">🎉 永続スキル解放！</div>`;
+    newSkills.forEach(sk=>{box.innerHTML+=`<div class="skill-unlock-item"><div class="sui-icon">${sk.icon}</div><div><div class="sui-name">${sk.name}</div><div class="sui-desc">${sk.desc}</div></div></div>`;});
+    skillArea.appendChild(box);
+  }
+
   const p=G.project;
-  document.getElementById('end-proj-badge').innerHTML=`<div class="epb-icon">${p.icon}</div><div><div class="epb-label">${won?'✅ 完成':'🌙 挑戦中（'+calcPct()+'%）'}</div><div class="epb-name">${p.name}</div></div>`;
-  document.getElementById('end-story').innerHTML=ending.story.map(s=>`<p>${s}</p>`).join('')+`<span class="end-coda">「${ending.coda}」</span>`;
+  document.getElementById('end-proj-badge').innerHTML=`<div class="epb-icon">${p.icon}</div><div><div class="epb-label">${won?'✅ 完成':'🌙 挑戦（'+calcPct()+'%）'}</div><div class="epb-name">${p.name}</div></div>`;
+
+  // Epilogue (project × ending combo)
+  const epi=EPILOGUES[ending.id]?.[G.project.id]||EPILOGUES[ending.id]?.default||null;
+  const epiEl=document.getElementById('end-epilogue');
+  if(epi&&won){epiEl.style.display='block';document.getElementById('end-epilogue-text').textContent=epi;}
+  else epiEl.style.display='none';
+
+  // Story with typewriter effect
+  const storyEl=document.getElementById('end-story');
+  storyEl.innerHTML=ending.story.map(s=>`<p>${s}</p>`).join('')+`<span class="end-coda">「${ending.coda}」</span>`;
+
   document.getElementById('end-stats').innerHTML=Object.entries(G.resources).map(([k,v])=>{const m=RES_META[k];return`<div class="end-stat"><div class="es-icon">${m.icon}</div><div class="es-val" style="color:${m.color}">${Math.max(0,v)}</div><div class="es-name">${m.name}</div></div>`;}).join('');
+
+  // Achievements earned this run
+  const earnedAchs=checkAchievements();
+  const achEl=document.getElementById('end-achievements');
+  if(earnedAchs.length>0){
+    achEl.innerHTML=`<div class="achievements-title">🏆 この旅で解放した実績</div><div class="ach-grid">${earnedAchs.map(a=>`<div class="ach-item unlocked"><div class="ai-icon">${a.icon}</div><div><div class="ai-name">${a.name}</div><div class="ai-cond">${a.desc}</div></div></div>`).join('')}</div>`;
+    achEl.style.display='block';
+  } else achEl.style.display='none';
+
   document.getElementById('end-log-wrap').innerHTML=`<h3>📖 旅の記録</h3><ul>${G.log.map(l=>`<li>${l}</li>`).join('')}</ul>`;
-  show('screen-ending');
 }
 
-// ═══════ LIBRARY ═══════
+function isNew(endingId){return LIB.unlockedEndings.filter(id=>id===endingId).length===1;}
+
+// ══════════════════════════════════════════
+//  LIBRARY
+// ══════════════════════════════════════════
 function goToLibrary(){renderLibrary();show('screen-library');}
+
 function renderLibrary(){
   document.getElementById('lib-shard-val').textContent=LIB.shards;
   const lvInfo=LIB_LEVELS.find(l=>l.lv===LIB.level)||LIB_LEVELS[0];
@@ -950,24 +1207,269 @@ function renderLibrary(){
   document.getElementById('lib-lv-num').textContent=`Lv ${LIB.level} / 6`;
   document.getElementById('lib-lv-fill').style.width=pct+'%';
   document.getElementById('lib-lv-hint').textContent=nextInfo?`Lv${LIB.level+1}まで 欠片${nextInfo.need}個が必要`:'最高レベル';
-  const list=document.getElementById('unlocked-list');list.innerHTML='';
+
+  // Skills list
+  const skillsList=document.getElementById('lib-skills-list');skillsList.innerHTML='';
+  SKILLS.forEach(sk=>{
+    const active=LIB.unlockedSkills.includes(sk.id);
+    const relEnding=ENDINGS.find(e=>e.id===sk.endingId);
+    skillsList.innerHTML+=`<div class="skill-item"><div class="si-icon">${sk.icon}</div><div><div class="si-name">${sk.name}</div><div class="si-desc">${sk.desc}</div><div style="font-size:10px;color:rgba(245,238,220,.35);margin-top:2px;">🏅 ${relEnding?.label||''}で解放</div></div>${active?'<span class="si-active">有効</span>':'<span class="si-locked">🔒 未解放</span>'}</div>`;
+  });
+
+  // Roadmap
+  const roadmap=document.getElementById('lib-roadmap-list');roadmap.innerHTML='';
+  LIB_LEVELS.forEach(lv=>{
+    const unlocks=LIB_UNLOCK_MAP[lv.lv];
+    const achieved=LIB.level>=lv.lv;
+    const cardNames=unlocks.cards.map(id=>{
+      const c=[...BASE_CARDS,...UNLOCK_CARDS].find(x=>x.id===id);
+      return c?`${c.icon}${c.name}`:'';
+    }).filter(Boolean);
+    const projNames=unlocks.projects.map(id=>{const p=PROJECTS.find(x=>x.id===id);return p?`${p.icon}${p.name}`:'';}).filter(Boolean);
+    const items=[...cardNames,...projNames];
+    roadmap.innerHTML+=`<div class="roadmap-row${achieved?' achieved':''}"><div class="roadmap-lv">Lv${lv.lv}${achieved?' ✓':''}</div><div class="roadmap-content"><div class="rc-name">${lv.name}</div><div class="rc-items">${items.length?items.join('　'):'基本コンテンツ'}</div></div></div>`;
+  });
+
+  // Stats rows
+  const statsRows=document.getElementById('lib-stats-rows');
+  if(statsRows){
+    const winRate=LIB.totalPlays>0?Math.round((LIB.wins||0)/LIB.totalPlays*100):0;
+    statsRows.innerHTML=[
+      ['総プレイ回数', `${LIB.totalPlays} 回`],
+      ['クリア回数', `${LIB.wins||0} 回`],
+      ['クリア率', `${winRate}%`],
+      ['熟練クリア', `${LIB.hardWins||0} 回`],
+      ['総カード使用数', `${LIB.totalCards||0} 枚`],
+      ['総強化回数', `${LIB.totalUpgrades||0} 回`],
+    ].map(([k,v])=>`<div class="stats-row"><span>${k}</span><span class="sv">${v}</span></div>`).join('');
+  }
+
+  // Achievements
+  const achGrid=document.getElementById('lib-ach-grid');
+  if(achGrid){
+    achGrid.innerHTML=ACHIEVEMENTS.map(a=>{
+      const unlocked=checkAchievementStatus(a);
+      return`<div class="ach-item ${unlocked?'unlocked':'locked'}"><div class="ai-icon">${a.icon}</div><div><div class="ai-name">${a.name}</div><div class="ai-cond">${a.desc}</div></div></div>`;
+    }).join('');
+  }
   const items=[
-    {icon:'📚',name:'基本カード 8種',desc:'学びの旅の基礎カード',always:true},
-    {icon:'📖',name:'プロジェクト「学びの場をつくる」',desc:'★☆☆ — 最初から利用可能',always:true},
-    {icon:'❓',name:'プロジェクト「問いを届ける」',desc:'★☆☆ — 最初から利用可能',always:true},
-    ...(LIB.upgradedCards.length>0?[{icon:'✨',name:`強化カード ${LIB.upgradedCards.length}種`,desc:LIB.upgradedCards.map(id=>BASE_CARDS.find(c=>c.id===id)?.name||id).join('、'),always:false}]:[]),
+    {icon:'📚',name:'基本カード 8種',desc:'学びの旅の基礎',always:true},
+    ...(LIB.upgradedCards.length>0?[{icon:'✨',name:`強化カード ${LIB.upgradedCards.length}種`,desc:LIB.upgradedCards.map(id=>{const c=[...BASE_CARDS,...UNLOCK_CARDS].find(x=>x.id===id);return c?.name||id;}).join('、'),always:false}]:[]),
     ...LIB.unlockedEndings.map(id=>{const e=ENDINGS.find(x=>x.id===id);return{icon:e.emblem,name:`エンディング：${e.label}`,desc:e.title,always:false};}),
+    ...LIB.unlockedSkills.map(id=>{const s=SKILLS.find(x=>x.id===id);return{icon:s.icon,name:`スキル：${s.name}`,desc:s.desc,always:false};}),
   ];
   items.forEach(item=>{
     const el=document.createElement('div');el.className='unlocked-item';
-    el.innerHTML=`<span class="ui-icon">${item.icon}</span><div><div class="ui-name">${item.name}</div><div class="ui-desc">${item.desc}</div></div>${!item.always?'<span class="ui-new">NEW</span>':''}`;
+    el.innerHTML=`<span class="ui-icon">${item.icon}</span><div><div class="ui-name">${item.name}</div><div class="ui-desc">${item.desc}</div></div>${!item.always?'<span class="ui-new">✓</span>':''}`;
     list.appendChild(el);
   });
 }
+
+function resetLib(){
+  if(!confirm('全データをリセットしますか？'))return;
+  LIB=initLib();saveLib();renderLibrary();renderTitle();
+}
+
 function goToTitle(){renderTitle();show('screen-title');}
 function restartDirect(){renderTitle();show('screen-title');}
 
-// ═══════ UTILS ═══════
+// ══════════════════════════════════════════
+//  PHASE 4: EPILOGUES
+// ══════════════════════════════════════════
+const EPILOGUES = {
+  awakened: {
+    P1: 'その学びの場からは、何年も後に、一人の探求者が生まれた。あなたがつくった場所は、今もそこにある。',
+    P2: 'あなたが届けた問いは、誰かの人生を静かに変えた。その連鎖はまだ続いている。',
+    P3: '失敗を讃えるその文化は、やがて一つの運動になった。',
+    P4: '知の地図は、次の探求者たちの羅針盤になった。',
+    P5: '育てた探求者たちは、それぞれの旅を始めた。あなたの旅は、彼らの中に生き続ける。',
+    P6: '学びの連鎖は、世界を少しだけ、確かに変えた。',
+    default: 'あなたの旅は、誰かの未来に繋がっている。'
+  },
+  researcher: {
+    default: '孤独な研究室で発見したものは、100年後に世界を変えるかもしれない。'
+  },
+  transmitter: {
+    default: 'あなたが最初に伝えた言葉が、今では誰かの口から語り継がれている。'
+  },
+  experimenter: {
+    default: '失敗のログは、次の実験者への最高の贈り物だ。'
+  },
+  giant: {
+    P6: '学びの連鎖を起こしたあなたは、知の歴史に名を刻んだ。しかし真の巨人は、それを誰にも語らない。',
+    default: '山の頂に立った。そこから見える次の山が、また遠くに輝いていた。'
+  },
+  unfinished: {
+    default: '未完のまま置かれた問いは、いつか誰かが拾い上げる。それもまた、学びの連鎖だ。'
+  }
+};
+
+// ══════════════════════════════════════════
+//  PHASE 4: ACHIEVEMENTS
+// ══════════════════════════════════════════
+const ACHIEVEMENTS = [
+  {id:'ACH1', icon:'🎯', name:'初めての完成',      desc:'プロジェクトを1回クリア',       cond:()=>(LIB.wins||0)>=1},
+  {id:'ACH2', icon:'🔥', name:'熟練の探求者',      desc:'熟練難易度でクリア',             cond:()=>(LIB.hardWins||0)>=1},
+  {id:'ACH3', icon:'💎', name:'欠片コレクター',    desc:'欠片を20個以上集める',           cond:()=>LIB.shards>=20},
+  {id:'ACH4', icon:'✨', name:'強化の達人',         desc:'カードを10枚強化する',           cond:()=>(LIB.totalUpgrades||0)>=10},
+  {id:'ACH5', icon:'📚', name:'カード収集家',       desc:'カードを100枚使う',              cond:()=>(LIB.totalCards||0)>=100},
+  {id:'ACH6', icon:'🏛️', name:'図書館の守護者',    desc:'図書館をLv3以上にする',          cond:()=>LIB.level>=3},
+  {id:'ACH7', icon:'🌟', name:'覚醒',               desc:'探求者の覚醒エンディングに到達', cond:()=>LIB.unlockedEndings.includes('awakened')},
+  {id:'ACH8', icon:'🏔️', name:'知の巨人',           desc:'知の巨人エンディングに到達',     cond:()=>LIB.unlockedEndings.includes('giant')},
+  {id:'ACH9', icon:'🔭', name:'孤高の研究者',       desc:'孤独な研究者エンディングに到達', cond:()=>LIB.unlockedEndings.includes('researcher')},
+  {id:'ACH10',icon:'🌈', name:'コンプリーター',     desc:'全エンディングを解放する',        cond:()=>ENDINGS.every(e=>LIB.unlockedEndings.includes(e.id))},
+];
+
+function checkAchievementStatus(a){return a.cond();}
+function checkAchievements(){
+  if(!LIB.achievements)LIB.achievements=[];
+  const newOnes=[];
+  ACHIEVEMENTS.forEach(a=>{
+    if(!LIB.achievements.includes(a.id)&&a.cond()){
+      LIB.achievements.push(a.id);newOnes.push(a);
+    }
+  });
+  if(newOnes.length)saveLib();
+  return newOnes;
+}
+
+// ══════════════════════════════════════════
+//  PHASE 4: PARTICLE SYSTEM
+// ══════════════════════════════════════════
+const _pCanvas=()=>document.getElementById('particle-canvas');
+let _particles=[];
+let _pRaf=null;
+
+function initParticleCanvas(){
+  const c=_pCanvas();if(!c)return;
+  c.width=window.innerWidth;c.height=window.innerHeight;
+}
+window.addEventListener('resize',initParticleCanvas);
+initParticleCanvas();
+
+function spawnCardParticles(card){
+  const c=_pCanvas();if(!c)return;
+  const bar=document.getElementById('res-bar');
+  const rect=bar?bar.getBoundingClientRect():{top:window.innerHeight/2,left:window.innerWidth/2,width:0,height:0};
+  const colors=card.gain?Object.keys(card.gain).map(k=>{
+    const m=RES_META[k];
+    return m?m.color.replace('var(--c-q)','#a78bfa').replace('var(--c-h)','#60a5fa').replace('var(--c-e)','#f97316').replace('var(--c-d)','#facc15').replace('var(--c-r)','#34d399'):'#f5c842';
+  }):['#f5c842'];
+  const cx=rect.left+rect.width/2;const cy=rect.top+rect.height/2;
+  for(let i=0;i<18;i++){
+    const angle=Math.random()*Math.PI*2;const speed=2+Math.random()*4;
+    _particles.push({x:cx,y:cy,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed-2,life:1,decay:0.025+Math.random()*0.02,size:4+Math.random()*6,color:colors[Math.floor(Math.random()*colors.length)]});
+  }
+  // Floating number
+  if(card.gain){
+    const total=Object.values(card.gain).reduce((a,b)=>a+b,0);
+    spawnFloatNum(`+${total}`,cx,cy-20,'#f5c842');
+  }
+  if(!_pRaf)runParticles();
+}
+
+function spawnFloatNum(text,x,y,color){
+  const el=document.createElement('div');
+  el.className='float-num';
+  el.style.cssText=`left:${x}px;top:${y}px;color:${color};`;
+  el.textContent=text;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),950);
+}
+
+function runParticles(){
+  const c=_pCanvas();if(!c){_pRaf=null;return;}
+  const ctx=c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  _particles=_particles.filter(p=>{
+    p.x+=p.vx;p.y+=p.vy;p.vy+=0.15;p.life-=p.decay;
+    ctx.save();ctx.globalAlpha=Math.max(0,p.life);
+    ctx.fillStyle=p.color;ctx.shadowColor=p.color;ctx.shadowBlur=8;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();
+    ctx.restore();
+    return p.life>0;
+  });
+  _pRaf=_particles.length>0?requestAnimationFrame(runParticles):null;
+}
+
+// ══════════════════════════════════════════
+//  PHASE 4: STARFALL (ending)
+// ══════════════════════════════════════════
+let _sfRaf=null;
+function startStarfall(){
+  const c=_pCanvas();if(!c)return;
+  c.width=window.innerWidth;c.height=window.innerHeight;
+  const stars=Array.from({length:60},()=>({x:Math.random()*c.width,y:-20-Math.random()*200,vx:(Math.random()-.5)*.5,vy:1+Math.random()*2,size:1.5+Math.random()*2.5,life:1,decay:.004+Math.random()*.004}));
+  function tick(){
+    const ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);
+    let alive=false;
+    stars.forEach(s=>{
+      s.x+=s.vx;s.y+=s.vy;s.life-=s.decay;
+      if(s.life<=0)return;
+      alive=true;
+      ctx.save();ctx.globalAlpha=s.life;ctx.fillStyle='#f5c842';ctx.shadowColor='#f5c842';ctx.shadowBlur=6;
+      ctx.beginPath();ctx.arc(s.x,s.y,s.size,0,Math.PI*2);ctx.fill();
+      ctx.restore();
+    });
+    if(alive)_sfRaf=requestAnimationFrame(tick);
+    else{ctx.clearRect(0,0,c.width,c.height);_sfRaf=null;}
+  }
+  tick();
+}
+
+// ══════════════════════════════════════════
+//  PHASE 4: GIANT SPECIAL EFFECT
+// ══════════════════════════════════════════
+let _gRaf=null;
+function startGiantEffect(){
+  const c=document.getElementById('giant-canvas');if(!c)return;
+  c.style.display='block';c.width=window.innerWidth;c.height=window.innerHeight;
+  const ctx=c.getContext('2d');
+  const pts=Array.from({length:80},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:1+Math.random()*3,hue:Math.random()*60+30,phase:Math.random()*Math.PI*2,speed:.02+Math.random()*.03}));
+  let frame=0;
+  function tick(){
+    ctx.clearRect(0,0,c.width,c.height);
+    pts.forEach(p=>{
+      p.phase+=p.speed;const alpha=0.4+Math.sin(p.phase)*0.4;
+      ctx.save();ctx.globalAlpha=Math.max(0,alpha);
+      ctx.fillStyle=`hsl(${p.hue},90%,70%)`;ctx.shadowColor=`hsl(${p.hue},90%,70%)`;ctx.shadowBlur=12;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();ctx.restore();
+    });
+    frame++;
+    if(frame<300)_gRaf=requestAnimationFrame(tick);
+    else{ctx.clearRect(0,0,c.width,c.height);c.style.display='none';}
+  }
+  tick();
+  startStarfall();
+}
+
+// ══════════════════════════════════════════
+//  PHASE 4: SHARD BURST
+// ══════════════════════════════════════════
+function showShardBurst(amount, endingLabel, cb){
+  const burst=document.getElementById('shard-burst');
+  const prev=LIB.shards-amount;
+  const lvBefore=getLvForShards(prev);
+  const lvAfter=LIB.level;
+  document.getElementById('sb-val').textContent=`+${amount}`;
+  document.getElementById('sb-sub').textContent=lvAfter>lvBefore?`🎉 図書館が Lv${lvAfter} にアップ！`:`合計 ${LIB.shards} 個`;
+  burst.style.display='block';
+  // Spawn particle burst at center
+  for(let i=0;i<24;i++){
+    const angle=Math.random()*Math.PI*2;const speed=3+Math.random()*5;
+    _particles.push({x:window.innerWidth/2,y:window.innerHeight/2,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed-3,life:1,decay:.018,size:5+Math.random()*7,color:'#93c5fd'});
+  }
+  if(!_pRaf)runParticles();
+  setTimeout(()=>{burst.style.display='none';cb();},1800);
+}
+
+function getLvForShards(s){
+  let lv=1;LIB_LEVELS.forEach(l=>{if(s>=l.need)lv=l.lv;});return lv;
+}
+
+// ══════════════════════════════════════════
+//  UTILS
+// ══════════════════════════════════════════
 function isComplete(){return Object.entries(G.project.cost).every(([k,v])=>(G.progress[k]||0)>=v);}
 function calcPct(){const cost=G.project.cost;const total=Object.values(cost).reduce((a,b)=>a+b,0);const done=Object.entries(cost).reduce((a,[k,v])=>a+Math.min(v,G.progress[k]||0),0);return Math.round((done/total)*100);}
 function canAfford(cost){if(!cost)return true;return Object.entries(cost).every(([k,v])=>(G.resources[k]||0)>=v);}
@@ -975,7 +1477,9 @@ function pulseChip(key){const el=document.getElementById(`chip-${key}`);if(!el)r
 function addLog(icon,text){const entry=`${icon} ${text}`;G.log.unshift(entry);const list=document.getElementById('log-list');const row=document.createElement('div');row.className='log-row';row.textContent=entry;list.insertBefore(row,list.firstChild);}
 function showPhaseBanner(name){const b=document.getElementById('phase-banner');b.innerHTML=name.replace('\n','<br>');b.classList.add('show');setTimeout(()=>b.classList.remove('show'),2400);}
 
-// ═══════ INIT ═══════
+// ══════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════
 G={};
 renderTitle();
 show('screen-title');
