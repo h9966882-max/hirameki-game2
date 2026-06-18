@@ -8,569 +8,346 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap');
 
 :root {
-  /* Night & depth */
-  --bg:        #0e1420;
-  --bg-mid:    #151e30;
-  --bg-panel:  #1a2438;
-  --border:    rgba(140,180,255,0.15);
+  --bg:#0e1420; --bg-mid:#151e30; --bg-panel:#1a2438; --border:rgba(140,180,255,0.15);
+  --parch:#f5eedc; --parch-mid:#e8ddc0; --parch-drk:#d4c498; --ink:#2a1e0e; --ink-soft:#5a4830;
+  --c-question:#a78bfa; --c-hypothesis:#60a5fa; --c-experiment:#f97316; --c-discovery:#facc15; --c-resonance:#34d399;
+  --gold:#d4a017; --gold-lt:#f5c842; --glow-gold:rgba(212,160,23,0.35);
+  --lib:#1e3a5f; --lib-lt:#2a5080;
+  --radius:14px; --radius-sm:9px; --shadow:0 4px 24px rgba(0,0,0,0.45);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'Noto Sans JP',sans-serif;color:var(--parch);min-height:100vh;overflow-x:hidden;}
 
-  /* Ink & parchment */
-  --parch:     #f5eedc;
-  --parch-mid: #e8ddc0;
-  --parch-drk: #d4c498;
-  --ink:       #2a1e0e;
-  --ink-soft:  #5a4830;
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none;background:
+  radial-gradient(ellipse at 30% 20%,#1e2f55 0%,#0e1420 60%),
+  radial-gradient(1.5px 1.5px at 15% 25%,rgba(200,220,255,.8) 0%,transparent 100%),
+  radial-gradient(1px 1px at 55% 8%,rgba(200,220,255,.6) 0%,transparent 100%),
+  radial-gradient(1.5px 1.5px at 80% 45%,rgba(200,220,255,.7) 0%,transparent 100%),
+  radial-gradient(1px 1px at 8% 65%,rgba(200,220,255,.5) 0%,transparent 100%),
+  radial-gradient(1px 1px at 42% 80%,rgba(200,220,255,.6) 0%,transparent 100%),
+  radial-gradient(1.5px 1.5px at 88% 70%,rgba(200,220,255,.8) 0%,transparent 100%),
+  radial-gradient(1px 1px at 60% 40%,rgba(200,220,255,.4) 0%,transparent 100%),
+  radial-gradient(1px 1px at 25% 55%,rgba(200,220,255,.5) 0%,transparent 100%),
+  radial-gradient(1.5px 1.5px at 70% 18%,rgba(200,220,255,.7) 0%,transparent 100%),
+  radial-gradient(1px 1px at 38% 12%,rgba(200,220,255,.6) 0%,transparent 100%);}
 
-  /* Resource colors */
-  --c-question:   #a78bfa; /* 疑問 — soft purple */
-  --c-hypothesis: #60a5fa; /* 仮説 — sky blue */
-  --c-experiment: #f97316; /* 実験 — orange */
-  --c-discovery:  #facc15; /* 発見 — gold */
-  --c-resonance:  #34d399; /* 共鳴 — mint */
+.screen{position:fixed;inset:0;z-index:10;overflow-y:auto;}
+.screen.hidden{display:none!important;}
 
-  /* Accent */
-  --gold:      #d4a017;
-  --gold-lt:   #f5c842;
-  --glow-gold: rgba(212,160,23,0.35);
+/* ── TITLE ── */
+#screen-title{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;background:radial-gradient(ellipse at 50% 35%,#1e2f55 0%,#0e1420 100%);transition:opacity .8s ease;}
+#screen-title.fade{opacity:0;pointer-events:none;}
+.title-glyph{font-size:48px;margin-bottom:16px;animation:float 4s ease-in-out infinite alternate;}
+@keyframes float{from{transform:translateY(0) rotate(-4deg);}to{transform:translateY(-12px) rotate(4deg);}}
+.title-main{font-family:'Noto Serif JP',serif;font-size:clamp(24px,5.5vw,44px);font-weight:900;color:var(--gold-lt);text-shadow:0 2px 28px var(--glow-gold);letter-spacing:.06em;line-height:1.45;margin-bottom:8px;animation:glow 3s ease-in-out infinite alternate;}
+@keyframes glow{from{text-shadow:0 2px 20px rgba(212,160,23,.5);}to{text-shadow:0 2px 36px rgba(212,160,23,1),0 0 80px rgba(212,160,23,.35);}}
+.title-sub{font-family:'Noto Serif JP',serif;font-size:13px;color:rgba(245,238,220,.55);letter-spacing:.18em;margin-bottom:10px;}
+.title-phase-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.14em;background:rgba(100,140,255,.15);border:1px solid rgba(100,140,255,.35);border-radius:20px;padding:4px 14px;color:#93c5fd;margin-bottom:28px;}
+.title-tagline{font-size:13px;color:rgba(245,238,220,.5);max-width:300px;line-height:1.9;margin-bottom:32px;}
+.library-preview{background:rgba(30,58,95,.6);border:1px solid rgba(100,150,255,.25);border-radius:var(--radius);padding:16px 20px;margin-bottom:24px;max-width:360px;width:100%;text-align:left;backdrop-filter:blur(8px);}
+.lib-preview-title{font-family:'Noto Serif JP',serif;font-size:13px;color:#93c5fd;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.lib-level-bar{background:rgba(255,255,255,.08);border-radius:8px;height:8px;overflow:hidden;margin-bottom:8px;}
+.lib-level-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,#3b82f6,#93c5fd);transition:width .8s cubic-bezier(.4,0,.2,1);box-shadow:0 0 8px rgba(147,197,253,.5);}
+.lib-stats{display:flex;gap:16px;font-size:12px;color:rgba(245,238,220,.6);}
+.lib-stat-val{font-weight:700;color:var(--gold-lt);}
+.project-select-label{font-family:'Noto Serif JP',serif;font-size:14px;color:var(--gold-lt);margin-bottom:12px;letter-spacing:.06em;}
+.project-choices{display:flex;flex-direction:column;gap:9px;width:100%;max-width:380px;margin-bottom:24px;}
+.project-choice{background:rgba(245,238,220,.05);border:1.5px solid rgba(212,160,23,.28);border-radius:var(--radius-sm);padding:12px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s ease;text-align:left;}
+.project-choice:hover{background:rgba(212,160,23,.12);border-color:rgba(245,200,66,.6);transform:translateX(4px);}
+.project-choice.selected{background:rgba(212,160,23,.18);border-color:var(--gold-lt);box-shadow:0 0 0 2px rgba(245,200,66,.2);transform:translateX(4px);}
+.pc-icon{font-size:24px;flex-shrink:0;}.pc-name{font-family:'Noto Serif JP',serif;font-size:13px;font-weight:700;color:var(--parch);}
+.pc-desc{font-size:11px;color:rgba(245,238,220,.5);margin-top:2px;line-height:1.5;}.pc-diff{font-size:10px;margin-top:3px;color:var(--gold-lt);}
 
-  /* Library blue */
-  --lib:       #1e3a5f;
-  --lib-lt:    #2a5080;
-
-  --radius:    14px;
-  --radius-sm: 9px;
-  --shadow:    0 4px 24px rgba(0,0,0,0.45);
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  background: var(--bg);
-  font-family: 'Noto Sans JP', sans-serif;
-  color: var(--parch);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* ── STARFIELD ── */
-#stars {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background:
-    radial-gradient(ellipse at 30% 20%, #1e2f55 0%, #0e1420 60%),
-    radial-gradient(1.5px 1.5px at 15% 25%, rgba(200,220,255,0.8) 0%, transparent 100%),
-    radial-gradient(1px   1px   at 55% 8%,  rgba(200,220,255,0.6) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 80% 45%, rgba(200,220,255,0.7) 0%, transparent 100%),
-    radial-gradient(1px   1px   at 8%  65%, rgba(200,220,255,0.5) 0%, transparent 100%),
-    radial-gradient(1px   1px   at 42% 80%, rgba(200,220,255,0.6) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 88% 70%, rgba(200,220,255,0.8) 0%, transparent 100%),
-    radial-gradient(1px   1px   at 60% 40%, rgba(200,220,255,0.4) 0%, transparent 100%),
-    radial-gradient(1px   1px   at 25% 55%, rgba(200,220,255,0.5) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 70% 18%, rgba(200,220,255,0.7) 0%, transparent 100%),
-    radial-gradient(1px   1px   at 38% 12%, rgba(200,220,255,0.6) 0%, transparent 100%);
-}
-
-/* ── SCREENS ── */
-.screen { position: fixed; inset: 0; z-index: 10; overflow-y: auto; }
-.screen.hidden { display: none !important; }
-
-/* ── TITLE SCREEN ── */
-#screen-title {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 40px 24px; text-align: center;
-  background: radial-gradient(ellipse at 50% 35%, #1e2f55 0%, #0e1420 100%);
-  transition: opacity 0.8s ease;
-}
-#screen-title.fade { opacity: 0; pointer-events: none; }
-
-.title-glyph { font-size: 48px; margin-bottom: 16px; animation: float 4s ease-in-out infinite alternate; }
-@keyframes float { from { transform: translateY(0) rotate(-4deg); } to { transform: translateY(-12px) rotate(4deg); } }
-
-.title-main {
-  font-family: 'Noto Serif JP', serif;
-  font-size: clamp(24px, 5.5vw, 44px); font-weight: 900;
-  color: var(--gold-lt);
-  text-shadow: 0 2px 28px var(--glow-gold), 0 0 60px rgba(212,160,23,0.2);
-  letter-spacing: 0.06em; line-height: 1.45; margin-bottom: 8px;
-  animation: glow 3s ease-in-out infinite alternate;
-}
-@keyframes glow {
-  from { text-shadow: 0 2px 20px rgba(212,160,23,0.5); }
-  to   { text-shadow: 0 2px 36px rgba(212,160,23,1.0), 0 0 80px rgba(212,160,23,0.35); }
-}
-.title-sub {
-  font-family: 'Noto Serif JP', serif; font-size: 13px;
-  color: rgba(245,238,220,0.55); letter-spacing: 0.18em; margin-bottom: 10px;
-}
-.title-phase-badge {
-  display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
-  background: rgba(100,140,255,0.15); border: 1px solid rgba(100,140,255,0.35);
-  border-radius: 20px; padding: 4px 14px; color: #93c5fd; margin-bottom: 32px;
-}
-.title-tagline {
-  font-size: 13px; color: rgba(245,238,220,0.5);
-  max-width: 300px; line-height: 1.9; margin-bottom: 36px;
-}
-
-/* Library preview on title */
-.library-preview {
-  background: rgba(30,58,95,0.6);
-  border: 1px solid rgba(100,150,255,0.25);
-  border-radius: var(--radius); padding: 16px 20px; margin-bottom: 28px;
-  max-width: 360px; width: 100%; text-align: left;
-  backdrop-filter: blur(8px);
-}
-.lib-preview-title {
-  font-family: 'Noto Serif JP', serif; font-size: 13px; color: #93c5fd;
-  margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
-}
-.lib-level-bar {
-  background: rgba(255,255,255,0.08); border-radius: 8px; height: 8px; overflow: hidden; margin-bottom: 8px;
-}
-.lib-level-fill {
-  height: 100%; border-radius: 8px;
-  background: linear-gradient(90deg, #3b82f6, #93c5fd);
-  transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
-  box-shadow: 0 0 8px rgba(147,197,253,0.5);
-}
-.lib-stats { display: flex; gap: 16px; font-size: 12px; color: rgba(245,238,220,0.6); }
-.lib-stat-val { font-weight: 700; color: var(--gold-lt); }
-
-/* Project choices */
-.project-select-label {
-  font-family: 'Noto Serif JP', serif; font-size: 14px; color: var(--gold-lt);
-  margin-bottom: 12px; letter-spacing: 0.06em;
-}
-.project-choices { display: flex; flex-direction: column; gap: 9px; width: 100%; max-width: 380px; margin-bottom: 24px; }
-.project-choice {
-  background: rgba(245,238,220,0.05); border: 1.5px solid rgba(212,160,23,0.28);
-  border-radius: var(--radius-sm); padding: 12px 16px;
-  display: flex; align-items: center; gap: 12px;
-  cursor: pointer; transition: all 0.2s ease; text-align: left;
-}
-.project-choice:hover { background: rgba(212,160,23,0.12); border-color: rgba(245,200,66,0.6); transform: translateX(4px); }
-.project-choice.selected { background: rgba(212,160,23,0.18); border-color: var(--gold-lt); box-shadow: 0 0 0 2px rgba(245,200,66,0.2); transform: translateX(4px); }
-.pc-icon { font-size: 24px; flex-shrink: 0; }
-.pc-name { font-family: 'Noto Serif JP', serif; font-size: 13px; font-weight: 700; color: var(--parch); }
-.pc-desc { font-size: 11px; color: rgba(245,238,220,0.5); margin-top: 2px; line-height: 1.5; }
-.pc-diff { font-size: 10px; margin-top: 3px; color: var(--gold-lt); }
-
-/* Buttons */
-.btn {
-  font-family: 'Noto Serif JP', serif; font-weight: 700; font-size: 14px;
-  padding: 12px 28px; border-radius: 999px; border: none; cursor: pointer;
-  transition: all 0.22s ease; letter-spacing: 0.06em; position: relative; overflow: hidden;
-}
-.btn::after { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0); transition: 0.2s; }
-.btn:hover::after { background: rgba(255,255,255,0.1); }
-.btn-gold {
-  background: linear-gradient(135deg, #c8900e 0%, var(--gold-lt) 100%);
-  color: #1a1000; box-shadow: 0 4px 18px var(--glow-gold), 0 1px 0 rgba(255,255,255,0.3) inset;
-}
-.btn-gold:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 24px var(--glow-gold); }
-.btn-ghost { background: rgba(245,238,220,0.08); border: 1.5px solid rgba(245,238,220,0.3) !important; color: rgba(245,238,220,0.8); }
-.btn-ghost:hover { background: rgba(245,238,220,0.14); }
-.btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none !important; }
+/* ── BUTTONS ── */
+.btn{font-family:'Noto Serif JP',serif;font-weight:700;font-size:14px;padding:12px 28px;border-radius:999px;border:none;cursor:pointer;transition:all .22s ease;letter-spacing:.06em;position:relative;overflow:hidden;}
+.btn::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,0);transition:.2s;}
+.btn:hover::after{background:rgba(255,255,255,.1);}
+.btn-gold{background:linear-gradient(135deg,#c8900e 0%,var(--gold-lt) 100%);color:#1a1000;box-shadow:0 4px 18px var(--glow-gold),0 1px 0 rgba(255,255,255,.3) inset;}
+.btn-gold:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 24px var(--glow-gold);}
+.btn-ghost{background:rgba(245,238,220,.08);border:1.5px solid rgba(245,238,220,.3)!important;color:rgba(245,238,220,.8);}
+.btn-ghost:hover{background:rgba(245,238,220,.14);}
+.btn-green{background:linear-gradient(135deg,#166534,#22c55e);color:#fff;box-shadow:0 4px 18px rgba(34,197,94,.3);}
+.btn-green:hover:not(:disabled){transform:translateY(-2px);}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none!important;}
 
 /* ── GAME SCREEN ── */
-#screen-game {
-  background: transparent;
-  z-index: 5;
-}
-#game-inner {
-  position: relative; z-index: 1;
-  max-width: 860px; margin: 0 auto; padding: 18px 14px 48px;
-}
+#screen-game{background:transparent;z-index:5;}
+#game-inner{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:18px 14px 48px;}
+#turn-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
+.phase-pill{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(120deg,#1e3a5f,#2a5080);border:1px solid rgba(100,160,255,.3);border-radius:999px;padding:5px 14px;font-size:11px;font-weight:700;color:#93c5fd;letter-spacing:.05em;}
+.turn-counter{font-family:'Noto Serif JP',serif;font-size:13px;color:rgba(245,238,220,.7);}
+.status-hint{font-size:11px;color:rgba(245,238,220,.45);font-style:italic;}
+#narrator{background:rgba(14,20,32,.82);border:1px solid rgba(140,180,255,.18);border-radius:var(--radius);padding:12px 16px;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start;backdrop-filter:blur(6px);}
+#narrator .n-icon{font-size:20px;flex-shrink:0;margin-top:1px;}
+#narrator .n-text{font-family:'Noto Serif JP',serif;font-size:13px;color:rgba(245,238,220,.85);line-height:1.85;font-style:italic;}
 
-/* Turn bar */
-#turn-bar {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 12px; flex-wrap: wrap; gap: 8px;
-}
-.phase-pill {
-  display: inline-flex; align-items: center; gap: 5px;
-  background: linear-gradient(120deg, #1e3a5f, #2a5080);
-  border: 1px solid rgba(100,160,255,0.3);
-  border-radius: 999px; padding: 5px 14px;
-  font-size: 11px; font-weight: 700; color: #93c5fd; letter-spacing: 0.05em;
-}
-.turn-counter {
-  font-family: 'Noto Serif JP', serif; font-size: 13px;
-  color: rgba(245,238,220,0.7);
-}
-.status-hint {
-  font-size: 11px; color: rgba(245,238,220,0.45);
-  font-style: italic;
-}
+/* ── MAP (Phase 2: node types) ── */
+#map-wrap{background:linear-gradient(155deg,#1a3a20 0%,#102810 25%,#102040 55%,#080e28 80%,#1a1200 100%);border-radius:var(--radius);padding:16px 14px 54px;margin-bottom:14px;box-shadow:inset 0 2px 10px rgba(0,0,0,.5),var(--shadow);position:relative;}
+.map-zone-labels{display:flex;justify-content:space-between;margin-bottom:10px;}
+.mzl{font-family:'Noto Serif JP',serif;font-size:9px;color:rgba(245,238,220,.7);text-align:center;width:22%;text-shadow:0 1px 4px rgba(0,0,0,.9);}
+.mzl span{display:block;font-size:16px;margin-bottom:2px;}
+#path{display:flex;align-items:center;position:relative;}
+.step{width:36px;height:36px;border-radius:50%;flex-shrink:0;border:2px solid rgba(212,160,23,.4);background:rgba(212,160,23,.08);display:flex;align-items:center;justify-content:center;font-size:16px;color:rgba(245,200,66,.6);font-weight:700;transition:all .4s ease;position:relative;cursor:default;}
+.step.done{background:rgba(212,160,23,.35);border-color:var(--gold-lt);box-shadow:0 0 8px rgba(212,160,23,.4);}
+.step.here{background:rgba(212,160,23,.6);border-color:#fff;box-shadow:0 0 20px rgba(255,230,80,.8);}
+/* Node type styles */
+.step.type-normal{}
+.step.type-event{border-color:rgba(249,115,22,.7);background:rgba(249,115,22,.15);}
+.step.type-rest{border-color:rgba(52,211,153,.7);background:rgba(52,211,153,.15);}
+.step.type-trial{border-color:rgba(239,68,68,.7);background:rgba(239,68,68,.15);}
+.step.type-discover{border-color:rgba(250,204,21,.7);background:rgba(250,204,21,.15);}
+.step.type-goal{border-color:var(--gold-lt);background:rgba(212,160,23,.3);}
+.step-tooltip{position:absolute;bottom:-28px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:9px;color:rgba(245,238,220,.7);background:rgba(14,20,32,.9);padding:2px 6px;border-radius:6px;pointer-events:none;z-index:20;}
+.connector{flex:1;height:2px;background:rgba(212,160,23,.2);min-width:3px;border-radius:2px;}
+.connector.done{background:linear-gradient(90deg,var(--gold),rgba(212,160,23,.4));}
+#pawn{position:absolute;font-size:24px;bottom:14px;transition:left .75s cubic-bezier(.34,1.56,.64,1);filter:drop-shadow(0 2px 8px rgba(0,0,0,.6));pointer-events:none;z-index:5;}
 
-/* Narrator */
-#narrator {
-  background: rgba(14,20,32,0.82); border: 1px solid rgba(140,180,255,0.18);
-  border-radius: var(--radius); padding: 12px 16px; margin-bottom: 14px;
-  display: flex; gap: 10px; align-items: flex-start;
-  backdrop-filter: blur(6px);
-}
-#narrator .n-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
-#narrator .n-text {
-  font-family: 'Noto Serif JP', serif; font-size: 13px;
-  color: rgba(245,238,220,0.85); line-height: 1.85; font-style: italic;
-}
+/* Map legend */
+.map-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;padding:0 2px;}
+.ml-item{display:flex;align-items:center;gap:4px;font-size:10px;color:rgba(245,238,220,.55);}
+.ml-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 
-/* Map */
-#map-wrap {
-  background: linear-gradient(155deg, #1a3a20 0%, #102810 25%, #102040 55%, #080e28 80%, #1a1200 100%);
-  border-radius: var(--radius); padding: 16px 14px 14px; margin-bottom: 14px;
-  box-shadow: inset 0 2px 10px rgba(0,0,0,0.5), var(--shadow);
-}
-.map-zone-labels { display: flex; justify-content: space-between; margin-bottom: 10px; }
-.mzl { font-family: 'Noto Serif JP', serif; font-size: 9px; color: rgba(245,238,220,0.7); text-align: center; width: 22%; text-shadow: 0 1px 4px rgba(0,0,0,0.9); }
-.mzl span { display: block; font-size: 16px; margin-bottom: 2px; }
+/* ── RESOURCES ── */
+#res-bar{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap;}
+.res-chip{background:rgba(14,20,32,.7);border:1.5px solid rgba(255,255,255,.1);border-radius:999px;padding:6px 12px 6px 9px;display:flex;align-items:center;gap:5px;backdrop-filter:blur(4px);transition:all .3s ease;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+.res-chip .rc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.res-chip .rc-name{font-size:11px;color:rgba(245,238,220,.6);}
+.res-chip .rc-val{font-family:'Noto Serif JP',serif;font-size:17px;font-weight:900;min-width:18px;text-align:right;}
+.res-chip.pulse{animation:chip-pulse .45s ease;}
+@keyframes chip-pulse{0%{transform:scale(1);}45%{transform:scale(1.22);box-shadow:0 0 20px rgba(255,255,255,.3);}100%{transform:scale(1);}}
+.rc-question{border-color:rgba(167,139,250,.4);}.rc-question .rc-dot{background:var(--c-question);box-shadow:0 0 6px var(--c-question);}.rc-question .rc-val{color:var(--c-question);}
+.rc-hypothesis{border-color:rgba(96,165,250,.4);}.rc-hypothesis .rc-dot{background:var(--c-hypothesis);box-shadow:0 0 6px var(--c-hypothesis);}.rc-hypothesis .rc-val{color:var(--c-hypothesis);}
+.rc-experiment{border-color:rgba(249,115,22,.4);}.rc-experiment .rc-dot{background:var(--c-experiment);box-shadow:0 0 6px var(--c-experiment);}.rc-experiment .rc-val{color:var(--c-experiment);}
+.rc-discovery{border-color:rgba(250,204,21,.4);}.rc-discovery .rc-dot{background:var(--c-discovery);box-shadow:0 0 6px var(--c-discovery);}.rc-discovery .rc-val{color:var(--c-discovery);}
+.rc-resonance{border-color:rgba(52,211,153,.4);}.rc-resonance .rc-dot{background:var(--c-resonance);box-shadow:0 0 6px var(--c-resonance);}.rc-resonance .rc-val{color:var(--c-resonance);}
 
-#path { display: flex; align-items: center; position: relative; }
-.step {
-  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-  border: 2px solid rgba(212,160,23,0.4);
-  background: rgba(212,160,23,0.08);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 9px; color: rgba(245,200,66,0.6); font-weight: 700;
-  transition: all 0.4s ease;
-}
-.step.done { background: rgba(212,160,23,0.35); border-color: var(--gold-lt); box-shadow: 0 0 8px rgba(212,160,23,0.4); }
-.step.here { background: rgba(212,160,23,0.6); border-color: #fff; box-shadow: 0 0 20px rgba(255,230,80,0.8); }
-.connector { flex: 1; height: 2px; background: rgba(212,160,23,0.2); min-width: 3px; border-radius: 2px; }
-.connector.done { background: linear-gradient(90deg, var(--gold), rgba(212,160,23,0.4)); }
-#pawn {
-  position: absolute; font-size: 24px; bottom: 40px;
-  transition: left 0.75s cubic-bezier(0.34,1.56,0.64,1);
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6));
-  pointer-events: none; z-index: 5;
-}
+/* ── CARDS ── */
+.section-label{font-family:'Noto Serif JP',serif;font-size:12px;font-weight:700;color:rgba(245,238,220,.5);letter-spacing:.1em;margin-bottom:9px;display:flex;align-items:center;gap:6px;}
+.section-label::after{content:'';flex:1;height:1px;background:rgba(245,238,220,.1);}
+.cards-row{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:16px;}
+.card{border-radius:var(--radius);padding:14px 12px 12px;width:calc(33.3% - 7px);min-width:100px;cursor:pointer;position:relative;overflow:hidden;transition:transform .22s cubic-bezier(.34,1.3,.64,1),box-shadow .22s ease;border:1.5px solid transparent;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:var(--radius) var(--radius) 0 0;}
+.card:hover:not(.disabled){transform:translateY(-7px) rotate(-.7deg);}
+.card.disabled{opacity:.32;cursor:not-allowed;filter:grayscale(30%);}
+/* Upgrade indicator */
+.card .upgrade-badge{position:absolute;top:6px;right:6px;font-size:9px;font-weight:700;padding:2px 5px;border-radius:6px;background:rgba(52,211,153,.25);color:#34d399;border:1px solid rgba(52,211,153,.4);}
+.card-badge{font-size:9px;font-weight:700;letter-spacing:.12em;margin-bottom:6px;text-transform:uppercase;}
+.card-icon-big{font-size:28px;display:block;margin-bottom:7px;line-height:1;}
+.card-name{font-family:'Noto Serif JP',serif;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:4px;line-height:1.35;}
+.card-desc{font-size:10px;color:var(--ink-soft);line-height:1.55;}
+.card-effects{margin-top:8px;display:flex;flex-wrap:wrap;gap:3px;}
+.eff-tag{font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;background:rgba(0,0,0,.08);}
+.card-cost{margin-top:6px;display:flex;gap:3px;flex-wrap:wrap;}
+.cost-pip{font-size:9px;font-weight:700;padding:2px 5px;border-radius:6px;background:rgba(0,0,0,.1);color:var(--ink-soft);}
+.card-learn{background:linear-gradient(150deg,#fdf6e3 0%,#f0e8c8 100%);border-color:rgba(212,160,23,.4);box-shadow:0 3px 12px rgba(0,0,0,.25),0 1px 0 rgba(255,255,255,.7) inset;}
+.card-learn::before{background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);}
+.card-learn .card-badge{color:#8b6010;}
+.card-action{background:linear-gradient(150deg,#edf8f0 0%,#cde8d4 100%);border-color:rgba(52,160,80,.4);box-shadow:0 3px 12px rgba(0,0,0,.25),0 1px 0 rgba(255,255,255,.6) inset;}
+.card-action::before{background:linear-gradient(90deg,transparent,rgba(100,220,140,.4),transparent);}
+.card-action .card-badge{color:#1a6b30;}
+.card-event{background:linear-gradient(150deg,#fff3e0 0%,#fde5b8 100%);border-color:rgba(220,130,30,.4);box-shadow:0 3px 12px rgba(0,0,0,.25),0 1px 0 rgba(255,255,255,.6) inset;}
+.card-event::before{background:linear-gradient(90deg,transparent,rgba(240,160,60,.4),transparent);}
+.card-event .card-badge{color:#8b4010;}
+/* Rare card glow */
+.card.rare{border-color:rgba(147,197,253,.6);box-shadow:0 3px 16px rgba(147,197,253,.2),0 1px 0 rgba(255,255,255,.6) inset;}
+.card.rare::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(147,197,253,.05),transparent);pointer-events:none;}
 
-/* Resources */
-#res-bar { display: flex; gap: 7px; margin-bottom: 14px; flex-wrap: wrap; }
-.res-chip {
-  background: rgba(14,20,32,0.7);
-  border: 1.5px solid rgba(255,255,255,0.1);
-  border-radius: 999px; padding: 6px 12px 6px 9px;
-  display: flex; align-items: center; gap: 5px;
-  backdrop-filter: blur(4px);
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-.res-chip .rc-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.res-chip .rc-name { font-size: 11px; color: rgba(245,238,220,0.6); }
-.res-chip .rc-val { font-family: 'Noto Serif JP', serif; font-size: 17px; font-weight: 900; min-width: 18px; text-align: right; }
-.res-chip.pulse { animation: chip-pulse 0.45s ease; }
-@keyframes chip-pulse {
-  0%   { transform: scale(1); }
-  45%  { transform: scale(1.22); box-shadow: 0 0 20px rgba(255,255,255,0.3); }
-  100% { transform: scale(1); }
-}
-.rc-question   { border-color: rgba(167,139,250,0.4); } .rc-question   .rc-dot { background: var(--c-question); box-shadow: 0 0 6px var(--c-question); }   .rc-question   .rc-val { color: var(--c-question); }
-.rc-hypothesis { border-color: rgba(96,165,250,0.4); }  .rc-hypothesis .rc-dot { background: var(--c-hypothesis); box-shadow: 0 0 6px var(--c-hypothesis); } .rc-hypothesis .rc-val { color: var(--c-hypothesis); }
-.rc-experiment { border-color: rgba(249,115,22,0.4); }  .rc-experiment .rc-dot { background: var(--c-experiment); box-shadow: 0 0 6px var(--c-experiment); } .rc-experiment .rc-val { color: var(--c-experiment); }
-.rc-discovery  { border-color: rgba(250,204,21,0.4); }  .rc-discovery  .rc-dot { background: var(--c-discovery); box-shadow: 0 0 6px var(--c-discovery); }  .rc-discovery  .rc-val { color: var(--c-discovery); }
-.rc-resonance  { border-color: rgba(52,211,153,0.4); }  .rc-resonance  .rc-dot { background: var(--c-resonance); box-shadow: 0 0 6px var(--c-resonance); }  .rc-resonance  .rc-val { color: var(--c-resonance); }
+/* ── REST PANEL ── */
+#rest-panel{background:rgba(14,20,32,.85);border:1.5px solid rgba(52,211,153,.35);border-radius:var(--radius);padding:16px;margin-bottom:14px;backdrop-filter:blur(6px);}
+#rest-panel .rest-title{font-family:'Noto Serif JP',serif;font-size:15px;font-weight:700;color:#34d399;margin-bottom:4px;}
+#rest-panel .rest-desc{font-size:12px;color:rgba(245,238,220,.55);margin-bottom:14px;line-height:1.6;}
+.rest-options{display:flex;flex-direction:column;gap:8px;}
+.rest-option{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);border-radius:var(--radius-sm);padding:10px 14px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .2s ease;}
+.rest-option:hover{background:rgba(52,211,153,.18);border-color:rgba(52,211,153,.5);transform:translateX(4px);}
+.rest-option .ro-icon{font-size:22px;flex-shrink:0;}
+.rest-option .ro-title{font-family:'Noto Serif JP',serif;font-size:13px;font-weight:700;color:var(--parch);}
+.rest-option .ro-desc{font-size:11px;color:rgba(245,238,220,.5);margin-top:2px;}
 
-/* Cards */
-.section-label {
-  font-family: 'Noto Serif JP', serif; font-size: 12px; font-weight: 700;
-  color: rgba(245,238,220,0.5); letter-spacing: 0.1em; margin-bottom: 9px;
-  display: flex; align-items: center; gap: 6px;
-}
-.section-label::after { content: ''; flex: 1; height: 1px; background: rgba(245,238,220,0.1); }
+/* ── UPGRADE PANEL ── */
+#upgrade-panel{background:rgba(14,20,32,.85);border:1.5px solid rgba(250,204,21,.35);border-radius:var(--radius);padding:16px;margin-bottom:14px;backdrop-filter:blur(6px);}
+.upgrade-title{font-family:'Noto Serif JP',serif;font-size:15px;font-weight:700;color:var(--gold-lt);margin-bottom:4px;}
+.upgrade-desc{font-size:12px;color:rgba(245,238,220,.55);margin-bottom:14px;}
+.upgrade-cards{display:flex;gap:9px;flex-wrap:wrap;}
 
-.cards-row { display: flex; gap: 9px; flex-wrap: wrap; margin-bottom: 16px; }
-.card {
-  border-radius: var(--radius); padding: 14px 12px 12px;
-  width: calc(33.3% - 7px); min-width: 100px;
-  cursor: pointer; position: relative; overflow: hidden;
-  transition: transform 0.22s cubic-bezier(0.34,1.3,0.64,1), box-shadow 0.22s ease;
-  border: 1.5px solid transparent;
-}
-.card::before { /* shimmer top line */
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  border-radius: var(--radius) var(--radius) 0 0;
-}
-.card:hover:not(.disabled) { transform: translateY(-7px) rotate(-0.7deg); }
-.card.disabled { opacity: 0.32; cursor: not-allowed; filter: grayscale(30%); }
-.card.selected-card { transform: translateY(-7px); box-shadow: 0 0 0 2px rgba(245,200,66,0.7), 0 12px 28px rgba(0,0,0,0.5); }
+/* ── TRIAL PANEL ── */
+#trial-panel{background:rgba(14,20,32,.85);border:1.5px solid rgba(239,68,68,.35);border-radius:var(--radius);padding:16px;margin-bottom:14px;backdrop-filter:blur(6px);}
+.trial-title{font-family:'Noto Serif JP',serif;font-size:15px;font-weight:700;color:#f87171;margin-bottom:4px;}
+.trial-desc{font-size:12px;color:rgba(245,238,220,.55);margin-bottom:14px;line-height:1.6;}
+.trial-choices{display:flex;gap:9px;flex-wrap:wrap;}
+.trial-choice{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:var(--radius-sm);padding:12px;cursor:pointer;flex:1;min-width:120px;transition:all .2s ease;text-align:left;}
+.trial-choice:hover{background:rgba(239,68,68,.18);border-color:rgba(239,68,68,.6);transform:translateY(-3px);}
+.trial-choice .tc-icon{font-size:24px;display:block;margin-bottom:6px;}
+.trial-choice .tc-name{font-family:'Noto Serif JP',serif;font-size:12px;font-weight:700;color:var(--parch);margin-bottom:4px;}
+.trial-choice .tc-desc{font-size:10px;color:rgba(245,238,220,.5);}
 
-.card-badge { font-size: 9px; font-weight: 700; letter-spacing: 0.12em; margin-bottom: 6px; text-transform: uppercase; }
-.card-icon-big { font-size: 28px; display: block; margin-bottom: 7px; line-height: 1; }
-.card-name { font-family: 'Noto Serif JP', serif; font-size: 12px; font-weight: 700; color: var(--ink); margin-bottom: 4px; line-height: 1.35; }
-.card-desc { font-size: 10px; color: var(--ink-soft); line-height: 1.55; }
-.card-effects { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 3px; }
-.eff-tag {
-  font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 6px;
-  background: rgba(0,0,0,0.08);
-}
-.card-cost { margin-top: 6px; display: flex; gap: 3px; flex-wrap: wrap; }
-.cost-pip { font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 6px; background: rgba(0,0,0,0.1); color: var(--ink-soft); }
+/* ── PROJECT ── */
+#project-panel{background:rgba(14,20,32,.7);border:1.5px solid rgba(212,160,23,.25);border-radius:var(--radius);padding:16px;margin-bottom:14px;backdrop-filter:blur(4px);}
+.proj-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.proj-icon{font-size:28px;}.proj-title{font-family:'Noto Serif JP',serif;font-size:14px;font-weight:700;color:var(--parch);}
+.proj-desc{font-size:11px;color:rgba(245,238,220,.5);margin-top:2px;line-height:1.5;}
+.proj-pct{font-size:11px;color:var(--gold-lt);font-weight:700;margin-left:auto;flex-shrink:0;}
+.prog-row{margin-bottom:7px;}
+.prog-lbl{display:flex;justify-content:space-between;font-size:10px;color:rgba(245,238,220,.5);margin-bottom:3px;}
+.prog-lbl-val{font-weight:700;}
+.prog-bg{background:rgba(255,255,255,.07);border-radius:6px;height:7px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:6px;transition:width .55s cubic-bezier(.4,0,.2,1);}
 
-/* Card types */
-.card-learn {
-  background: linear-gradient(150deg, #fdf6e3 0%, #f0e8c8 100%);
-  border-color: rgba(212,160,23,0.4);
-  box-shadow: 0 3px 12px rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.7) inset;
-}
-.card-learn::before { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent); }
-.card-learn .card-badge { color: #8b6010; }
-
-.card-action {
-  background: linear-gradient(150deg, #edf8f0 0%, #cde8d4 100%);
-  border-color: rgba(52,160,80,0.4);
-  box-shadow: 0 3px 12px rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.6) inset;
-}
-.card-action::before { background: linear-gradient(90deg, transparent, rgba(100,220,140,0.4), transparent); }
-.card-action .card-badge { color: #1a6b30; }
-
-.card-event {
-  background: linear-gradient(150deg, #fff3e0 0%, #fde5b8 100%);
-  border-color: rgba(220,130,30,0.4);
-  box-shadow: 0 3px 12px rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.6) inset;
-}
-.card-event::before { background: linear-gradient(90deg, transparent, rgba(240,160,60,0.4), transparent); }
-.card-event .card-badge { color: #8b4010; }
-
-/* Project panel */
-#project-panel {
-  background: rgba(14,20,32,0.7); border: 1.5px solid rgba(212,160,23,0.25);
-  border-radius: var(--radius); padding: 16px; margin-bottom: 14px;
-  backdrop-filter: blur(4px);
-}
-.proj-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-.proj-icon { font-size: 28px; }
-.proj-title { font-family: 'Noto Serif JP', serif; font-size: 14px; font-weight: 700; color: var(--parch); }
-.proj-desc { font-size: 11px; color: rgba(245,238,220,0.5); margin-top: 2px; line-height: 1.5; }
-.proj-pct { font-size: 11px; color: var(--gold-lt); font-weight: 700; margin-left: auto; flex-shrink: 0; }
-
-.prog-row { margin-bottom: 7px; }
-.prog-lbl { display: flex; justify-content: space-between; font-size: 10px; color: rgba(245,238,220,0.5); margin-bottom: 3px; }
-.prog-lbl .prog-lbl-val { font-weight: 700; }
-.prog-bg { background: rgba(255,255,255,0.07); border-radius: 6px; height: 7px; overflow: hidden; }
-.prog-fill { height: 100%; border-radius: 6px; transition: width 0.55s cubic-bezier(0.4,0,0.2,1); }
-
-/* Log */
-#log-wrap {
-  background: rgba(14,20,32,0.6); border: 1px solid var(--border);
-  border-radius: var(--radius); overflow: hidden; margin-bottom: 14px;
-}
-.log-header { padding: 8px 14px; border-bottom: 1px solid var(--border); font-size: 11px; color: rgba(245,238,220,0.4); letter-spacing: 0.1em; }
-#log-list { padding: 8px 14px; max-height: 100px; overflow-y: auto; }
-.log-row {
-  font-size: 11px; color: rgba(245,238,220,0.65); padding: 3px 0;
-  border-bottom: 1px dashed rgba(255,255,255,0.06);
-  display: flex; gap: 6px; align-items: flex-start;
-  animation: fadein 0.35s ease;
-}
-@keyframes fadein { from { opacity:0; transform: translateY(-4px); } to { opacity:1; transform:none; } }
-.log-row:last-child { border-bottom: none; }
-
-/* Action area */
-.action-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+/* ── LOG ── */
+#log-wrap{background:rgba(14,20,32,.6);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:14px;}
+.log-header{padding:8px 14px;border-bottom:1px solid var(--border);font-size:11px;color:rgba(245,238,220,.4);letter-spacing:.1em;}
+#log-list{padding:8px 14px;max-height:100px;overflow-y:auto;}
+.log-row{font-size:11px;color:rgba(245,238,220,.65);padding:3px 0;border-bottom:1px dashed rgba(255,255,255,.06);display:flex;gap:6px;align-items:flex-start;animation:fadein .35s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:none;}}
+.log-row:last-child{border-bottom:none;}
+.action-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;}
 
 /* ── LIBRARY SCREEN ── */
-#screen-library {
-  background: radial-gradient(ellipse at 40% 30%, #1e3050 0%, #0a1020 100%);
-  display: flex; flex-direction: column; align-items: center;
-  padding: 40px 20px 60px;
-}
-.lib-inner { max-width: 520px; width: 100%; }
-.lib-title {
-  font-family: 'Noto Serif JP', serif; font-size: 26px; font-weight: 900;
-  color: #93c5fd; text-align: center; margin-bottom: 6px;
-  text-shadow: 0 2px 20px rgba(100,150,255,0.5);
-}
-.lib-sub { text-align: center; font-size: 13px; color: rgba(245,238,220,0.45); margin-bottom: 28px; letter-spacing: 0.06em; }
-
-.lib-shard-box {
-  background: rgba(30,58,95,0.6); border: 1px solid rgba(100,150,255,0.25);
-  border-radius: var(--radius); padding: 18px 20px; margin-bottom: 20px;
-  display: flex; align-items: center; gap: 16px;
-}
-.shard-icon { font-size: 40px; animation: float 3s ease-in-out infinite alternate; }
-.shard-info .shard-label { font-size: 11px; color: rgba(245,238,220,0.45); margin-bottom: 4px; }
-.shard-info .shard-val { font-family: 'Noto Serif JP', serif; font-size: 32px; font-weight: 900; color: #93c5fd; line-height: 1; }
-.shard-info .shard-sub { font-size: 11px; color: rgba(245,238,220,0.4); margin-top: 3px; }
-
-.lib-level-section { background: rgba(14,20,32,0.6); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 20px; }
-.lib-lv-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-.lib-lv-name { font-family: 'Noto Serif JP', serif; font-size: 15px; font-weight: 700; color: #93c5fd; }
-.lib-lv-num { font-size: 12px; color: rgba(245,238,220,0.4); }
-.lib-lv-bar { background: rgba(255,255,255,0.07); border-radius: 8px; height: 10px; overflow: hidden; margin-bottom: 8px; }
-.lib-lv-fill { height: 100%; border-radius: 8px; background: linear-gradient(90deg, #2563eb, #93c5fd); transition: width 0.8s ease; box-shadow: 0 0 10px rgba(147,197,253,0.5); }
-.lib-lv-hint { font-size: 11px; color: rgba(245,238,220,0.4); }
-
-.lib-unlocked { margin-bottom: 20px; }
-.lib-unlocked-title { font-size: 12px; color: rgba(245,238,220,0.4); letter-spacing: 0.1em; margin-bottom: 10px; }
-.unlocked-list { display: flex; flex-direction: column; gap: 7px; }
-.unlocked-item {
-  background: rgba(30,58,95,0.4); border: 1px solid rgba(100,150,255,0.2);
-  border-radius: var(--radius-sm); padding: 10px 14px;
-  display: flex; align-items: center; gap: 10px;
-}
-.unlocked-item .ui-icon { font-size: 20px; flex-shrink: 0; }
-.unlocked-item .ui-name { font-family: 'Noto Serif JP', serif; font-size: 13px; font-weight: 700; color: var(--parch); }
-.unlocked-item .ui-desc { font-size: 11px; color: rgba(245,238,220,0.45); margin-top: 2px; }
-.unlocked-item .ui-new { font-size: 9px; font-weight: 700; color: #34d399; background: rgba(52,211,153,0.15); border: 1px solid rgba(52,211,153,0.3); border-radius: 6px; padding: 2px 7px; margin-left: auto; flex-shrink: 0; }
-
-.lib-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
+#screen-library{background:radial-gradient(ellipse at 40% 30%,#1e3050 0%,#0a1020 100%);display:flex;flex-direction:column;align-items:center;padding:40px 20px 60px;}
+.lib-inner{max-width:520px;width:100%;}
+.lib-title{font-family:'Noto Serif JP',serif;font-size:26px;font-weight:900;color:#93c5fd;text-align:center;margin-bottom:6px;text-shadow:0 2px 20px rgba(100,150,255,.5);}
+.lib-sub{text-align:center;font-size:13px;color:rgba(245,238,220,.45);margin-bottom:28px;letter-spacing:.06em;}
+.lib-shard-box{background:rgba(30,58,95,.6);border:1px solid rgba(100,150,255,.25);border-radius:var(--radius);padding:18px 20px;margin-bottom:20px;display:flex;align-items:center;gap:16px;}
+.shard-icon{font-size:40px;animation:float 3s ease-in-out infinite alternate;}
+.shard-info .shard-label{font-size:11px;color:rgba(245,238,220,.45);margin-bottom:4px;}
+.shard-info .shard-val{font-family:'Noto Serif JP',serif;font-size:32px;font-weight:900;color:#93c5fd;line-height:1;}
+.shard-info .shard-sub{font-size:11px;color:rgba(245,238,220,.4);margin-top:3px;}
+.lib-level-section{background:rgba(14,20,32,.6);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:20px;}
+.lib-lv-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.lib-lv-name{font-family:'Noto Serif JP',serif;font-size:15px;font-weight:700;color:#93c5fd;}
+.lib-lv-num{font-size:12px;color:rgba(245,238,220,.4);}
+.lib-lv-bar{background:rgba(255,255,255,.07);border-radius:8px;height:10px;overflow:hidden;margin-bottom:8px;}
+.lib-lv-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,#2563eb,#93c5fd);transition:width .8s ease;box-shadow:0 0 10px rgba(147,197,253,.5);}
+.lib-lv-hint{font-size:11px;color:rgba(245,238,220,.4);}
+.lib-unlocked{margin-bottom:20px;}
+.lib-unlocked-title{font-size:12px;color:rgba(245,238,220,.4);letter-spacing:.1em;margin-bottom:10px;}
+.unlocked-list{display:flex;flex-direction:column;gap:7px;}
+.unlocked-item{background:rgba(30,58,95,.4);border:1px solid rgba(100,150,255,.2);border-radius:var(--radius-sm);padding:10px 14px;display:flex;align-items:center;gap:10px;}
+.unlocked-item .ui-icon{font-size:20px;flex-shrink:0;}
+.unlocked-item .ui-name{font-family:'Noto Serif JP',serif;font-size:13px;font-weight:700;color:var(--parch);}
+.unlocked-item .ui-desc{font-size:11px;color:rgba(245,238,220,.45);margin-top:2px;}
+.unlocked-item .ui-new{font-size:9px;font-weight:700;color:#34d399;background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.3);border-radius:6px;padding:2px 7px;margin-left:auto;flex-shrink:0;}
+.lib-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px;}
 
 /* ── ENDING SCREEN ── */
-#screen-ending {
-  background: radial-gradient(ellipse at 50% 25%, #1e3050 0%, #0a1020 100%);
-  display: flex; flex-direction: column; align-items: center;
-  padding: 44px 20px 64px;
-}
-.end-inner { max-width: 520px; width: 100%; text-align: center; }
-.end-emblem { font-size: 72px; margin-bottom: 16px; animation: float 3.5s ease-in-out infinite alternate; filter: drop-shadow(0 4px 16px rgba(212,160,23,0.4)); }
-.end-type { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.22em; color: var(--gold-lt); border: 1px solid rgba(212,160,23,0.4); border-radius: 999px; padding: 5px 18px; margin-bottom: 14px; background: rgba(212,160,23,0.1); }
-.end-title { font-family: 'Noto Serif JP', serif; font-size: clamp(20px, 5vw, 30px); font-weight: 900; color: var(--gold-lt); text-shadow: 0 2px 24px rgba(212,160,23,0.6); margin-bottom: 20px; line-height: 1.5; }
+#screen-ending{background:radial-gradient(ellipse at 50% 25%,#1e3050 0%,#0a1020 100%);display:flex;flex-direction:column;align-items:center;padding:44px 20px 64px;}
+.end-inner{max-width:520px;width:100%;text-align:center;}
+.end-emblem{font-size:72px;margin-bottom:16px;animation:float 3.5s ease-in-out infinite alternate;filter:drop-shadow(0 4px 16px rgba(212,160,23,.4));}
+.end-type{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.22em;color:var(--gold-lt);border:1px solid rgba(212,160,23,.4);border-radius:999px;padding:5px 18px;margin-bottom:14px;background:rgba(212,160,23,.1);}
+.end-title{font-family:'Noto Serif JP',serif;font-size:clamp(20px,5vw,30px);font-weight:900;color:var(--gold-lt);text-shadow:0 2px 24px rgba(212,160,23,.6);margin-bottom:20px;line-height:1.5;}
+.end-shard-gain{background:rgba(30,58,95,.5);border:1px solid rgba(147,197,253,.3);border-radius:var(--radius);padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px;text-align:left;}
+.esg-icon{font-size:32px;flex-shrink:0;}.esg-label{font-size:11px;color:rgba(245,238,220,.45);margin-bottom:3px;}.esg-val{font-family:'Noto Serif JP',serif;font-size:22px;font-weight:900;color:#93c5fd;}
+.end-proj-badge{background:rgba(212,160,23,.1);border:1.5px solid rgba(212,160,23,.35);border-radius:var(--radius);padding:14px 16px;margin-bottom:20px;display:flex;align-items:center;gap:12px;text-align:left;}
+.epb-icon{font-size:30px;flex-shrink:0;}.epb-label{font-size:10px;color:rgba(245,238,220,.4);margin-bottom:3px;}.epb-name{font-family:'Noto Serif JP',serif;font-size:14px;font-weight:700;color:var(--gold-lt);}
+.end-story{background:rgba(14,20,32,.6);border:1px solid rgba(212,160,23,.2);border-radius:var(--radius);padding:22px 20px;margin-bottom:20px;text-align:left;}
+.end-story p{font-family:'Noto Serif JP',serif;font-size:14px;color:rgba(245,238,220,.88);line-height:2.05;margin-bottom:10px;}
+.end-story p:last-child{margin-bottom:0;}
+.end-coda{display:block;font-size:14px;font-weight:700;color:var(--gold-lt);margin-top:12px;font-style:italic;padding-top:12px;border-top:1px dashed rgba(212,160,23,.25);}
+.end-stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:20px;text-align:left;}
+.end-stat{background:rgba(14,20,32,.6);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-sm);padding:12px 14px;}
+.end-stat .es-icon{font-size:16px;margin-bottom:4px;}.end-stat .es-val{font-family:'Noto Serif JP',serif;font-size:22px;font-weight:900;}.end-stat .es-name{font-size:11px;color:rgba(245,238,220,.5);margin-top:2px;}
+.end-log{background:rgba(14,20,32,.6);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:14px 16px;margin-bottom:24px;text-align:left;}
+.end-log h3{font-family:'Noto Serif JP',serif;font-size:12px;color:#93c5fd;margin-bottom:9px;}
+.end-log ul{list-style:none;}.end-log li{font-size:11px;color:rgba(245,238,220,.65);padding:4px 0;border-bottom:1px dashed rgba(255,255,255,.06);line-height:1.55;}.end-log li:last-child{border-bottom:none;}
+.end-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
 
-.end-shard-gain {
-  background: rgba(30,58,95,0.5); border: 1px solid rgba(147,197,253,0.3);
-  border-radius: var(--radius); padding: 14px 18px; margin-bottom: 20px;
-  display: flex; align-items: center; gap: 12px; text-align: left;
-}
-.esg-icon { font-size: 32px; flex-shrink: 0; }
-.esg-label { font-size: 11px; color: rgba(245,238,220,0.45); margin-bottom: 3px; }
-.esg-val { font-family: 'Noto Serif JP', serif; font-size: 22px; font-weight: 900; color: #93c5fd; }
-
-.end-proj-badge {
-  background: rgba(212,160,23,0.1); border: 1.5px solid rgba(212,160,23,0.35);
-  border-radius: var(--radius); padding: 14px 16px; margin-bottom: 20px;
-  display: flex; align-items: center; gap: 12px; text-align: left;
-}
-.epb-icon { font-size: 30px; flex-shrink: 0; }
-.epb-label { font-size: 10px; color: rgba(245,238,220,0.4); margin-bottom: 3px; }
-.epb-name { font-family: 'Noto Serif JP', serif; font-size: 14px; font-weight: 700; color: var(--gold-lt); }
-
-.end-story {
-  background: rgba(14,20,32,0.6); border: 1px solid rgba(212,160,23,0.2);
-  border-radius: var(--radius); padding: 22px 20px; margin-bottom: 20px; text-align: left;
-}
-.end-story p { font-family: 'Noto Serif JP', serif; font-size: 14px; color: rgba(245,238,220,0.88); line-height: 2.05; margin-bottom: 10px; }
-.end-story p:last-child { margin-bottom: 0; }
-.end-coda { display: block; font-size: 14px; font-weight: 700; color: var(--gold-lt); margin-top: 12px; font-style: italic; padding-top: 12px; border-top: 1px dashed rgba(212,160,23,0.25); }
-
-.end-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 20px; text-align: left; }
-.end-stat { background: rgba(14,20,32,0.6); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-sm); padding: 12px 14px; }
-.end-stat .es-icon { font-size: 16px; margin-bottom: 4px; }
-.end-stat .es-val { font-family: 'Noto Serif JP', serif; font-size: 22px; font-weight: 900; }
-.end-stat .es-name { font-size: 11px; color: rgba(245,238,220,0.5); margin-top: 2px; }
-
-.end-log { background: rgba(14,20,32,0.6); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 24px; text-align: left; }
-.end-log h3 { font-family: 'Noto Serif JP', serif; font-size: 12px; color: #93c5fd; margin-bottom: 9px; }
-.end-log ul { list-style: none; }
-.end-log li { font-size: 11px; color: rgba(245,238,220,0.65); padding: 4px 0; border-bottom: 1px dashed rgba(255,255,255,0.06); line-height: 1.55; }
-.end-log li:last-child { border-bottom: none; }
-
-.end-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-
-/* Phase banner */
-#phase-banner {
-  position: fixed; top: 50%; left: 50%; z-index: 100;
-  transform: translate(-50%,-50%) scale(0);
-  background: linear-gradient(140deg, #0e1420, #1a2438);
-  border: 2px solid rgba(147,197,253,0.5); border-radius: 18px;
-  padding: 22px 44px;
-  font-family: 'Noto Serif JP', serif; font-size: 18px; font-weight: 900; color: #93c5fd;
-  text-align: center; box-shadow: 0 12px 50px rgba(0,0,0,0.8), 0 0 0 6px rgba(147,197,253,0.08);
-  pointer-events: none; transition: transform 0.38s cubic-bezier(0.34,1.56,0.64,1);
-}
-#phase-banner.show { transform: translate(-50%,-50%) scale(1); }
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
-
-@media (max-width: 560px) {
-  .card { width: calc(50% - 5px); }
-  .step { width: 30px; height: 30px; font-size: 8px; }
-  .end-stats { grid-template-columns: 1fr 1fr; }
-}
+/* ── PHASE BANNER ── */
+#phase-banner{position:fixed;top:50%;left:50%;z-index:100;transform:translate(-50%,-50%) scale(0);background:linear-gradient(140deg,#0e1420,#1a2438);border:2px solid rgba(147,197,253,.5);border-radius:18px;padding:22px 44px;font-family:'Noto Serif JP',serif;font-size:18px;font-weight:900;color:#93c5fd;text-align:center;box-shadow:0 12px 50px rgba(0,0,0,.8),0 0 0 6px rgba(147,197,253,.08);pointer-events:none;transition:transform .38s cubic-bezier(.34,1.56,.64,1);}
+#phase-banner.show{transform:translate(-50%,-50%) scale(1);}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:4px;}
+@media(max-width:560px){.card{width:calc(50% - 5px);}.step{width:30px;height:30px;font-size:12px;}.end-stats{grid-template-columns:1fr 1fr;}}
 </style>
 </head>
 <body>
 <div id="stars"></div>
 
-<!-- ══ TITLE SCREEN ══ -->
+<!-- TITLE -->
 <div id="screen-title" class="screen">
   <div class="title-glyph">📚</div>
   <h1 class="title-main">学びを、<br>かたちにする旅</h1>
   <div class="title-sub">〜 知ることは、旅することだ 〜</div>
-  <div class="title-phase-badge">✦ Phase 1 — 図書館の夜明け ✦</div>
-  <div class="title-tagline">
-    仮説を立て、実験し、失敗し、<br>
-    それでも前に進む探求者の物語。<br>
-    旅は、図書館に積み重なっていく。
-  </div>
-
+  <div class="title-phase-badge">✦ Phase 2 — ランダムマップ & カード強化 ✦</div>
+  <div class="title-tagline">仮説を立て、実験し、失敗し、<br>それでも前に進む探求者の物語。<br>旅は、図書館に積み重なっていく。</div>
   <div class="library-preview">
     <div class="lib-preview-title">🏛️ 知の図書館</div>
     <div class="lib-level-bar"><div class="lib-level-fill" id="title-lib-fill" style="width:0%"></div></div>
     <div class="lib-stats">
       <span>Lv <span class="lib-stat-val" id="title-lib-lv">1</span></span>
-      <span>知識の欠片 <span class="lib-stat-val" id="title-shard-count">0</span></span>
-      <span>プレイ回数 <span class="lib-stat-val" id="title-play-count">0</span></span>
+      <span>欠片 <span class="lib-stat-val" id="title-shard-count">0</span></span>
+      <span>旅 <span class="lib-stat-val" id="title-play-count">0</span> 回</span>
     </div>
   </div>
-
   <div class="project-select-label">✦ プロジェクトを選ぼう ✦</div>
   <div class="project-choices" id="proj-choices"></div>
   <button class="btn btn-gold" id="btn-start" onclick="startGame()" disabled>旅を始める</button>
 </div>
 
-<!-- ══ GAME SCREEN ══ -->
+<!-- GAME -->
 <div id="screen-game" class="screen hidden">
   <div id="game-inner">
     <div id="turn-bar">
       <div class="phase-pill"><span id="phase-icon">🌾</span><span id="phase-name">疑問の野原</span></div>
-      <div class="turn-counter">ターン <span id="turn-now">1</span> / <span id="turn-max">10</span></div>
+      <div class="turn-counter">ターン <span id="turn-now">1</span> / <span id="turn-max">12</span></div>
       <div class="status-hint" id="status-hint">← カードを引こう</div>
     </div>
-
-    <div id="narrator">
-      <span class="n-icon" id="n-icon">📖</span>
-      <span class="n-text" id="n-text">旅が始まった。</span>
-    </div>
-
+    <div id="narrator"><span class="n-icon" id="n-icon">📖</span><span class="n-text" id="n-text">旅が始まった。</span></div>
     <div id="map-wrap">
       <div class="map-zone-labels">
-        <div class="mzl"><span>🌾</span>疑問の<br>野原</div>
-        <div class="mzl"><span>🌀</span>仮説の<br>迷宮</div>
-        <div class="mzl"><span>⚡</span>実験の<br>荒野</div>
-        <div class="mzl"><span>🏛️</span>発見の<br>塔</div>
+        <div class="mzl"><span>🌾</span>疑問の野原</div>
+        <div class="mzl"><span>🌀</span>仮説の迷宮</div>
+        <div class="mzl"><span>⚡</span>実験の荒野</div>
+        <div class="mzl"><span>🏛️</span>発見の塔</div>
       </div>
       <div id="path"></div>
       <div id="pawn">🎒</div>
+      <div class="map-legend">
+        <div class="ml-item"><div class="ml-dot" style="background:#facc15"></div>通常</div>
+        <div class="ml-item"><div class="ml-dot" style="background:#f97316"></div>イベント</div>
+        <div class="ml-item"><div class="ml-dot" style="background:#34d399"></div>休憩</div>
+        <div class="ml-item"><div class="ml-dot" style="background:#ef4444"></div>試練</div>
+        <div class="ml-item"><div class="ml-dot" style="background:#a78bfa"></div>発見</div>
+      </div>
     </div>
-
     <div id="res-bar"></div>
+
+    <!-- Special node panels -->
+    <div id="rest-panel" style="display:none">
+      <div class="rest-title">🏕️ 休憩マス</div>
+      <div class="rest-desc">ここで少し立ち止まろう。体力を回復するか、カードを強化するか選べる。</div>
+      <div class="rest-options" id="rest-options"></div>
+    </div>
+    <div id="upgrade-panel" style="display:none">
+      <div class="upgrade-title">✨ カード強化</div>
+      <div class="upgrade-desc" id="upgrade-desc">強化したいカードを選ぼう</div>
+      <div class="upgrade-cards" id="upgrade-cards"></div>
+    </div>
+    <div id="trial-panel" style="display:none">
+      <div class="trial-title">⚔️ 試練マス</div>
+      <div class="trial-desc" id="trial-desc">覚悟を決めろ。どちらの道を選ぶ？</div>
+      <div class="trial-choices" id="trial-choices"></div>
+    </div>
 
     <!-- Hand -->
     <div class="section-label">✦ 手札（1枚選んで使おう）</div>
     <div class="cards-row" id="hand-area">
-      <div style="font-size:12px;color:rgba(245,238,220,0.35);font-style:italic;padding:8px;">カードを引いてください</div>
+      <div style="font-size:12px;color:rgba(245,238,220,.35);font-style:italic;padding:8px 4px;">カードを引いてください</div>
     </div>
-    <div class="action-row">
+    <div class="action-row" id="action-row">
       <button class="btn btn-gold" id="btn-draw" onclick="drawCards()">カードを引く（2枚）</button>
     </div>
 
-    <!-- Project -->
+    <!-- Deck info -->
+    <div style="text-align:center;font-size:11px;color:rgba(245,238,220,.3);margin-bottom:14px;">
+      デッキ: <span id="deck-size">8</span>枚　強化済: <span id="upgraded-count">0</span>枚
+    </div>
+
     <div id="project-panel">
       <div class="proj-header">
         <div class="proj-icon" id="proj-icon">📚</div>
-        <div>
-          <div class="proj-title" id="proj-title">—</div>
-          <div class="proj-desc" id="proj-desc">—</div>
-        </div>
+        <div><div class="proj-title" id="proj-title">—</div><div class="proj-desc" id="proj-desc">—</div></div>
         <div class="proj-pct" id="proj-pct">0%</div>
       </div>
       <div id="proj-bars"></div>
     </div>
-
-    <!-- Log -->
     <div id="log-wrap">
       <div class="log-header">📖 旅の記録</div>
       <div id="log-list"></div>
@@ -578,26 +355,17 @@ body {
   </div>
 </div>
 
-<!-- ══ ENDING SCREEN ══ -->
+<!-- ENDING -->
 <div id="screen-ending" class="screen hidden">
   <div class="end-inner">
     <div class="end-emblem" id="end-emblem">🌟</div>
     <div class="end-type" id="end-type">エンディング</div>
     <div class="end-title" id="end-title"></div>
-
-    <div class="end-shard-gain">
-      <div class="esg-icon">💎</div>
-      <div>
-        <div class="esg-label">この旅で得た 知識の欠片</div>
-        <div class="esg-val" id="end-shard-gain">+0</div>
-      </div>
-    </div>
-
+    <div class="end-shard-gain"><div class="esg-icon">💎</div><div><div class="esg-label">この旅で得た 知識の欠片</div><div class="esg-val" id="end-shard-gain">+0</div></div></div>
     <div class="end-proj-badge" id="end-proj-badge"></div>
     <div class="end-story" id="end-story"></div>
     <div class="end-stats" id="end-stats"></div>
     <div class="end-log" id="end-log-wrap"></div>
-
     <div class="end-buttons">
       <button class="btn btn-gold" onclick="goToLibrary()">図書館を確認する</button>
       <button class="btn btn-ghost" onclick="restartDirect()">すぐにもう一度</button>
@@ -605,54 +373,35 @@ body {
   </div>
 </div>
 
-<!-- ══ LIBRARY SCREEN ══ -->
+<!-- LIBRARY -->
 <div id="screen-library" class="screen hidden">
   <div class="lib-inner">
     <div class="lib-title">🏛️ 知の図書館</div>
     <div class="lib-sub">旅は、ここに積み重なっていく</div>
-
-    <div class="lib-shard-box">
-      <div class="shard-icon">💎</div>
-      <div class="shard-info">
-        <div class="shard-label">所持している 知識の欠片</div>
-        <div class="shard-val" id="lib-shard-val">0</div>
-        <div class="shard-sub" id="lib-shard-sub">次のレベルまで あと ? 個</div>
-      </div>
-    </div>
-
+    <div class="lib-shard-box"><div class="shard-icon">💎</div><div class="shard-info"><div class="shard-label">所持している 知識の欠片</div><div class="shard-val" id="lib-shard-val">0</div><div class="shard-sub" id="lib-shard-sub">次のレベルまで あと ? 個</div></div></div>
     <div class="lib-level-section">
-      <div class="lib-lv-header">
-        <div class="lib-lv-name" id="lib-lv-name">図書館 Lv.1 — 夜明けの書架</div>
-        <div class="lib-lv-num" id="lib-lv-num">Lv 1 / 6</div>
-      </div>
+      <div class="lib-lv-header"><div class="lib-lv-name" id="lib-lv-name">図書館 Lv.1</div><div class="lib-lv-num" id="lib-lv-num">Lv 1 / 6</div></div>
       <div class="lib-lv-bar"><div class="lib-lv-fill" id="lib-lv-fill" style="width:0%"></div></div>
       <div class="lib-lv-hint" id="lib-lv-hint">Lv2まで 欠片3個が必要</div>
     </div>
-
-    <div class="lib-unlocked">
-      <div class="lib-unlocked-title">✦ 解放済みのコンテンツ</div>
-      <div class="unlocked-list" id="unlocked-list"></div>
-    </div>
-
-    <div class="lib-buttons">
-      <button class="btn btn-gold" onclick="goToTitle()">旅の選択に戻る</button>
-    </div>
+    <div class="lib-unlocked"><div class="lib-unlocked-title">✦ 解放済みのコンテンツ</div><div class="unlocked-list" id="unlocked-list"></div></div>
+    <div class="lib-buttons"><button class="btn btn-gold" onclick="goToTitle()">旅の選択に戻る</button></div>
   </div>
 </div>
 
 <div id="phase-banner"></div>
 
 <script>
-// ═══════════════════════════════════════════
-//  DATA
-// ═══════════════════════════════════════════
+// ═══════ DATA ═══════
 
 const PROJECTS = [
   { id:'P1', icon:'📚', name:'学びの場をつくる', desc:'知識が育つ空間を社会に生み出す', cost:{question:3,hypothesis:3,discovery:2,resonance:1}, diff:'★☆☆' },
   { id:'P2', icon:'❓', name:'問いを届ける', desc:'「なぜ？」という問いを、誰かの日常に届ける', cost:{question:4,hypothesis:2,resonance:3}, diff:'★☆☆' },
+  { id:'P3', icon:'💔', name:'失敗を讃える文化をつくる', desc:'失敗した人が称えられる社会を作る', cost:{experiment:4,discovery:3,resonance:2}, diff:'★★☆' },
 ];
 
-const LEARN_CARDS = [
+// Base card pool (16 cards for Phase 2)
+const BASE_CARDS = [
   { id:'L1', icon:'❓', name:'素朴な疑問', desc:'「なぜ？」が旅の第一歩', gain:{question:2}, cost:{} },
   { id:'L2', icon:'💭', name:'小さな仮説', desc:'疑うことは、考えることだ', gain:{hypothesis:2}, cost:{question:1} },
   { id:'L3', icon:'📝', name:'走り書きのメモ', desc:'思いついたらすぐ書く', gain:{question:1,hypothesis:1}, cost:{} },
@@ -661,7 +410,34 @@ const LEARN_CARDS = [
   { id:'L6', icon:'💬', name:'対話', desc:'人と話すと、考えが整理される', gain:{hypothesis:1,resonance:1}, cost:{question:1} },
   { id:'L7', icon:'📖', name:'記録する', desc:'記録しないと、発見は消える', gain:{discovery:2}, cost:{experiment:1} },
   { id:'L8', icon:'📢', name:'伝える', desc:'知識は、伝わった時に価値になる', gain:{resonance:2}, cost:{discovery:1} },
+  // Phase 2 new cards
+  { id:'L9',  icon:'🌙', name:'深夜の研究', desc:'誰も邪魔しない時間に、思考が深まる', gain:{hypothesis:3}, cost:{question:1}, rare:true },
+  { id:'L10', icon:'🔎', name:'反証を探す', desc:'正しいかどうかより、なぜ間違いか', gain:{discovery:3}, cost:{hypothesis:2}, rare:true },
+  { id:'L11', icon:'🌈', name:'セレンディピティ', desc:'探していないものが最も重要だった', gain:{question:2,discovery:1,resonance:1}, cost:{}, rare:true },
+  { id:'L12', icon:'💡', name:'ひらめき', desc:'何かがつながった瞬間', gain:{question:1,hypothesis:1,experiment:1}, cost:{} },
+  { id:'L13', icon:'🔬', name:'精密な観察', desc:'細部に神が宿る', gain:{experiment:2,discovery:1}, cost:{hypothesis:1} },
+  { id:'L14', icon:'🤝', name:'共同研究', desc:'一人では見えなかった景色が、二人では見える', gain:{resonance:3}, cost:{question:1,discovery:1}, rare:true },
+  { id:'L15', icon:'📊', name:'データを整理する', desc:'散らばった点が、線になる', gain:{hypothesis:1,discovery:2}, cost:{experiment:1} },
+  { id:'L16', icon:'🌱', name:'種を蒔く', desc:'今日の問いが、明日の発見になる', gain:{question:2,resonance:1}, cost:{} },
 ];
+
+// Card upgrade definitions
+const UPGRADES = {
+  L1: { name:'深い疑問', gain:{question:3}, desc:'より本質的な問いへ' },
+  L2: { name:'鋭い仮説', gain:{hypothesis:3}, desc:'精度が上がった' },
+  L3: { name:'詳細なメモ', gain:{question:2,hypothesis:1}, desc:'記録の質が向上' },
+  L4: { name:'慣れた実験', gain:{experiment:2,discovery:1}, desc:'失敗から学んだ' },
+  L5: { name:'深い振り返り', gain:{question:2,discovery:1}, desc:'より深く内省する' },
+  L6: { name:'豊かな対話', gain:{hypothesis:2,resonance:1}, desc:'聞き方が変わった' },
+  L7: { name:'体系的な記録', gain:{discovery:3}, desc:'整理の力が増した' },
+  L8: { name:'響く言葉', gain:{resonance:3}, desc:'伝え方が洗練された' },
+  L9: { name:'徹夜の研究', gain:{hypothesis:4}, desc:'限界を超えた' },
+  L10:{ name:'徹底的な反証', gain:{discovery:4}, desc:'疑いが深まった' },
+  L12:{ name:'大ひらめき', gain:{question:2,hypothesis:2,experiment:1}, desc:'思考が加速する' },
+  L13:{ name:'超精密観察', gain:{experiment:3,discovery:1}, desc:'ミクロの世界が見える' },
+  L15:{ name:'完璧な整理', gain:{hypothesis:2,discovery:2}, desc:'全てが見えた' },
+  L16:{ name:'豊かな種蒔き', gain:{question:3,resonance:1}, desc:'未来への投資' },
+};
 
 const EVENTS = [
   { id:'E1', icon:'📗', name:'名著との邂逅', desc:'一冊の本が、視界を開いた。', effect:{hypothesis:2,discovery:1}, bad:false },
@@ -670,524 +446,537 @@ const EVENTS = [
   { id:'E4', icon:'💥', name:'実験の失敗', desc:'失敗した。でも、なぜ失敗したかはわかった。', effect:{experiment:-2,discovery:1}, bad:true },
   { id:'E5', icon:'🌈', name:'突破口の閃き', desc:'あの瞬間、すべてがつながった。', effect:{question:2,discovery:1}, bad:false },
   { id:'E6', icon:'💔', name:'批判を受ける', desc:'否定された。でも、全部間違っていたわけじゃない。', effect:{resonance:-1,hypothesis:1}, bad:true },
+  { id:'E7', icon:'🏆', name:'小さな成功', desc:'ちゃんと進んでいた。その実感が次を生む。', effect:{experiment:2,resonance:1}, bad:false },
+  { id:'E8', icon:'🌧️', name:'突然の嵐', desc:'予期せぬ困難が訪れた。', effect:{question:-1,experiment:-1}, bad:true },
+];
+
+const TRIALS = [
+  { desc:'深い問いか、早い答えか。', a:{name:'深く掘る', icon:'⛏️', desc:'時間をかけて本質を探る', cost:{question:2}, gain:{hypothesis:3,discovery:2}}, b:{name:'先に進む', icon:'🏃', desc:'スピードを優先する', cost:{}, gain:{experiment:2}} },
+  { desc:'失敗を公表するか、黙って学ぶか。', a:{name:'公表する', icon:'📢', desc:'信頼を失うかもしれないが、誰かの役に立つ', cost:{resonance:1}, gain:{discovery:3,resonance:2}}, b:{name:'黙っておく', icon:'🤫', desc:'傷つかずに、ひっそり学ぶ', cost:{}, gain:{discovery:2}} },
+  { desc:'未検証の仮説を提出するか、もっと調べるか。', a:{name:'提出する', icon:'📄', desc:'不完全でも世に出す勇気', cost:{hypothesis:2}, gain:{resonance:3,experiment:1}}, b:{name:'調べ続ける', icon:'🔬', desc:'完璧を求めて深める', cost:{experiment:1}, gain:{discovery:3}} },
 ];
 
 const NARRATIONS = [
-  { icon:'🌾', text:'疑問の野原の入り口に立った。風が草を揺らす。ここから、全ての問いが始まる。' },
-  { icon:'🌾', text:'野原を進むたびに、小さな「なぜ？」が芽吹いていく。踏みしめるたびに根が広がる。' },
-  { icon:'🌾', text:'問いの種が、少しずつ形を持ち始めた。仮説という名の芽が、土から顔を出す。' },
-  { icon:'🌀', text:'仮説の迷宮に足を踏み入れた。道が入り組んでいる。正解は、自分で見つけるしかない。' },
-  { icon:'🌀', text:'迷宮の奥に進むほど、考えが深まっていく。迷うことは、探求の証だ。' },
-  { icon:'🌀', text:'仮説が積み重なり、思考の地図が少しずつ描かれていく。' },
-  { icon:'⚡', text:'実験の荒野に入った。ここでは、考えるだけでは足りない。動かなければ何も生まれない。' },
-  { icon:'⚡', text:'試みるたびに、何かが壊れ、何かが生まれる。失敗は敵ではなく、師だ。' },
-  { icon:'⚡', text:'荒野の向こうに、光が見え始めた。発見の塔が、遠くに輝いている。' },
-  { icon:'🏛️', text:'発見の塔の麓に立った。ここまで来た全ての問い、全ての失敗が、今ここに集まっている。' },
+  {icon:'🌾',text:'疑問の野原の入り口に立った。風が草を揺らす。ここから、全ての問いが始まる。'},
+  {icon:'🌾',text:'野原を進むたびに、小さな「なぜ？」が芽吹いていく。踏みしめるたびに根が広がる。'},
+  {icon:'🌾',text:'問いの種が、少しずつ形を持ち始めた。仮説という名の芽が、土から顔を出す。'},
+  {icon:'🌀',text:'仮説の迷宮に足を踏み入れた。道が入り組んでいる。正解は、自分で見つけるしかない。'},
+  {icon:'🌀',text:'迷宮の奥に進むほど、考えが深まっていく。迷うことは、探求の証だ。'},
+  {icon:'🌀',text:'仮説が積み重なり、思考の地図が少しずつ描かれていく。'},
+  {icon:'⚡',text:'実験の荒野に入った。ここでは、考えるだけでは足りない。動かなければ何も生まれない。'},
+  {icon:'⚡',text:'試みるたびに、何かが壊れ、何かが生まれる。失敗は敵ではなく、師だ。'},
+  {icon:'⚡',text:'荒野の向こうに、光が見え始めた。発見の塔が、遠くに輝いている。'},
+  {icon:'🏛️',text:'発見の塔の麓に立った。ここまで来た全ての問い、全ての失敗が、今ここに集まっている。'},
+  {icon:'🏛️',text:'塔を登るにつれ、景色が変わる。今まで見えなかったものが、見えてくる。'},
+  {icon:'🏛️',text:'頂が近い。ここで得たものを、誰かに届ける時が来た。'},
 ];
 
 const ENDINGS = [
-  { id:'awakened', emblem:'🌟', label:'探求者の覚醒', title:'全てが実を結んだ、探求者の覚醒', cond: s => { const v=Object.values(s.resources); return Math.min(...v)>=2 && Math.max(...v)-Math.min(...v)<=4; }, story:['すべての要素が、美しく調和した。','疑問、仮説、実験、発見、共鳴——どれ一つ欠けることなく育てたあなたは、真の探求者だ。','この旅で得たものは、知識だけではない。学ぶことの喜び、それ自体を手に入れた。'], coda:'学びとは、終わりのない旅だ。そして、それは美しい。' },
-  { id:'researcher', emblem:'🔭', label:'孤独な研究者', title:'静寂の中で輝く、孤独な研究者', cond: s => s.resources.question+s.resources.hypothesis>=10 && s.resources.resonance<=1, story:['あなたは誰よりも深く、問い続けた。','その仮説は精緻で、誰も辿り着けなかった場所まで届いた。','まだ、その発見は一人の胸の中にある。でも、それでいい。','問いの価値は、答えを得た瞬間だけにあるのではない。'], coda:'孤独な問いが、次の時代の礎になる。' },
-  { id:'transmitter', emblem:'📢', label:'伝道者', title:'知を届け続けた、伝道者', cond: s => s.resources.resonance>=6, story:['あなたはいつも、誰かに伝えることを選んだ。','知識は、伝わった瞬間に倍になる。','あなたが届けた問いが、今頃誰かの心の中で芽吹いている。'], coda:'伝えることは、種を蒔くことだ。' },
-  { id:'experimenter', emblem:'⚡', label:'実験家', title:'失敗を愛した、実験家', cond: s => s.resources.experiment+s.resources.discovery>=8, story:['あなたは恐れずに、何度も試みた。','失敗するたびに、少し賢くなった。','そのサイクルこそが、あなたの学びの形だ。'], coda:'失敗とは、正解への最短経路だ。' },
-  { id:'unfinished', emblem:'🌙', label:'未完の研究', title:'未完という名の可能性', cond: ()=>true, story:['プロジェクトは完成しなかった。','でも、旅の中で手に入れたものは確かにある。','この問いは、次の旅へと続いていく。'], coda:'終わらない旅に、本当の敗北はない。' },
+  { id:'awakened', emblem:'🌟', label:'探求者の覚醒', title:'全てが実を結んだ、探求者の覚醒', cond:s=>{const v=Object.values(s.resources);return Math.min(...v)>=2&&Math.max(...v)-Math.min(...v)<=4;}, story:['すべての要素が、美しく調和した。','疑問、仮説、実験、発見、共鳴——どれ一つ欠けることなく育てたあなたは、真の探求者だ。','この旅で得たものは、知識だけではない。学ぶことの喜び、それ自体を手に入れた。'], coda:'学びとは、終わりのない旅だ。そして、それは美しい。' },
+  { id:'researcher', emblem:'🔭', label:'孤独な研究者', title:'静寂の中で輝く、孤独な研究者', cond:s=>s.resources.question+s.resources.hypothesis>=10&&s.resources.resonance<=1, story:['あなたは誰よりも深く、問い続けた。','その仮説は精緻で、誰も辿り着けなかった場所まで届いた。','問いの価値は、答えを得た瞬間だけにあるのではない。'], coda:'孤独な問いが、次の時代の礎になる。' },
+  { id:'transmitter', emblem:'📢', label:'伝道者', title:'知を届け続けた、伝道者', cond:s=>s.resources.resonance>=6, story:['あなたはいつも、誰かに伝えることを選んだ。','知識は、伝わった瞬間に倍になる。','あなたが届けた問いが、今頃誰かの心の中で芽吹いている。'], coda:'伝えることは、種を蒔くことだ。' },
+  { id:'experimenter', emblem:'⚡', label:'実験家', title:'失敗を愛した、実験家', cond:s=>s.resources.experiment+s.resources.discovery>=8, story:['あなたは恐れずに、何度も試みた。','失敗するたびに、少し賢くなった。','そのサイクルこそが、あなたの学びの形だ。'], coda:'失敗とは、正解への最短経路だ。' },
+  { id:'unfinished', emblem:'🌙', label:'未完の研究', title:'未完という名の可能性', cond:()=>true, story:['プロジェクトは完成しなかった。','でも、旅の中で手に入れたものは確かにある。','この問いは、次の旅へと続いていく。'], coda:'終わらない旅に、本当の敗北はない。' },
 ];
 
 const LIB_LEVELS = [
-  { lv:1, name:'夜明けの書架', need:0,  next:3  },
-  { lv:2, name:'探求者の回廊', need:3,  next:8  },
-  { lv:3, name:'仮説の書庫',   need:8,  next:15 },
-  { lv:4, name:'実験の記録室', need:15, next:25 },
-  { lv:5, name:'発見の神殿',   need:25, next:40 },
-  { lv:6, name:'知の大図書館', need:40, next:999 },
+  {lv:1,name:'夜明けの書架',need:0,next:3},
+  {lv:2,name:'探求者の回廊',need:3,next:8},
+  {lv:3,name:'仮説の書庫',need:8,next:15},
+  {lv:4,name:'実験の記録室',need:15,next:25},
+  {lv:5,name:'発見の神殿',need:25,next:40},
+  {lv:6,name:'知の大図書館',need:40,next:999},
 ];
 
 const RES_META = {
-  question:   { name:'疑問', icon:'❓', color:'var(--c-question)',   cls:'rc-question'   },
-  hypothesis: { name:'仮説', icon:'💭', color:'var(--c-hypothesis)', cls:'rc-hypothesis' },
-  experiment: { name:'実験', icon:'🧪', color:'var(--c-experiment)', cls:'rc-experiment' },
-  discovery:  { name:'発見', icon:'✨', color:'var(--c-discovery)',  cls:'rc-discovery'  },
-  resonance:  { name:'共鳴', icon:'🌐', color:'var(--c-resonance)',  cls:'rc-resonance'  },
+  question:  {name:'疑問',icon:'❓',color:'var(--c-question)',  cls:'rc-question'},
+  hypothesis:{name:'仮説',icon:'💭',color:'var(--c-hypothesis)',cls:'rc-hypothesis'},
+  experiment:{name:'実験',icon:'🧪',color:'var(--c-experiment)',cls:'rc-experiment'},
+  discovery: {name:'発見',icon:'✨',color:'var(--c-discovery)', cls:'rc-discovery'},
+  resonance: {name:'共鳴',icon:'🌐',color:'var(--c-resonance)', cls:'rc-resonance'},
 };
 
-// ═══════════════════════════════════════════
-//  PERSISTENT STORAGE (localStorage)
-// ═══════════════════════════════════════════
-function loadLib() {
-  try { return JSON.parse(localStorage.getItem('manabiLib') || 'null'); } catch { return null; }
-}
-function saveLib(lib) {
-  try { localStorage.setItem('manabiLib', JSON.stringify(lib)); } catch {}
-}
-function initLib() {
-  return { shards: 0, totalPlays: 0, level: 1, unlockedEndings: [] };
+// ═══════ MAP GENERATION (Phase 2) ═══════
+const NODE_TYPES = ['normal','normal','normal','event','event','rest','trial','discover'];
+
+function generateMap(length) {
+  const nodes = [];
+  nodes.push({type:'normal', idx:0});
+  for (let i = 1; i < length - 1; i++) {
+    // Zone-weighted type selection
+    const zone = Math.floor(i / (length/4));
+    let pool;
+    if (zone === 0) pool = ['normal','normal','normal','event'];
+    else if (zone === 1) pool = ['normal','normal','event','rest'];
+    else if (zone === 2) pool = ['normal','event','trial','discover'];
+    else pool = ['normal','trial','discover','event'];
+    const t = pool[Math.floor(Math.random()*pool.length)];
+    nodes.push({type:t, idx:i});
+  }
+  nodes.push({type:'goal', idx:length-1});
+  return nodes;
 }
 
-// ═══════════════════════════════════════════
-//  STATE
-// ═══════════════════════════════════════════
-let G = {}; // game state
-let LIB = loadLib() || initLib();
+const NODE_ICONS = {normal:'⬜',event:'⚠️',rest:'🏕️',trial:'⚔️',discover:'🔍',goal:'🏛️'};
+const NODE_LABELS = {normal:'',event:'イベント',rest:'休憩',trial:'試練',discover:'発見',goal:'GOAL'};
+
+// ═══════ STORAGE ═══════
+function loadLib(){try{return JSON.parse(localStorage.getItem('manabiLib2')||'null');}catch{return null;}}
+function saveLib(lib){try{localStorage.setItem('manabiLib2',JSON.stringify(lib));}catch{}}
+function initLib(){return{shards:0,totalPlays:0,level:1,unlockedEndings:[],upgradedCards:[]};}
+
+// ═══════ STATE ═══════
+let G={};
+let LIB=loadLib()||initLib();
 
 function initGame(project) {
+  const mapLen = 12;
+  const map = generateMap(mapLen);
+  // Build deck: basic 8 cards, + 2-4 rare based on lib level
+  const deck = BASE_CARDS.slice(0,8).map(c=>({...c, upgraded:false}));
+  if (LIB.level >= 2) deck.push({...BASE_CARDS[8], upgraded:false}); // L9
+  if (LIB.level >= 3) deck.push({...BASE_CARDS[9], upgraded:false}); // L10
+  // Apply previously upgraded cards from library
+  LIB.upgradedCards.forEach(uid => {
+    const i = deck.findIndex(c=>c.id===uid);
+    if (i>=0 && UPGRADES[uid]) {
+      deck[i] = {...deck[i], ...UPGRADES[uid], upgraded:true, id:uid};
+    }
+  });
+
   G = {
-    project,
-    turn: 1, maxTurns: 10,
-    position: 0,
-    resources: { question:3, hypothesis:1, experiment:1, discovery:0, resonance:0 },
-    progress: Object.fromEntries(Object.entries(project.cost).map(([k])=>[k,0])),
-    hand: [],
-    drawnThisTurn: false,
-    playedThisTurn: false,
-    gameOver: false,
-    projectComplete: false,
-    log: [],
-    eventPending: false,
-    pendingEvent: null,
-    shardsEarned: 0,
+    project, map, mapLen,
+    turn:1, maxTurns:mapLen,
+    position:0,
+    resources:{question:3,hypothesis:1,experiment:1,discovery:0,resonance:0},
+    progress:Object.fromEntries(Object.entries(project.cost).map(([k])=>[k,0])),
+    deck,
+    hand:[],
+    drawnThisTurn:false, playedThisTurn:false,
+    gameOver:false, projectComplete:false,
+    log:[], eventPending:false, pendingEvent:null,
+    shardsEarned:0,
+    nodeHandled:false,
+    upgradedThisRun:[],
   };
 }
 
-// ═══════════════════════════════════════════
-//  SCREEN MANAGEMENT
-// ═══════════════════════════════════════════
-function show(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
-}
+// ═══════ SCREEN ═══════
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');}
 
-// ═══════════════════════════════════════════
-//  TITLE SCREEN
-// ═══════════════════════════════════════════
-function renderTitle() {
-  // Library preview
-  const lvInfo = LIB_LEVELS.find(l=>l.lv===LIB.level) || LIB_LEVELS[0];
-  const nextInfo = LIB_LEVELS.find(l=>l.lv===LIB.level+1);
-  const pct = nextInfo ? Math.min(100, ((LIB.shards - lvInfo.need) / (nextInfo.need - lvInfo.need)) * 100) : 100;
-  document.getElementById('title-lib-fill').style.width = pct + '%';
-  document.getElementById('title-lib-lv').textContent = LIB.level;
-  document.getElementById('title-shard-count').textContent = LIB.shards;
-  document.getElementById('title-play-count').textContent = LIB.totalPlays;
+// ═══════ TITLE ═══════
+function renderTitle(){
+  const lvInfo=LIB_LEVELS.find(l=>l.lv===LIB.level)||LIB_LEVELS[0];
+  const nextInfo=LIB_LEVELS.find(l=>l.lv===LIB.level+1);
+  const pct=nextInfo?Math.min(100,((LIB.shards-lvInfo.need)/(nextInfo.need-lvInfo.need))*100):100;
+  document.getElementById('title-lib-fill').style.width=pct+'%';
+  document.getElementById('title-lib-lv').textContent=LIB.level;
+  document.getElementById('title-shard-count').textContent=LIB.shards;
+  document.getElementById('title-play-count').textContent=LIB.totalPlays;
 
-  // Project choices
-  const c = document.getElementById('proj-choices');
-  c.innerHTML = '';
-  PROJECTS.forEach((p, i) => {
-    const el = document.createElement('div');
-    el.className = 'project-choice';
-    el.dataset.idx = i;
-    el.innerHTML = `<div class="pc-icon">${p.icon}</div><div><div class="pc-name">${p.name}</div><div class="pc-desc">${p.desc}</div><div class="pc-diff">${p.diff}</div></div>`;
-    el.onclick = () => {
-      document.querySelectorAll('.project-choice').forEach(e=>e.classList.remove('selected'));
-      el.classList.add('selected');
-      G._selectedProj = i;
-      document.getElementById('btn-start').disabled = false;
-    };
+  const c=document.getElementById('proj-choices');
+  c.innerHTML='';
+  PROJECTS.forEach((p,i)=>{
+    const el=document.createElement('div');
+    el.className='project-choice';
+    el.innerHTML=`<div class="pc-icon">${p.icon}</div><div><div class="pc-name">${p.name}</div><div class="pc-desc">${p.desc}</div><div class="pc-diff">${p.diff}</div></div>`;
+    el.onclick=()=>{document.querySelectorAll('.project-choice').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');G._selectedProj=i;document.getElementById('btn-start').disabled=false;};
     c.appendChild(el);
   });
-  document.getElementById('btn-start').disabled = true;
-  G._selectedProj = undefined;
+  document.getElementById('btn-start').disabled=true;
+  G._selectedProj=undefined;
 }
 
-function startGame() {
-  const proj = PROJECTS[G._selectedProj ?? 0];
+function startGame(){
+  const proj=PROJECTS[G._selectedProj??0];
   initGame(proj);
-  LIB.totalPlays++;
-  saveLib(LIB);
+  LIB.totalPlays++;saveLib(LIB);
+  hideAllPanels();
   show('screen-game');
   renderGame();
 }
 
-// ═══════════════════════════════════════════
-//  GAME SCREEN
-// ═══════════════════════════════════════════
-function renderGame() {
-  renderMap();
-  renderResources();
-  renderHand();
-  renderProject();
-  renderTurnBar();
-  renderNarrator();
+// ═══════ GAME RENDER ═══════
+function renderGame(){renderMap();renderResources();renderHand();renderProject();renderTurnBar();renderNarrator();renderDeckInfo();}
+
+function renderTurnBar(){
+  const phase=getPhase(G.position);
+  document.getElementById('phase-icon').textContent=phase.icon;
+  document.getElementById('phase-name').textContent=phase.name;
+  document.getElementById('turn-now').textContent=G.turn;
+  document.getElementById('turn-max').textContent=G.maxTurns;
+  const node=G.map[G.position];
+  const nodeStr=node&&node.type!=='normal'&&node.type!=='goal'?` [${NODE_LABELS[node.type]}]`:'';
+  const hint=!G.drawnThisTurn?(G.nodeHandled||!['rest','trial','discover'].includes(node?.type)?'← カードを引こう':'← マスのアクションを先に'):G.playedThisTurn?'✓ ターン完了':'← カードを選ぼう';
+  document.getElementById('status-hint').textContent=hint+nodeStr;
+  const drawBtn=document.getElementById('btn-draw');
+  if(drawBtn) drawBtn.disabled=G.drawnThisTurn||G.gameOver;
 }
 
-function renderTurnBar() {
-  const phase = getPhase(G.position);
-  document.getElementById('phase-icon').textContent = phase.icon;
-  document.getElementById('phase-name').textContent = phase.name;
-  document.getElementById('turn-now').textContent = G.turn;
-  document.getElementById('turn-max').textContent = G.maxTurns;
-  const hint = !G.drawnThisTurn ? '← カードを引こう' : G.playedThisTurn ? '✓ ターン完了' : '← カードを選ぼう';
-  document.getElementById('status-hint').textContent = hint;
-  document.getElementById('btn-draw').disabled = G.drawnThisTurn || G.gameOver || G.eventPending;
+function getPhase(pos){
+  if(pos<=2)return{name:'疑問の野原',icon:'🌾'};
+  if(pos<=5)return{name:'仮説の迷宮',icon:'🌀'};
+  if(pos<=8)return{name:'実験の荒野',icon:'⚡'};
+  return{name:'発見の塔',icon:'🏛️'};
 }
 
-function getPhase(pos) {
-  if (pos <= 2) return { name:'疑問の野原', icon:'🌾' };
-  if (pos <= 5) return { name:'仮説の迷宮', icon:'🌀' };
-  if (pos <= 7) return { name:'実験の荒野', icon:'⚡' };
-  return { name:'発見の塔', icon:'🏛️' };
+function renderNarrator(){
+  const n=NARRATIONS[Math.min(G.position,NARRATIONS.length-1)];
+  document.getElementById('n-icon').textContent=n.icon;
+  document.getElementById('n-text').textContent=n.text;
 }
 
-function renderNarrator() {
-  const n = NARRATIONS[Math.min(G.position, NARRATIONS.length-1)];
-  document.getElementById('n-icon').textContent = n.icon;
-  document.getElementById('n-text').textContent = n.text;
-}
-
-function renderMap() {
-  const track = document.getElementById('path');
-  track.innerHTML = '';
-  for (let i = 0; i < G.maxTurns; i++) {
-    const s = document.createElement('div');
-    s.className = 'step' + (i < G.position ? ' done' : '') + (i === G.position ? ' here' : '');
-    s.textContent = i===0?'S':i===G.maxTurns-1?'G':i+1;
-    track.appendChild(s);
-    if (i < G.maxTurns-1) {
-      const c = document.createElement('div');
-      c.className = 'connector' + (i < G.position ? ' done' : '');
-      track.appendChild(c);
+function renderMap(){
+  const track=document.getElementById('path');
+  track.innerHTML='';
+  G.map.forEach((node,i)=>{
+    const s=document.createElement('div');
+    const typeClass=`type-${node.type}`;
+    s.className='step '+typeClass+(i<G.position?' done':'')+(i===G.position?' here':'');
+    s.textContent=NODE_ICONS[node.type]||'⬜';
+    if(node.type!=='normal'&&node.type!=='goal'){
+      const tip=document.createElement('div');
+      tip.className='step-tooltip';
+      tip.textContent=NODE_LABELS[node.type];
+      s.appendChild(tip);
     }
-  }
-  // Move pawn
-  const pawn = document.getElementById('pawn');
-  const steps = track.querySelectorAll('.step');
-  if (steps[G.position]) {
-    const wrap = document.getElementById('map-wrap');
-    const sr = steps[G.position].getBoundingClientRect();
-    const wr = wrap.getBoundingClientRect();
-    pawn.style.left = (sr.left - wr.left + sr.width/2 - 12) + 'px';
+    track.appendChild(s);
+    if(i<G.map.length-1){
+      const conn=document.createElement('div');
+      conn.className='connector'+(i<G.position?' done':'');
+      track.appendChild(conn);
+    }
+  });
+  const pawn=document.getElementById('pawn');
+  const steps=track.querySelectorAll('.step');
+  if(steps[G.position]){
+    const wr=document.getElementById('map-wrap').getBoundingClientRect();
+    const sr=steps[G.position].getBoundingClientRect();
+    pawn.style.left=(sr.left-wr.left+sr.width/2-12)+'px';
   }
 }
 
-function renderResources() {
-  const bar = document.getElementById('res-bar');
-  bar.innerHTML = '';
-  Object.entries(G.resources).forEach(([k, v]) => {
-    const m = RES_META[k];
-    const div = document.createElement('div');
-    div.className = `res-chip ${m.cls}`; div.id = `chip-${k}`;
-    div.innerHTML = `<div class="rc-dot"></div><div class="rc-name">${m.name}</div><div class="rc-val">${Math.max(0,v)}</div>`;
+function renderResources(){
+  const bar=document.getElementById('res-bar');bar.innerHTML='';
+  Object.entries(G.resources).forEach(([k,v])=>{
+    const m=RES_META[k];
+    const div=document.createElement('div');
+    div.className=`res-chip ${m.cls}`;div.id=`chip-${k}`;
+    div.innerHTML=`<div class="rc-dot"></div><div class="rc-name">${m.name}</div><div class="rc-val">${Math.max(0,v)}</div>`;
     bar.appendChild(div);
   });
 }
 
-function renderHand() {
-  const area = document.getElementById('hand-area');
-  area.innerHTML = '';
-  if (!G.drawnThisTurn) {
-    area.innerHTML = '<div style="font-size:12px;color:rgba(245,238,220,0.35);font-style:italic;padding:8px 4px;">カードを引いてください</div>';
+function renderHand(){
+  const area=document.getElementById('hand-area');
+  area.innerHTML='';
+  if(!G.drawnThisTurn){
+    area.innerHTML='<div style="font-size:12px;color:rgba(245,238,220,.35);font-style:italic;padding:8px 4px;">カードを引いてください</div>';
     return;
   }
-  G.hand.forEach((card, idx) => {
-    const el = buildCard(card, 'learn');
-    const canPlay = !G.playedThisTurn && !G.gameOver && !G.eventPending && canAfford(card.cost);
-    if (!canPlay) el.classList.add('disabled');
-    else el.onclick = () => playCard(idx);
+  if(G.hand.length===0){
+    area.innerHTML='<div style="font-size:12px;color:rgba(245,238,220,.35);font-style:italic;padding:8px 4px;">手札なし</div>';
+    return;
+  }
+  G.hand.forEach((card,idx)=>{
+    const el=buildCard(card,'learn');
+    const canPlay=!G.playedThisTurn&&!G.gameOver&&canAfford(card.cost);
+    if(!canPlay)el.classList.add('disabled');
+    else el.onclick=()=>playCard(idx);
     area.appendChild(el);
   });
 }
 
-function buildCard(card, type) {
-  const el = document.createElement('div');
-  el.className = `card card-${type}`;
-  const typeLabel = type==='learn'?'📘 学びカード':type==='action'?'⚡ アクション':'⚠️ イベント';
+function renderDeckInfo(){
+  const ds=document.getElementById('deck-size');
+  const uc=document.getElementById('upgraded-count');
+  if(ds)ds.textContent=G.deck.length;
+  if(uc)uc.textContent=G.deck.filter(c=>c.upgraded).length;
+}
 
-  const gainHtml = card.gain ? Object.entries(card.gain).map(([k,v])=>{
-    const m=RES_META[k]; return `<span class="eff-tag" style="color:${m.color};background:rgba(0,0,0,0.08)">${m.icon}+${v}</span>`;
-  }).join('') : '';
-  const costHtml = card.cost && Object.keys(card.cost).length ? card.cost && Object.entries(card.cost).map(([k,v])=>{
-    const m=RES_META[k]; return `<span class="cost-pip" style="color:${m.color}">${m.icon}${v}</span>`;
-  }).join('') : '';
-  const effectHtml = card.effect ? Object.entries(card.effect).map(([k,v])=>{
-    const m=RES_META[k]; return `<span class="eff-tag" style="color:${m.color};background:rgba(0,0,0,0.08)">${m.icon}${v>0?'+'+v:v}</span>`;
-  }).join('') : '';
-
-  el.innerHTML = `
-    <div class="card-badge">${typeLabel}</div>
-    <span class="card-icon-big">${card.icon}</span>
-    <div class="card-name">${card.name}</div>
-    <div class="card-desc">${card.desc}</div>
-    ${costHtml ? `<div class="card-cost">${costHtml}</div>` : ''}
-    <div class="card-effects">${gainHtml}${effectHtml}</div>
-  `;
+function buildCard(card,type){
+  const el=document.createElement('div');
+  el.className=`card card-${type}`+(card.rare?' rare':'');
+  if(card.upgraded)el.innerHTML+='<div class="upgrade-badge">強化済</div>';
+  const typeLabel=type==='learn'?'📘 学びカード':type==='action'?'⚡ アクション':'⚠️ イベント';
+  const gainHtml=card.gain?Object.entries(card.gain).map(([k,v])=>{const m=RES_META[k];return`<span class="eff-tag" style="color:${m.color}">${m.icon}+${v}</span>`;}).join(''):'';
+  const costHtml=card.cost&&Object.keys(card.cost).length?Object.entries(card.cost).map(([k,v])=>{const m=RES_META[k];return`<span class="cost-pip" style="color:${m.color}">${m.icon}${v}</span>`;}).join(''):'';
+  const effectHtml=card.effect?Object.entries(card.effect).map(([k,v])=>{const m=RES_META[k];return`<span class="eff-tag" style="color:${m.color}">${m.icon}${v>0?'+'+v:v}</span>`;}).join(''):'';
+  el.innerHTML+=`<div class="card-badge">${typeLabel}</div><span class="card-icon-big">${card.icon}</span><div class="card-name">${card.name}</div><div class="card-desc">${card.desc}</div>${costHtml?`<div class="card-cost">${costHtml}</div>`:''}<div class="card-effects">${gainHtml}${effectHtml}</div>`;
   return el;
 }
 
-function renderProject() {
-  const p = G.project;
-  document.getElementById('proj-icon').textContent = p.icon;
-  document.getElementById('proj-title').textContent = p.name;
-  document.getElementById('proj-desc').textContent = p.desc;
-  document.getElementById('proj-pct').textContent = calcPct() + '%';
-
-  const bars = document.getElementById('proj-bars');
-  bars.innerHTML = '';
-  Object.entries(p.cost).forEach(([k, need]) => {
-    const m = RES_META[k];
-    const prog = Math.min(need, G.progress[k]||0);
-    const pct = Math.min(100, (prog/need)*100);
-    bars.innerHTML += `<div class="prog-row">
-      <div class="prog-lbl"><span>${m.icon} ${m.name}</span><span class="prog-lbl-val">${prog}/${need}</span></div>
-      <div class="prog-bg"><div class="prog-fill" style="width:${pct}%;background:${m.color};box-shadow:0 0 6px ${m.color}55"></div></div>
-    </div>`;
+function renderProject(){
+  const p=G.project;
+  document.getElementById('proj-icon').textContent=p.icon;
+  document.getElementById('proj-title').textContent=p.name;
+  document.getElementById('proj-desc').textContent=p.desc;
+  document.getElementById('proj-pct').textContent=calcPct()+'%';
+  const bars=document.getElementById('proj-bars');bars.innerHTML='';
+  Object.entries(p.cost).forEach(([k,need])=>{
+    const m=RES_META[k];const prog=Math.min(need,G.progress[k]||0);const pct=Math.min(100,(prog/need)*100);
+    bars.innerHTML+=`<div class="prog-row"><div class="prog-lbl"><span>${m.icon} ${m.name}</span><span class="prog-lbl-val">${prog}/${need}</span></div><div class="prog-bg"><div class="prog-fill" style="width:${pct}%;background:${m.color};box-shadow:0 0 6px ${m.color}55"></div></div></div>`;
   });
 }
 
-// ═══════════════════════════════════════════
-//  ACTIONS
-// ═══════════════════════════════════════════
-function drawCards() {
-  if (G.drawnThisTurn || G.gameOver) return;
+// ═══════ NODE HANDLERS ═══════
+function handleNodeEntry(){
+  const node=G.map[G.position];
+  if(G.nodeHandled||!node)return;
+  if(node.type==='rest') showRestPanel();
+  else if(node.type==='trial') showTrialPanel();
+  else if(node.type==='discover') showDiscoverPanel();
+  else if(node.type==='event') triggerEvent(true);
+}
 
-  // Event check (after turn 2, 25% chance)
-  if (G.turn > 2 && Math.random() < 0.25) {
-    triggerEvent(); return;
-  }
+function hideAllPanels(){
+  ['rest-panel','upgrade-panel','trial-panel'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
+}
 
-  // Draw 2 random learn cards
-  const pool = [...LEARN_CARDS];
-  const picks = [];
-  while (picks.length < 2 && pool.length) {
-    const i = Math.floor(Math.random() * pool.length);
-    picks.push(pool.splice(i, 1)[0]);
-  }
-  G.hand = picks;
-  G.drawnThisTurn = true;
-  addLog('✨', '2枚のカードを引いた');
+function showRestPanel(){
+  document.getElementById('rest-panel').style.display='block';
+  const opts=document.getElementById('rest-options');
+  opts.innerHTML=`
+    <div class="rest-option" onclick="restRecover()"><div class="ro-icon">💊</div><div><div class="ro-title">体力を回復する</div><div class="ro-desc">全リソース +1 を得る</div></div></div>
+    <div class="rest-option" onclick="restUpgrade()"><div class="ro-icon">✨</div><div><div class="ro-title">カードを強化する</div><div class="ro-desc">手持ちのカード1枚を強化できる</div></div></div>
+  `;
+  G.nodeHandled=true;renderTurnBar();
+}
+
+function restRecover(){
+  Object.keys(G.resources).forEach(k=>{G.resources[k]=(G.resources[k]||0)+1;pulseChip(k);if(G.project.cost[k])G.progress[k]=Math.min(G.project.cost[k],(G.progress[k]||0)+1);});
+  addLog('🏕️','休憩：全リソース +1 を回復した');
+  document.getElementById('rest-panel').style.display='none';
   renderGame();
 }
 
-function triggerEvent() {
-  const ev = EVENTS[Math.floor(Math.random()*EVENTS.length)];
-  G.eventPending = true; G.pendingEvent = ev;
-  G.hand = [ev]; // show event as "hand"
-  G.drawnThisTurn = true;
+function restUpgrade(){
+  document.getElementById('rest-panel').style.display='none';
+  showUpgradePanel('rest');
+}
 
-  // Override hand render for event
-  const area = document.getElementById('hand-area');
-  area.innerHTML = '';
-  const el = buildCard(ev, 'event');
-  el.style.width = '100%';
-  area.appendChild(el);
+function showUpgradePanel(from){
+  const panel=document.getElementById('upgrade-panel');
+  panel.style.display='block';
+  document.getElementById('upgrade-desc').textContent='強化したいカードを選ぼう（強化できないカードはグレー表示）';
+  const area=document.getElementById('upgrade-cards');
+  area.innerHTML='';
+  G.deck.forEach((card,idx)=>{
+    const canUp=!!UPGRADES[card.id]&&!card.upgraded;
+    const el=buildCard(card,'learn');
+    el.style.opacity=canUp?'1':'0.4';
+    el.style.cursor=canUp?'pointer':'not-allowed';
+    if(canUp) el.onclick=()=>upgradeCard(idx,from);
+    area.appendChild(el);
+  });
+}
 
-  const actionRow = document.querySelector('.action-row');
-  actionRow.innerHTML = '<button class="btn btn-gold" onclick="resolveEvent()">受け入れて進む</button>';
-  addLog('⚠️', `イベント発生：「${ev.name}」`);
+function upgradeCard(idx, from){
+  const card=G.deck[idx];
+  const up=UPGRADES[card.id];
+  if(!up||card.upgraded)return;
+  G.deck[idx]={...card,...up,upgraded:true,id:card.id};
+  G.upgradedThisRun.push(card.id);
+  // Persist to library
+  if(!LIB.upgradedCards.includes(card.id)){LIB.upgradedCards.push(card.id);saveLib(LIB);}
+  addLog('✨',`「${card.name}」→「${up.name}」に強化した！`);
+  document.getElementById('upgrade-panel').style.display='none';
+  renderGame();
+}
+
+function showTrialPanel(){
+  document.getElementById('trial-panel').style.display='block';
+  const trial=TRIALS[Math.floor(Math.random()*TRIALS.length)];
+  G._currentTrial=trial;
+  document.getElementById('trial-desc').textContent=trial.desc;
+  const choices=document.getElementById('trial-choices');
+  choices.innerHTML='';
+  [trial.a,trial.b].forEach((opt,i)=>{
+    const el=document.createElement('div');
+    el.className='trial-choice';
+    const gainStr=Object.entries(opt.gain).map(([k,v])=>`${RES_META[k].icon}+${v}`).join(' ');
+    const costStr=opt.cost&&Object.keys(opt.cost).length?'コスト: '+Object.entries(opt.cost).map(([k,v])=>`${RES_META[k].icon}${v}`).join(' '):'コストなし';
+    el.innerHTML=`<span class="tc-icon">${opt.icon}</span><div class="tc-name">${opt.name}</div><div class="tc-desc">${opt.desc}<br><small style="color:var(--gold-lt)">${gainStr}</small><br><small style="opacity:.6">${costStr}</small></div>`;
+    el.onclick=()=>resolveTrial(i===0?trial.a:trial.b);
+    choices.appendChild(el);
+  });
+  G.nodeHandled=true;renderTurnBar();
+}
+
+function resolveTrial(opt){
+  if(opt.cost) Object.entries(opt.cost).forEach(([k,v])=>{G.resources[k]=Math.max(0,G.resources[k]-v);});
+  Object.entries(opt.gain).forEach(([k,v])=>{G.resources[k]=(G.resources[k]||0)+v;pulseChip(k);if(G.project.cost[k])G.progress[k]=Math.min(G.project.cost[k],(G.progress[k]||0)+v);});
+  addLog('⚔️',`試練「${opt.name}」を選んだ`);
+  document.getElementById('trial-panel').style.display='none';
+  renderGame();
+}
+
+function showDiscoverPanel(){
+  // Add a rare card to deck
+  const rare=BASE_CARDS.filter(c=>c.rare&&!G.deck.find(d=>d.id===c.id));
+  if(rare.length>0){
+    const pick=rare[Math.floor(Math.random()*rare.length)];
+    G.deck.push({...pick,upgraded:false});
+    addLog('🔍',`レアカード「${pick.name}」をデッキに加えた！`);
+    showPhaseBanner(`✨ レアカード発見！\n「${pick.name}」`);
+  } else {
+    // All rares already obtained — give resources instead
+    G.resources.discovery=(G.resources.discovery||0)+2;
+    pulseChip('discovery');
+    addLog('🔍','発見マス：全レアカード取得済み。発見 +2 を得た');
+  }
+  G.nodeHandled=true;
+  renderGame();renderTurnBar();
+}
+
+// ═══════ DRAW & PLAY ═══════
+function drawCards(){
+  if(G.drawnThisTurn||G.gameOver)return;
+  const node=G.map[G.position];
+  // Handle node entry first if not yet handled
+  if(!G.nodeHandled&&['rest','trial','discover'].includes(node?.type)){
+    handleNodeEntry();return;
+  }
+  // Event node: forced event
+  if(!G.nodeHandled&&node?.type==='event'){handleNodeEntry();return;}
+
+  // Random event chance on normal nodes (after turn 3)
+  if(G.turn>3&&Math.random()<0.2&&node?.type==='normal'){
+    triggerEvent(false);return;
+  }
+
+  pickCards();
+}
+
+function pickCards(){
+  const pool=[...G.deck];
+  const picks=[];
+  while(picks.length<2&&pool.length){
+    const i=Math.floor(Math.random()*pool.length);
+    picks.push(pool.splice(i,1)[0]);
+  }
+  G.hand=picks;
+  G.drawnThisTurn=true;
+  addLog('🃏','2枚のカードを引いた');
+  renderGame();
+}
+
+function triggerEvent(forced){
+  const ev=EVENTS[Math.floor(Math.random()*EVENTS.length)];
+  G.eventPending=true;G.pendingEvent=ev;
+  const area=document.getElementById('hand-area');
+  area.innerHTML='';
+  const el=buildCard(ev,'event');
+  el.style.width='100%';area.appendChild(el);
+  const ar=document.getElementById('action-row');
+  ar.innerHTML='<button class="btn btn-gold" onclick="resolveEvent()">受け入れて進む</button>';
+  if(forced)G.nodeHandled=true;
+  G.drawnThisTurn=true;
+  addLog('⚠️',`イベント：「${ev.name}」`);
   renderTurnBar();
 }
 
-function resolveEvent() {
-  const ev = G.pendingEvent;
-  if (ev && ev.effect) {
-    Object.entries(ev.effect).forEach(([k,v]) => {
-      G.resources[k] = Math.max(0, (G.resources[k]||0)+v);
-      pulseChip(k);
-      if (G.project.cost[k])
-        G.progress[k] = Math.min(G.project.cost[k], (G.progress[k]||0)+Math.max(0,v));
-    });
-  }
-  G.eventPending = false; G.pendingEvent = null; G.hand = [];
-  addLog('📝', `「${ev.name}」の影響を受けた`);
-  // Restore draw button
-  document.querySelector('.action-row').innerHTML = '<button class="btn btn-gold" id="btn-draw" onclick="drawCards()">カードを引く（2枚）</button>';
-  // Now draw actual cards
-  const pool = [...LEARN_CARDS];
-  const picks = [];
-  while (picks.length < 2 && pool.length) {
-    const i = Math.floor(Math.random()*pool.length);
-    picks.push(pool.splice(i,1)[0]);
-  }
-  G.hand = picks;
-  renderGame();
+function resolveEvent(){
+  const ev=G.pendingEvent;
+  if(ev?.effect) Object.entries(ev.effect).forEach(([k,v])=>{G.resources[k]=Math.max(0,(G.resources[k]||0)+v);pulseChip(k);if(v>0&&G.project.cost[k])G.progress[k]=Math.min(G.project.cost[k],(G.progress[k]||0)+v);});
+  G.eventPending=false;G.pendingEvent=null;
+  addLog('📝',`「${ev.name}」の影響を受けた`);
+  document.getElementById('action-row').innerHTML='<button class="btn btn-gold" id="btn-draw" onclick="drawCards()">カードを引く（2枚）</button>';
+  pickCards();
 }
 
-function playCard(idx) {
-  if (G.playedThisTurn || G.gameOver) return;
-  const card = G.hand[idx];
-  if (!canAfford(card.cost)) return;
-
-  // Pay cost
-  if (card.cost) Object.entries(card.cost).forEach(([k,v]) => { G.resources[k] = Math.max(0, G.resources[k]-v); });
-  // Gain
-  if (card.gain) Object.entries(card.gain).forEach(([k,v]) => {
-    G.resources[k] = (G.resources[k]||0)+v;
-    pulseChip(k);
-    if (G.project.cost[k])
-      G.progress[k] = Math.min(G.project.cost[k], (G.progress[k]||0)+v);
-  });
-
-  addLog('📘', `「${card.name}」を使った`);
-  G.playedThisTurn = true;
+function playCard(idx){
+  if(G.playedThisTurn||G.gameOver)return;
+  const card=G.hand[idx];
+  if(!canAfford(card.cost))return;
+  if(card.cost) Object.entries(card.cost).forEach(([k,v])=>{G.resources[k]=Math.max(0,G.resources[k]-v);});
+  if(card.gain) Object.entries(card.gain).forEach(([k,v])=>{G.resources[k]=(G.resources[k]||0)+v;pulseChip(k);if(G.project.cost[k])G.progress[k]=Math.min(G.project.cost[k],(G.progress[k]||0)+v);});
+  addLog('📘',`「${card.name}」を使った${card.upgraded?' ✨':''}`);
+  G.playedThisTurn=true;
   endTurn();
   renderGame();
 }
 
-function endTurn() {
-  G.position = Math.min(G.maxTurns-1, G.position+1);
-
-  if (isComplete()) {
-    G.projectComplete = true; G.gameOver = true;
-    calcShards(true);
-    setTimeout(()=>showEnding(true), 900); return;
+function endTurn(){
+  G.position=Math.min(G.maxTurns-1,G.position+1);
+  G.nodeHandled=false;
+  if(isComplete()){G.projectComplete=true;G.gameOver=true;calcShards(true);setTimeout(()=>showEnding(true),900);return;}
+  if(G.turn>=G.maxTurns){G.gameOver=true;calcShards(false);setTimeout(()=>showEnding(false),900);return;}
+  const prev=getPhase(G.position-1).name,cur=getPhase(G.position).name;
+  if(prev!==cur)showPhaseBanner(cur);
+  G.turn++;G.drawnThisTurn=false;G.playedThisTurn=false;G.hand=[];
+  hideAllPanels();
+  // Auto-trigger node on arrival
+  const node=G.map[G.position];
+  if(node&&['event'].includes(node.type)){
+    setTimeout(()=>{handleNodeEntry();renderGame();},400);
   }
-  if (G.turn >= G.maxTurns) {
-    G.gameOver = true;
-    calcShards(false);
-    setTimeout(()=>showEnding(false), 900); return;
-  }
-
-  // Phase change banner
-  const prev = getPhase(G.position-1).name;
-  const cur  = getPhase(G.position).name;
-  if (prev !== cur) showPhaseBanner(cur);
-
-  G.turn++; G.drawnThisTurn = false; G.playedThisTurn = false; G.hand = [];
+  document.getElementById('action-row').innerHTML='<button class="btn btn-gold" id="btn-draw" onclick="drawCards()">カードを引く（2枚）</button>';
 }
 
-function calcShards(won) {
-  let s = 1; // always +1 for playing
-  if (won) s += 2;
-  G.shardsEarned = s;
-  LIB.shards += s;
-  // Level up check
-  for (let i = LIB_LEVELS.length-1; i >= 0; i--) {
-    if (LIB.shards >= LIB_LEVELS[i].need) { LIB.level = LIB_LEVELS[i].lv; break; }
-  }
+function calcShards(won){
+  let s=1;if(won)s+=2;
+  if(G.upgradedThisRun.length>0)s+=1;
+  G.shardsEarned=s;LIB.shards+=s;
+  for(let i=LIB_LEVELS.length-1;i>=0;i--){if(LIB.shards>=LIB_LEVELS[i].need){LIB.level=LIB_LEVELS[i].lv;break;}}
   saveLib(LIB);
 }
 
-// ═══════════════════════════════════════════
-//  ENDING
-// ═══════════════════════════════════════════
-function showEnding(won) {
-  const ending = won
-    ? ENDINGS.find(e=>e.id!=='unfinished' && e.cond(G)) || ENDINGS.find(e=>e.id==='unfinished')
-    : ENDINGS.find(e=>e.id==='unfinished');
-
-  if (!LIB.unlockedEndings.includes(ending.id)) LIB.unlockedEndings.push(ending.id);
-  saveLib(LIB);
-
-  document.getElementById('end-emblem').textContent = ending.emblem;
-  document.getElementById('end-type').textContent = ending.label;
-  document.getElementById('end-title').textContent = ending.title;
-  document.getElementById('end-shard-gain').textContent = `+${G.shardsEarned}`;
-
-  // Project badge
-  const p = G.project;
-  document.getElementById('end-proj-badge').innerHTML = `
-    <div class="epb-icon">${p.icon}</div>
-    <div><div class="epb-label">${won?'✅ 完成したプロジェクト':'🌙 挑戦したプロジェクト（'+calcPct()+'%達成）'}</div>
-    <div class="epb-name">${p.name}</div></div>`;
-
-  // Story
-  const storyEl = document.getElementById('end-story');
-  storyEl.innerHTML = ending.story.map(s=>`<p>${s}</p>`).join('') +
-    `<span class="end-coda">「${ending.coda}」</span>`;
-
-  // Stats
-  const statsEl = document.getElementById('end-stats');
-  statsEl.innerHTML = Object.entries(G.resources).map(([k,v])=>{
-    const m=RES_META[k];
-    return `<div class="end-stat"><div class="es-icon">${m.icon}</div><div class="es-val" style="color:${m.color}">${Math.max(0,v)}</div><div class="es-name">${m.name}</div></div>`;
-  }).join('');
-
-  // Log
-  document.getElementById('end-log-wrap').innerHTML = `<h3>📖 旅の記録</h3><ul>${G.log.map(l=>`<li>${l}</li>`).join('')}</ul>`;
-
+// ═══════ ENDING ═══════
+function showEnding(won){
+  const ending=won?ENDINGS.find(e=>e.id!=='unfinished'&&e.cond(G))||ENDINGS.find(e=>e.id==='unfinished'):ENDINGS.find(e=>e.id==='unfinished');
+  if(!LIB.unlockedEndings.includes(ending.id)){LIB.unlockedEndings.push(ending.id);saveLib(LIB);}
+  document.getElementById('end-emblem').textContent=ending.emblem;
+  document.getElementById('end-type').textContent=ending.label;
+  document.getElementById('end-title').textContent=ending.title;
+  document.getElementById('end-shard-gain').textContent=`+${G.shardsEarned}`;
+  const p=G.project;
+  document.getElementById('end-proj-badge').innerHTML=`<div class="epb-icon">${p.icon}</div><div><div class="epb-label">${won?'✅ 完成':'🌙 挑戦中（'+calcPct()+'%）'}</div><div class="epb-name">${p.name}</div></div>`;
+  document.getElementById('end-story').innerHTML=ending.story.map(s=>`<p>${s}</p>`).join('')+`<span class="end-coda">「${ending.coda}」</span>`;
+  document.getElementById('end-stats').innerHTML=Object.entries(G.resources).map(([k,v])=>{const m=RES_META[k];return`<div class="end-stat"><div class="es-icon">${m.icon}</div><div class="es-val" style="color:${m.color}">${Math.max(0,v)}</div><div class="es-name">${m.name}</div></div>`;}).join('');
+  document.getElementById('end-log-wrap').innerHTML=`<h3>📖 旅の記録</h3><ul>${G.log.map(l=>`<li>${l}</li>`).join('')}</ul>`;
   show('screen-ending');
 }
 
-// ═══════════════════════════════════════════
-//  LIBRARY SCREEN
-// ═══════════════════════════════════════════
-function goToLibrary() {
-  renderLibrary();
-  show('screen-library');
-}
-
-function renderLibrary() {
-  document.getElementById('lib-shard-val').textContent = LIB.shards;
-  const lvInfo = LIB_LEVELS.find(l=>l.lv===LIB.level) || LIB_LEVELS[0];
-  const nextInfo = LIB_LEVELS.find(l=>l.lv===LIB.level+1);
-  const pct = nextInfo ? Math.min(100, ((LIB.shards-lvInfo.need)/(nextInfo.need-lvInfo.need))*100) : 100;
-  document.getElementById('lib-shard-sub').textContent = nextInfo ? `次のレベルまで あと ${Math.max(0,nextInfo.need-LIB.shards)} 個` : '最高レベル達成！';
-  document.getElementById('lib-lv-name').textContent = `図書館 Lv.${LIB.level} — ${lvInfo.name}`;
-  document.getElementById('lib-lv-num').textContent = `Lv ${LIB.level} / 6`;
-  document.getElementById('lib-lv-fill').style.width = pct + '%';
-  document.getElementById('lib-lv-hint').textContent = nextInfo ? `Lv${LIB.level+1}まで 欠片${nextInfo.need}個が必要` : '最高レベル';
-
-  const list = document.getElementById('unlocked-list');
-  list.innerHTML = '';
-
-  const items = [
-    { icon:'📚', name:'基本カード 8種', desc:'素朴な疑問、小さな仮説、振り返り…など', always:true },
-    { icon:'📖', name:'プロジェクト「学びの場をつくる」', desc:'知識が育つ空間を社会に生み出す', always:true },
-    { icon:'❓', name:'プロジェクト「問いを届ける」', desc:'「なぜ？」という問いを届ける', always:true },
-    ...LIB.unlockedEndings.map(id => {
-      const e = ENDINGS.find(x=>x.id===id);
-      return { icon:e.emblem, name:`エンディング：${e.label}`, desc:e.title, always:false };
-    }),
+// ═══════ LIBRARY ═══════
+function goToLibrary(){renderLibrary();show('screen-library');}
+function renderLibrary(){
+  document.getElementById('lib-shard-val').textContent=LIB.shards;
+  const lvInfo=LIB_LEVELS.find(l=>l.lv===LIB.level)||LIB_LEVELS[0];
+  const nextInfo=LIB_LEVELS.find(l=>l.lv===LIB.level+1);
+  const pct=nextInfo?Math.min(100,((LIB.shards-lvInfo.need)/(nextInfo.need-lvInfo.need))*100):100;
+  document.getElementById('lib-shard-sub').textContent=nextInfo?`次のレベルまで あと ${Math.max(0,nextInfo.need-LIB.shards)} 個`:'最高レベル達成！';
+  document.getElementById('lib-lv-name').textContent=`図書館 Lv.${LIB.level} — ${lvInfo.name}`;
+  document.getElementById('lib-lv-num').textContent=`Lv ${LIB.level} / 6`;
+  document.getElementById('lib-lv-fill').style.width=pct+'%';
+  document.getElementById('lib-lv-hint').textContent=nextInfo?`Lv${LIB.level+1}まで 欠片${nextInfo.need}個が必要`:'最高レベル';
+  const list=document.getElementById('unlocked-list');list.innerHTML='';
+  const items=[
+    {icon:'📚',name:'基本カード 8種',desc:'学びの旅の基礎カード',always:true},
+    {icon:'📖',name:'プロジェクト「学びの場をつくる」',desc:'★☆☆ — 最初から利用可能',always:true},
+    {icon:'❓',name:'プロジェクト「問いを届ける」',desc:'★☆☆ — 最初から利用可能',always:true},
+    ...(LIB.upgradedCards.length>0?[{icon:'✨',name:`強化カード ${LIB.upgradedCards.length}種`,desc:LIB.upgradedCards.map(id=>BASE_CARDS.find(c=>c.id===id)?.name||id).join('、'),always:false}]:[]),
+    ...LIB.unlockedEndings.map(id=>{const e=ENDINGS.find(x=>x.id===id);return{icon:e.emblem,name:`エンディング：${e.label}`,desc:e.title,always:false};}),
   ];
-
-  items.forEach((item, i) => {
-    const el = document.createElement('div');
-    el.className = 'unlocked-item';
-    el.innerHTML = `<span class="ui-icon">${item.icon}</span><div><div class="ui-name">${item.name}</div><div class="ui-desc">${item.desc}</div></div>${!item.always && i >= 3 ? '<span class="ui-new">NEW</span>' : ''}`;
+  items.forEach(item=>{
+    const el=document.createElement('div');el.className='unlocked-item';
+    el.innerHTML=`<span class="ui-icon">${item.icon}</span><div><div class="ui-name">${item.name}</div><div class="ui-desc">${item.desc}</div></div>${!item.always?'<span class="ui-new">NEW</span>':''}`;
     list.appendChild(el);
   });
 }
+function goToTitle(){renderTitle();show('screen-title');}
+function restartDirect(){renderTitle();show('screen-title');}
 
-function goToTitle() {
-  renderTitle();
-  show('screen-title');
-}
+// ═══════ UTILS ═══════
+function isComplete(){return Object.entries(G.project.cost).every(([k,v])=>(G.progress[k]||0)>=v);}
+function calcPct(){const cost=G.project.cost;const total=Object.values(cost).reduce((a,b)=>a+b,0);const done=Object.entries(cost).reduce((a,[k,v])=>a+Math.min(v,G.progress[k]||0),0);return Math.round((done/total)*100);}
+function canAfford(cost){if(!cost)return true;return Object.entries(cost).every(([k,v])=>(G.resources[k]||0)>=v);}
+function pulseChip(key){const el=document.getElementById(`chip-${key}`);if(!el)return;el.classList.remove('pulse');void el.offsetWidth;el.classList.add('pulse');}
+function addLog(icon,text){const entry=`${icon} ${text}`;G.log.unshift(entry);const list=document.getElementById('log-list');const row=document.createElement('div');row.className='log-row';row.textContent=entry;list.insertBefore(row,list.firstChild);}
+function showPhaseBanner(name){const b=document.getElementById('phase-banner');b.innerHTML=name.replace('\n','<br>');b.classList.add('show');setTimeout(()=>b.classList.remove('show'),2400);}
 
-function restartDirect() {
-  renderTitle();
-  show('screen-title');
-}
-
-// ═══════════════════════════════════════════
-//  UTILS
-// ═══════════════════════════════════════════
-function isComplete() {
-  return Object.entries(G.project.cost).every(([k,v])=>(G.progress[k]||0)>=v);
-}
-function calcPct() {
-  const cost = G.project.cost;
-  const total = Object.values(cost).reduce((a,b)=>a+b,0);
-  const done  = Object.entries(cost).reduce((a,[k,v])=>a+Math.min(v,G.progress[k]||0),0);
-  return Math.round((done/total)*100);
-}
-function canAfford(cost) {
-  if (!cost) return true;
-  return Object.entries(cost).every(([k,v])=>(G.resources[k]||0)>=v);
-}
-function pulseChip(key) {
-  const el = document.getElementById(`chip-${key}`);
-  if (!el) return;
-  el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse');
-}
-function addLog(icon, text) {
-  const entry = `${icon} ${text}`;
-  G.log.unshift(entry);
-  const list = document.getElementById('log-list');
-  const row = document.createElement('div');
-  row.className = 'log-row';
-  row.textContent = entry;
-  list.insertBefore(row, list.firstChild);
-}
-function showPhaseBanner(name) {
-  const b = document.getElementById('phase-banner');
-  b.innerHTML = `新しいエリアへ<br><span style="font-size:15px">${name}</span>`;
-  b.classList.add('show');
-  setTimeout(()=>b.classList.remove('show'), 2200);
-}
-
-// ═══════════════════════════════════════════
-//  INIT
-// ═══════════════════════════════════════════
-G = {};
+// ═══════ INIT ═══════
+G={};
 renderTitle();
 show('screen-title');
 </script>
